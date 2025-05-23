@@ -1,0 +1,2 @@
+﻿GRANT ALL PRIVILEGES ON Inventory.* TO 'mysql'@'%';
+FLUSH PRIVILEGES;
