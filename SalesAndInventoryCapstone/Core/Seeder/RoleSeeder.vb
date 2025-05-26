@@ -1,6 +1,8 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Public Class RoleSeeder
+
+    'This is a function that seeds the database with default roles
     Public Shared Sub SeedRoles()
         da = New MySqlDataAdapter("select Id from roles limit 10", con)
         ds = New DataSet
@@ -26,6 +28,7 @@ Public Class RoleSeeder
         End If
     End Sub
 
+    'This is a function that creates a role in the database
     Public Shared Function CreateRole(roleName As String) As Integer
         con.Open()
         cmd = New MySqlCommand("insert into roles(Name) values(@1)", con)

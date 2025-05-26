@@ -8,11 +8,13 @@ Public Class LoginForm
         Me.Close()
     End Sub
 
+    'This is a function that initializes the login form by seeding roles and users if there is no data in the database
     Sub LoginInitialize()
         RoleSeeder.SeedRoles()
         UserSeeder.RoleSeeder()
     End Sub
 
+    'This is a function that handles the login process
     Sub Login()
         Dim username As String = tUsername.Text
         Dim password As String = tPassword.Text
@@ -45,6 +47,7 @@ Public Class LoginForm
         LoginInitialize()
     End Sub
 
+    'This is a function that handles the key down event for the login form
     Private Sub LoginForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.Enter Then
             Login()

@@ -1,6 +1,7 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Public Class UserSeeder
+    'This is a function that seeds the database with default users
     Public Shared Sub RoleSeeder()
         da = New MySqlDataAdapter("select Id from users", con)
         ds = New DataSet
@@ -22,6 +23,8 @@ Public Class UserSeeder
         End If
     End Sub
 
+
+    'This is a function tht creates a user in the database
     Public Shared Function CreateUser(lastName As String, firstName As String, username As String, password As String) As Integer
         Dim hashedPassword As String = HashPassword(password)
 
