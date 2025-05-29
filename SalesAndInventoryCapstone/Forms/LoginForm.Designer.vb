@@ -22,6 +22,7 @@ Partial Class LoginForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoginForm))
         tUsername = New Krypton.Toolkit.KryptonTextBox()
         tPassword = New Krypton.Toolkit.KryptonTextBox()
@@ -34,6 +35,9 @@ Partial Class LoginForm
         Label4 = New Label()
         Label5 = New Label()
         Label6 = New Label()
+        chkShowPassword = New CheckBox()
+        lblLockoutTimer = New Label()
+        lockoutTimer = New Timer(components)
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -61,7 +65,7 @@ Partial Class LoginForm
         ' 
         ' btnLogin
         ' 
-        btnLogin.Location = New Point(61, 382)
+        btnLogin.Location = New Point(64, 437)
         btnLogin.Name = "btnLogin"
         btnLogin.Size = New Size(126, 33)
         btnLogin.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -77,7 +81,7 @@ Partial Class LoginForm
         ' 
         ' btnExit
         ' 
-        btnExit.Location = New Point(193, 382)
+        btnExit.Location = New Point(196, 437)
         btnExit.Name = "btnExit"
         btnExit.Size = New Size(126, 33)
         btnExit.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -167,13 +171,40 @@ Partial Class LoginForm
         Label6.TabIndex = 10
         Label6.Text = "Agri Top Solana, Cagayan"
         ' 
+        ' chkShowPassword
+        ' 
+        chkShowPassword.AutoSize = True
+        chkShowPassword.ForeColor = SystemColors.Control
+        chkShowPassword.Location = New Point(146, 382)
+        chkShowPassword.Name = "chkShowPassword"
+        chkShowPassword.Size = New Size(108, 19)
+        chkShowPassword.TabIndex = 11
+        chkShowPassword.Text = "Show Password"
+        chkShowPassword.UseVisualStyleBackColor = True
+        ' 
+        ' lblLockoutTimer
+        ' 
+        lblLockoutTimer.ForeColor = SystemColors.Control
+        lblLockoutTimer.Location = New Point(11, 404)
+        lblLockoutTimer.Name = "lblLockoutTimer"
+        lblLockoutTimer.Size = New Size(374, 30)
+        lblLockoutTimer.TabIndex = 13
+        lblLockoutTimer.Text = "30"
+        lblLockoutTimer.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' lockoutTimer
+        ' 
+        lockoutTimer.Interval = 1000
+        ' 
         ' LoginForm
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        ClientSize = New Size(399, 452)
+        ClientSize = New Size(409, 501)
         ControlBox = False
+        Controls.Add(lblLockoutTimer)
+        Controls.Add(chkShowPassword)
         Controls.Add(Label6)
         Controls.Add(Label5)
         Controls.Add(Label4)
@@ -216,4 +247,7 @@ Partial Class LoginForm
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
+    Friend WithEvents chkShowPassword As CheckBox
+    Friend WithEvents lblLockoutTimer As Label
+    Friend WithEvents lockoutTimer As Timer
 End Class

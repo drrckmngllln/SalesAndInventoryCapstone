@@ -37,6 +37,8 @@ Namespace My
             Else
                 Me.MainForm = LoginForm
             End If
+
+            'Me.MainForm = New MainForm
         End Sub
     End Class
 End Namespace

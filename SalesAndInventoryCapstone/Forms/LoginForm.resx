@@ -121,7 +121,7 @@
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAGw3SURBVHhe7b0J
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAGw3SURBVHhe7b0J
         +FbFefc/bCoiooILCCqiCCgogoKAuOCO4I64oLihxrik1r1xiXHfQFOTvjHGaDRqEo3axCVGYxaXaPtv
         m6RL2r5N27Rv9ibG9n2Tpjn/6/uEX4LfOTz87jlzzplznu/3uj5XG4T7meU+c8+ZM3OPc5IkSZIkSZIk
         SZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSVLZGu6cm+mcO9E5d71z7jHn3KvO
@@ -586,4 +586,7 @@
         JEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSwvX/Aznors+l1pCAAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="lockoutTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

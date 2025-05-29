@@ -4,6 +4,9 @@ Imports MySql.Data.MySqlClient
 Public Class LoginForm
     Inherits KryptonForm
 
+    Dim failedAttempts As Integer = 0
+    Dim lockoutSeconds As Integer = 30
+
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         Me.Close()
     End Sub
@@ -28,7 +31,15 @@ Public Class LoginForm
         da.Fill(ds, "users")
 
         If ds.Tables(0).Rows.Count <= 0 Then
-            MsgBox("Username not found.")
+            failedAttempts += 1
+            MsgBox($"Username not found. Invalid Attempts: {failedAttempts}")
+
+            If failedAttempts >= 3 Then
+                StartLockout()
+            End If
+
+            'This is to prevent further execution if the username is not found
+            Return
         End If
 
         Dim result As Boolean = BCrypt.Net.BCrypt.Verify(password, ds.Tables(0).Rows(0).Item("Password").ToString())
@@ -38,9 +49,25 @@ Public Class LoginForm
             Me.Hide()
             MainForm.Show()
         Else
-            MsgBox("Invalid Password")
+            failedAttempts += 1
+            MsgBox($"Invalid Password. Invalid Attempts: {failedAttempts}")
         End If
 
+        If failedAttempts >= 3 Then
+            StartLockout()
+        End If
+
+    End Sub
+
+    'This is a function that starts the lockout timer and disables the login fields
+    Sub StartLockout()
+        tUsername.Enabled = False
+        tPassword.Enabled = False
+        btnLogin.Enabled = False
+        lockoutSeconds = 30
+        lblLockoutTimer.Text = $"Too many failed attempts. Please wait {lockoutSeconds} seconds."
+        lblLockoutTimer.Visible = True
+        lockoutTimer.Start()
     End Sub
 
     Private Sub LoginForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -58,5 +85,30 @@ Public Class LoginForm
 
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         Login()
+    End Sub
+
+    'This is a function that handles the toggle of the password visibility
+    Private Sub chkShowPassword_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPassword.CheckedChanged
+        If chkShowPassword.Checked Then
+            tPassword.UseSystemPasswordChar = False
+            tPassword.PasswordChar = Nothing
+        Else
+            tPassword.UseSystemPasswordChar = True
+        End If
+    End Sub
+
+    'This is a function that handles the lockout timer tick event
+    Private Sub lockoutTimer_Tick(sender As Object, e As EventArgs) Handles lockoutTimer.Tick
+        lockoutSeconds -= 1
+        lblLockoutTimer.Text = $"Too many failed attempts. Please wait {lockoutSeconds} seconds."
+
+        If lockoutSeconds <= 0 Then
+            lockoutTimer.Stop()
+            tUsername.Enabled = True
+            tPassword.Enabled = True
+            btnLogin.Enabled = True
+            lblLockoutTimer.Visible = False
+            failedAttempts = 0
+        End If
     End Sub
 End Class
