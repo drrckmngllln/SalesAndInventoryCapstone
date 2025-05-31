@@ -23,22 +23,35 @@ Partial Class UserManagement
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Label1 = New Label()
+        pnlData = New FlowLayoutPanel()
         SuspendLayout()
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
+        Label1.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         Label1.Location = New Point(12, 9)
         Label1.Name = "Label1"
-        Label1.Size = New Size(159, 15)
+        Label1.Size = New Size(110, 15)
         Label1.TabIndex = 0
-        Label1.Text = "This is the user management"
+        Label1.Text = "User Management"
+        ' 
+        ' pnlData
+        ' 
+        pnlData.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        pnlData.AutoScroll = True
+        pnlData.BackColor = SystemColors.Control
+        pnlData.Location = New Point(12, 94)
+        pnlData.Name = "pnlData"
+        pnlData.Size = New Size(1160, 583)
+        pnlData.TabIndex = 1
         ' 
         ' UserManagement
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(866, 482)
+        ClientSize = New Size(1184, 698)
+        Controls.Add(pnlData)
         Controls.Add(Label1)
         Name = "UserManagement"
         Text = "UserManagement"
@@ -47,4 +60,5 @@ Partial Class UserManagement
     End Sub
 
     Friend WithEvents Label1 As Label
+    Friend WithEvents pnlData As FlowLayoutPanel
 End Class

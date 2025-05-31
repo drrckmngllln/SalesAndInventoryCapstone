@@ -1,5 +1,6 @@
 ﻿Public Class Categories
     Dim categories As New DataSet
+    Dim db As New DBHelper()
 
     Private Sub Categories_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         GetCategories()
@@ -7,9 +8,9 @@
 
     Sub GetCategories(Optional search As String = "")
         If (Not String.IsNullOrEmpty(search)) Then
-            categories = Fetch("select * from categories where name like '" & search & "' order by id asc")
+            categories = db.Fetch("select * from categories where name like '%" & search & "%' order by id asc")
         Else
-            categories = Fetch("select * from categories order by id asc")
+            categories = db.Fetch("select * from categories order by id asc")
         End If
 
         If categories.Tables.Count > 0 Then
@@ -17,18 +18,26 @@
                 Dim card As New CategoryCard
                 card.data = row
                 card.Dock = DockStyle.Top
-                pnlGrid.Controls.Add(card)
+                pnlData.Controls.Add(card)
             Next
         End If
     End Sub
 
     Private Sub tSearch_TextChanged(sender As Object, e As EventArgs) Handles tSearch.TextChanged
         If (tSearch.Text.Length > 2) Then
-            pnlGrid.Controls.Clear()
+            pnlData.Controls.Clear()
             GetCategories(tSearch.Text)
         Else
-            pnlGrid.Controls.Clear()
+            pnlData.Controls.Clear()
             GetCategories()
         End If
+    End Sub
+
+    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
+        Dim frm As New CategoryAEForm
+        frm.Text = "Add Category"
+        frm.ShowDialog(Me)
+        pnlData.Controls.Clear()
+        GetCategories()
     End Sub
 End Class

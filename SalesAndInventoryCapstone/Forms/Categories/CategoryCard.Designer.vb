@@ -34,9 +34,9 @@ Partial Class CategoryCard
         ' 
         Panel1.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
         Panel1.Dock = DockStyle.Left
-        Panel1.Location = New Point(0, 5)
+        Panel1.Location = New Point(0, 2)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(38, 35)
+        Panel1.Size = New Size(38, 36)
         Panel1.TabIndex = 0
         ' 
         ' pnlActions
@@ -45,10 +45,10 @@ Partial Class CategoryCard
         pnlActions.Controls.Add(Button2)
         pnlActions.Controls.Add(Button1)
         pnlActions.Dock = DockStyle.Right
-        pnlActions.Location = New Point(383, 5)
+        pnlActions.Location = New Point(383, 2)
         pnlActions.Name = "pnlActions"
         pnlActions.Padding = New Padding(1, 1, 5, 1)
-        pnlActions.Size = New Size(146, 35)
+        pnlActions.Size = New Size(146, 36)
         pnlActions.TabIndex = 1
         ' 
         ' Button2
@@ -56,7 +56,7 @@ Partial Class CategoryCard
         Button2.Dock = DockStyle.Right
         Button2.Location = New Point(66, 1)
         Button2.Name = "Button2"
-        Button2.Size = New Size(75, 33)
+        Button2.Size = New Size(75, 34)
         Button2.TabIndex = 1
         Button2.Text = "Delete"
         Button2.UseVisualStyleBackColor = True
@@ -66,7 +66,7 @@ Partial Class CategoryCard
         Button1.Dock = DockStyle.Left
         Button1.Location = New Point(1, 1)
         Button1.Name = "Button1"
-        Button1.Size = New Size(65, 33)
+        Button1.Size = New Size(65, 34)
         Button1.TabIndex = 0
         Button1.Text = "Edit"
         Button1.UseVisualStyleBackColor = True
@@ -77,9 +77,9 @@ Partial Class CategoryCard
         lblDescription.Dock = DockStyle.Fill
         lblDescription.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblDescription.ForeColor = SystemColors.Control
-        lblDescription.Location = New Point(38, 5)
+        lblDescription.Location = New Point(38, 2)
         lblDescription.Name = "lblDescription"
-        lblDescription.Size = New Size(345, 35)
+        lblDescription.Size = New Size(345, 36)
         lblDescription.TabIndex = 2
         lblDescription.Text = "Label1"
         lblDescription.TextAlign = ContentAlignment.MiddleLeft
@@ -93,7 +93,7 @@ Partial Class CategoryCard
         Controls.Add(pnlActions)
         Controls.Add(Panel1)
         Name = "CategoryCard"
-        Padding = New Padding(0, 5, 0, 0)
+        Padding = New Padding(0, 2, 0, 2)
         Size = New Size(529, 40)
         pnlActions.ResumeLayout(False)
         ResumeLayout(False)

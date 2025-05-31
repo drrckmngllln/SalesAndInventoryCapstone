@@ -32,13 +32,13 @@ Namespace My
 
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>
         Protected Overrides Sub OnCreateMainForm()
-            If IsLoggedIn() Then
-                Me.MainForm = MainForm
-            Else
-                Me.MainForm = LoginForm
-            End If
+            'If IsLoggedIn() Then
+            '    Me.MainForm = MainForm
+            'Else
+            '    Me.MainForm = LoginForm
+            'End If
 
-            'Me.MainForm = New MainForm
+            Me.MainForm = New MainForm
         End Sub
     End Class
 End Namespace
