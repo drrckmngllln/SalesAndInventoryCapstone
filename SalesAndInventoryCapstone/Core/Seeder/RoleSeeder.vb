@@ -4,8 +4,8 @@ Public Class RoleSeeder
 
     'This is a function that seeds the database with default roles
     Public Shared Sub SeedRoles()
-        da = New MySqlDataAdapter("select Id from roles limit 10", con)
-        ds = New DataSet
+        Dim da = New MySqlDataAdapter("select Id from roles limit 10", con)
+        Dim ds = New DataSet
         da.Fill(ds, "roles")
 
         If ds.Tables(0).Rows.Count <= 0 Then
@@ -31,7 +31,7 @@ Public Class RoleSeeder
     'This is a function that creates a role in the database
     Public Shared Function CreateRole(roleName As String) As Integer
         con.Open()
-        cmd = New MySqlCommand("insert into roles(Name) values(@1)", con)
+        Dim cmd = New MySqlCommand("insert into roles(Name) values(@1)", con)
         cmd.Parameters.AddWithValue("@1", roleName)
         Dim result As Integer = cmd.ExecuteNonQuery()
         con.Close()

@@ -65,7 +65,7 @@ Partial Class LoginForm
         ' 
         ' btnLogin
         ' 
-        btnLogin.Location = New Point(64, 437)
+        btnLogin.Location = New Point(69, 437)
         btnLogin.Name = "btnLogin"
         btnLogin.Size = New Size(126, 33)
         btnLogin.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -81,7 +81,7 @@ Partial Class LoginForm
         ' 
         ' btnExit
         ' 
-        btnExit.Location = New Point(196, 437)
+        btnExit.Location = New Point(201, 437)
         btnExit.Name = "btnExit"
         btnExit.Size = New Size(126, 33)
         btnExit.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -191,6 +191,7 @@ Partial Class LoginForm
         lblLockoutTimer.TabIndex = 13
         lblLockoutTimer.Text = "30"
         lblLockoutTimer.TextAlign = ContentAlignment.MiddleCenter
+        lblLockoutTimer.Visible = False
         ' 
         ' lockoutTimer
         ' 
@@ -201,7 +202,7 @@ Partial Class LoginForm
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        ClientSize = New Size(409, 501)
+        ClientSize = New Size(407, 492)
         ControlBox = False
         Controls.Add(lblLockoutTimer)
         Controls.Add(chkShowPassword)
