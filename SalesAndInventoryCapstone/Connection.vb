@@ -24,5 +24,26 @@ Module Connection
         End If
     End Sub
 
+    Public Sub MigrateDatabase()
+        Dim path As String = "/dbSchema.sql"
+        If Not File.Exists(path) Then
+            MsgBox("Database schema file not found.", MsgBoxStyle.Critical, "Error")
+            Application.Exit()
+        End If
 
+        Dim sqlScript As String = File.ReadAllText(path)
+
+        Using connection As New MySqlConnection(Connstring)
+            Try
+                connection.Open()
+                Dim command As New MySqlCommand(sqlScript, connection)
+                command.ExecuteNonQuery()
+                MsgBox("Database migration completed successfully.", MsgBoxStyle.Information, "Migration Success")
+            Catch ex As Exception
+                MsgBox($"An error occurred during migration: {ex.Message}", MsgBoxStyle.Critical, "Migration Error")
+            Finally
+                connection.Close()
+            End Try
+        End Using
+    End Sub
 End Module

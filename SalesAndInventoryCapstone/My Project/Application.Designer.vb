@@ -32,6 +32,8 @@ Namespace My
 
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>
         Protected Overrides Sub OnCreateMainForm()
+            'MigrateDatabase()
+
             'If IsLoggedIn() Then
             '    Me.MainForm = MainForm
             'Else

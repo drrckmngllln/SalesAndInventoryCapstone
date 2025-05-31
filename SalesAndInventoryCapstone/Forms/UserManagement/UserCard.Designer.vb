@@ -34,14 +34,14 @@ Partial Class UserCard
         Panel1.Dock = DockStyle.Fill
         Panel1.Location = New Point(5, 5)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(290, 190)
+        Panel1.Size = New Size(751, 30)
         Panel1.TabIndex = 0
         ' 
         ' lblName
         ' 
         lblName.AutoSize = True
         lblName.ForeColor = SystemColors.Control
-        lblName.Location = New Point(93, 76)
+        lblName.Location = New Point(172, 0)
         lblName.Name = "lblName"
         lblName.Size = New Size(41, 15)
         lblName.TabIndex = 0
@@ -54,7 +54,7 @@ Partial Class UserCard
         Controls.Add(Panel1)
         Name = "UserCard"
         Padding = New Padding(5)
-        Size = New Size(300, 200)
+        Size = New Size(761, 40)
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
         ResumeLayout(False)
