@@ -26,15 +26,18 @@ Partial Class UserManagement
         pnlGrid = New Panel()
         pnlData = New Panel()
         Panel1 = New Panel()
+        Label5 = New Label()
+        Label4 = New Label()
+        Label2 = New Label()
         Panel3 = New Panel()
         Label3 = New Label()
         Panel2 = New Panel()
         Panel4 = New Panel()
-        Panel5 = New Panel()
-        Panel6 = New Panel()
         pnlGrid.SuspendLayout()
+        pnlData.SuspendLayout()
         Panel1.SuspendLayout()
         Panel3.SuspendLayout()
+        Panel4.SuspendLayout()
         SuspendLayout()
         ' 
         ' Label1
@@ -62,6 +65,8 @@ Partial Class UserManagement
         ' pnlData
         ' 
         pnlData.AutoScroll = True
+        pnlData.Controls.Add(Label5)
+        pnlData.Controls.Add(Label4)
         pnlData.Dock = DockStyle.Fill
         pnlData.Location = New Point(0, 30)
         pnlData.Name = "pnlData"
@@ -70,8 +75,6 @@ Partial Class UserManagement
         ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(Panel6)
-        Panel1.Controls.Add(Panel5)
         Panel1.Controls.Add(Panel4)
         Panel1.Controls.Add(Panel3)
         Panel1.Controls.Add(Panel2)
@@ -80,6 +83,43 @@ Partial Class UserManagement
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(1160, 30)
         Panel1.TabIndex = 0
+        ' 
+        ' Label5
+        ' 
+        Label5.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        Label5.ForeColor = SystemColors.Control
+        Label5.Location = New Point(658, 209)
+        Label5.Name = "Label5"
+        Label5.Padding = New Padding(5, 0, 0, 0)
+        Label5.Size = New Size(316, 30)
+        Label5.TabIndex = 6
+        Label5.Text = "Username"
+        Label5.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' Label4
+        ' 
+        Label4.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        Label4.ForeColor = SystemColors.Control
+        Label4.Location = New Point(429, 290)
+        Label4.Name = "Label4"
+        Label4.Padding = New Padding(5, 0, 0, 0)
+        Label4.Size = New Size(330, 30)
+        Label4.TabIndex = 5
+        Label4.Text = "First Name"
+        Label4.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' Label2
+        ' 
+        Label2.Dock = DockStyle.Left
+        Label2.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        Label2.ForeColor = SystemColors.Control
+        Label2.Location = New Point(0, 0)
+        Label2.Name = "Label2"
+        Label2.Padding = New Padding(5, 0, 0, 0)
+        Label2.Size = New Size(330, 30)
+        Label2.TabIndex = 4
+        Label2.Text = "Last Name"
+        Label2.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Panel3
         ' 
@@ -113,27 +153,12 @@ Partial Class UserManagement
         ' 
         ' Panel4
         ' 
-        Panel4.Dock = DockStyle.Left
+        Panel4.Controls.Add(Label2)
+        Panel4.Dock = DockStyle.Fill
         Panel4.Location = New Point(38, 0)
         Panel4.Name = "Panel4"
-        Panel4.Size = New Size(330, 30)
+        Panel4.Size = New Size(976, 30)
         Panel4.TabIndex = 2
-        ' 
-        ' Panel5
-        ' 
-        Panel5.Dock = DockStyle.Left
-        Panel5.Location = New Point(368, 0)
-        Panel5.Name = "Panel5"
-        Panel5.Size = New Size(330, 30)
-        Panel5.TabIndex = 3
-        ' 
-        ' Panel6
-        ' 
-        Panel6.Dock = DockStyle.Left
-        Panel6.Location = New Point(698, 0)
-        Panel6.Name = "Panel6"
-        Panel6.Size = New Size(330, 30)
-        Panel6.TabIndex = 4
         ' 
         ' UserManagement
         ' 
@@ -145,8 +170,10 @@ Partial Class UserManagement
         Name = "UserManagement"
         Text = "UserManagement"
         pnlGrid.ResumeLayout(False)
+        pnlData.ResumeLayout(False)
         Panel1.ResumeLayout(False)
         Panel3.ResumeLayout(False)
+        Panel4.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -158,7 +185,8 @@ Partial Class UserManagement
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Label3 As Label
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents Panel6 As Panel
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label2 As Label
     Friend WithEvents Panel4 As Panel
 End Class
