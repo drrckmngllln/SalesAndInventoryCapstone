@@ -1,6 +1,19 @@
-﻿Public Class UserCard
+﻿Imports System.Runtime.InteropServices
+Imports System.Runtime.Intrinsics.X86
+
+Public Class UserCard
     Public data As DataRow
     Dim db As New DBHelper()
+
+    Async Function HandleRefetch() As Task
+        Dim user = Await db.Fetch($"select * from users where id={data("Id").ToString()}")
+        If user.Tables.Count > 0 AndAlso user.Tables(0).Rows.Count > 0 Then
+            data = user.Tables(0).Rows(0)
+            DataInit()
+        Else
+            MessageBox.Show("User not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        End If
+    End Function
 
     Sub DisplayInit()
         Dim labels = pnlHeader.Controls.OfType(Of Label)().ToList()
@@ -25,13 +38,18 @@
         lblUsername.Text = data("Username").ToString()
     End Sub
 
-    Sub HandleEdit()
-
+    Async Sub HandleEdit()
+        Dim frm As New AddEditForm
+        frm.data = data
+        frm.Text = "Edit User"
+        frm.btnSave.Text = "Update User"
+        frm.ShowDialog(Me)
+        Await HandleRefetch()
     End Sub
 
-    Sub HandleDelete()
+    Async Sub HandleDelete()
         If MessageBox.Show("Are you sure you want to delete this user?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
-            db.Delete("users", data("id").ToString())
+            Await db.DeleteAsync("users", data("id").ToString())
             Me.Dispose()
         End If
     End Sub

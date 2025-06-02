@@ -2,14 +2,15 @@
     Dim users As New DataSet
     Dim db As New DBHelper()
 
-    Sub GetUsers(Optional search As String = "")
+    Async Function GetUsers(Optional search As String = "") As Task
+        pnlData.Controls.Clear()
         If (Not String.IsNullOrEmpty(search)) Then
-            users = db.Fetch("select * from users where LastName like '%" & search & "%' 
+            users = Await db.Fetch("select * from users where LastName like '%" & search & "%' 
                 or FirstName like '%" & search & "%'
                 or Username like '%" & search & "%'
                 order by id asc")
         Else
-            users = db.Fetch("select * from users order by id asc")
+            users = Await db.Fetch("select * from users order by id asc")
         End If
         If users.Tables.Count > 0 Then
             For Each row As DataRow In users.Tables(0).Rows
@@ -19,10 +20,10 @@
                 pnlData.Controls.Add(card)
             Next
         End If
-    End Sub
+    End Function
 
-    Private Sub UserManagement_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        GetUsers()
+    Private Async Sub UserManagement_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Await GetUsers()
     End Sub
 
     Private Sub pnlHeader_Resize(sender As Object, e As EventArgs) Handles pnlHeader.Resize

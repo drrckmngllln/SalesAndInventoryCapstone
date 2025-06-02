@@ -30,7 +30,7 @@ Partial Class AddEditForm
         tFirstName = New Krypton.Toolkit.KryptonTextBox()
         Label3 = New Label()
         tUsername = New Krypton.Toolkit.KryptonTextBox()
-        Label4 = New Label()
+        lblPassword = New Label()
         tPassword = New Krypton.Toolkit.KryptonTextBox()
         chkShowPassword = New CheckBox()
         SuspendLayout()
@@ -38,7 +38,7 @@ Partial Class AddEditForm
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(12, 9)
+        Label1.Location = New Point(19, 9)
         Label1.Name = "Label1"
         Label1.Size = New Size(63, 15)
         Label1.TabIndex = 8
@@ -46,7 +46,7 @@ Partial Class AddEditForm
         ' 
         ' btnSave
         ' 
-        btnSave.Location = New Point(306, 259)
+        btnSave.Location = New Point(313, 259)
         btnSave.Name = "btnSave"
         btnSave.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnSave.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -74,7 +74,7 @@ Partial Class AddEditForm
         btnSave.StatePressed.Border.Color2 = SystemColors.Control
         btnSave.StateTracking.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnSave.StateTracking.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnSave.TabIndex = 7
+        btnSave.TabIndex = 6
         btnSave.Values.DropDownArrowColor = Color.Empty
         btnSave.Values.Text = "Save"
         ' 
@@ -82,17 +82,17 @@ Partial Class AddEditForm
         ' 
         tLastName.CueHint.CueHintText = "Username"
         tLastName.CueHint.Hint = Krypton.Toolkit.PaletteTextHint.ClearTypeGridFit
-        tLastName.Location = New Point(12, 27)
+        tLastName.Location = New Point(19, 27)
         tLastName.Name = "tLastName"
         tLastName.Size = New Size(420, 31)
         tLastName.StateActive.Border.Rounding = 10F
         tLastName.StateActive.Border.Width = 2
-        tLastName.TabIndex = 6
+        tLastName.TabIndex = 1
         ' 
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(12, 61)
+        Label2.Location = New Point(19, 61)
         Label2.Name = "Label2"
         Label2.Size = New Size(64, 15)
         Label2.TabIndex = 10
@@ -102,17 +102,17 @@ Partial Class AddEditForm
         ' 
         tFirstName.CueHint.CueHintText = "Username"
         tFirstName.CueHint.Hint = Krypton.Toolkit.PaletteTextHint.ClearTypeGridFit
-        tFirstName.Location = New Point(12, 79)
+        tFirstName.Location = New Point(19, 79)
         tFirstName.Name = "tFirstName"
         tFirstName.Size = New Size(420, 31)
         tFirstName.StateActive.Border.Rounding = 10F
         tFirstName.StateActive.Border.Width = 2
-        tFirstName.TabIndex = 9
+        tFirstName.TabIndex = 2
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(12, 113)
+        Label3.Location = New Point(19, 113)
         Label3.Name = "Label3"
         Label3.Size = New Size(60, 15)
         Label3.TabIndex = 12
@@ -122,40 +122,43 @@ Partial Class AddEditForm
         ' 
         tUsername.CueHint.CueHintText = "Username"
         tUsername.CueHint.Hint = Krypton.Toolkit.PaletteTextHint.ClearTypeGridFit
-        tUsername.Location = New Point(12, 131)
+        tUsername.Location = New Point(19, 131)
         tUsername.Name = "tUsername"
         tUsername.Size = New Size(420, 31)
         tUsername.StateActive.Border.Rounding = 10F
         tUsername.StateActive.Border.Width = 2
-        tUsername.TabIndex = 11
+        tUsername.TabIndex = 3
         ' 
-        ' Label4
+        ' lblPassword
         ' 
-        Label4.AutoSize = True
-        Label4.Location = New Point(12, 165)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(57, 15)
-        Label4.TabIndex = 14
-        Label4.Text = "Password"
+        lblPassword.AutoSize = True
+        lblPassword.Location = New Point(19, 165)
+        lblPassword.Name = "lblPassword"
+        lblPassword.Size = New Size(57, 15)
+        lblPassword.TabIndex = 14
+        lblPassword.Text = "Password"
+        lblPassword.Visible = False
         ' 
         ' tPassword
         ' 
         tPassword.CueHint.CueHintText = "Username"
         tPassword.CueHint.Hint = Krypton.Toolkit.PaletteTextHint.ClearTypeGridFit
-        tPassword.Location = New Point(12, 183)
+        tPassword.Location = New Point(19, 183)
         tPassword.Name = "tPassword"
+        tPassword.PasswordChar = "●"c
         tPassword.Size = New Size(420, 31)
         tPassword.StateActive.Border.Rounding = 10F
         tPassword.StateActive.Border.Width = 2
-        tPassword.TabIndex = 13
+        tPassword.TabIndex = 4
+        tPassword.UseSystemPasswordChar = True
         ' 
         ' chkShowPassword
         ' 
         chkShowPassword.AutoSize = True
-        chkShowPassword.Location = New Point(324, 220)
+        chkShowPassword.Location = New Point(331, 220)
         chkShowPassword.Name = "chkShowPassword"
         chkShowPassword.Size = New Size(108, 19)
-        chkShowPassword.TabIndex = 15
+        chkShowPassword.TabIndex = 5
         chkShowPassword.Text = "Show Password"
         chkShowPassword.UseVisualStyleBackColor = True
         ' 
@@ -163,10 +166,10 @@ Partial Class AddEditForm
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(456, 313)
+        ClientSize = New Size(464, 314)
         ControlBox = False
         Controls.Add(chkShowPassword)
-        Controls.Add(Label4)
+        Controls.Add(lblPassword)
         Controls.Add(tPassword)
         Controls.Add(Label3)
         Controls.Add(tUsername)
@@ -198,7 +201,7 @@ Partial Class AddEditForm
     Friend WithEvents tFirstName As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents tUsername As Krypton.Toolkit.KryptonTextBox
-    Friend WithEvents Label4 As Label
+    Friend WithEvents lblPassword As Label
     Friend WithEvents tPassword As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents chkShowPassword As CheckBox
 End Class
