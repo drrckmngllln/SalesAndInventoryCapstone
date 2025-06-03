@@ -37,25 +37,25 @@
             Dim lbl = labels(i)
             lbl.Width = labelWidth
             lbl.Left = i * labelWidth
-            lbl.Top = 0 ' Optional: align to top
+            lbl.Top = 0
         Next
     End Sub
 
-    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
+    Private Async Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         Dim frm As New AddEditForm
         frm.Text = "Add New User"
         frm.ShowDialog(Me)
         pnlData.Controls.Clear()
-        GetUsers()
+        Await GetUsers()
     End Sub
 
-    Private Sub tSearch_TextChanged(sender As Object, e As EventArgs) Handles tSearch.TextChanged
+    Private Async Sub tSearch_TextChanged(sender As Object, e As EventArgs) Handles tSearch.TextChanged
         If tSearch.TextLength > 2 Then
             pnlData.Controls.Clear()
-            GetUsers(tSearch.Text.Trim())
+            Await GetUsers(tSearch.Text.Trim())
         ElseIf tSearch.TextLength = 0 Then
             pnlData.Controls.Clear()
-            GetUsers()
+            Await GetUsers()
         End If
     End Sub
 End Class
