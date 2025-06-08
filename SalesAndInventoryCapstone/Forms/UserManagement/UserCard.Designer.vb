@@ -23,80 +23,113 @@ Partial Class UserCard
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
+        pnlHeader = New Panel()
+        lblUsername = New Label()
+        lblFirstName = New Label()
+        lblLastName = New Label()
         Panel3 = New Panel()
-        Label5 = New Label()
-        Label4 = New Label()
-        Label2 = New Label()
+        btnDelete = New Button()
+        btnEdit = New Button()
         Panel2 = New Panel()
-        Button1 = New Button()
-        Button2 = New Button()
         Panel1.SuspendLayout()
+        pnlHeader.SuspendLayout()
         Panel3.SuspendLayout()
         SuspendLayout()
         ' 
         ' Panel1
         ' 
         Panel1.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        Panel1.Controls.Add(pnlHeader)
         Panel1.Controls.Add(Panel3)
-        Panel1.Controls.Add(Label5)
-        Panel1.Controls.Add(Label4)
-        Panel1.Controls.Add(Label2)
         Panel1.Controls.Add(Panel2)
         Panel1.Dock = DockStyle.Fill
         Panel1.Location = New Point(0, 2)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(1237, 36)
+        Panel1.Size = New Size(843, 36)
         Panel1.TabIndex = 0
+        ' 
+        ' pnlHeader
+        ' 
+        pnlHeader.Controls.Add(lblUsername)
+        pnlHeader.Controls.Add(lblFirstName)
+        pnlHeader.Controls.Add(lblLastName)
+        pnlHeader.Dock = DockStyle.Fill
+        pnlHeader.Location = New Point(38, 0)
+        pnlHeader.Name = "pnlHeader"
+        pnlHeader.Size = New Size(600, 36)
+        pnlHeader.TabIndex = 9
+        ' 
+        ' lblUsername
+        ' 
+        lblUsername.Dock = DockStyle.Left
+        lblUsername.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        lblUsername.ForeColor = SystemColors.Control
+        lblUsername.Location = New Point(400, 0)
+        lblUsername.Name = "lblUsername"
+        lblUsername.Padding = New Padding(5, 0, 0, 0)
+        lblUsername.Size = New Size(200, 36)
+        lblUsername.TabIndex = 10
+        lblUsername.Text = "Username"
+        lblUsername.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' lblFirstName
+        ' 
+        lblFirstName.Dock = DockStyle.Left
+        lblFirstName.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        lblFirstName.ForeColor = SystemColors.Control
+        lblFirstName.Location = New Point(200, 0)
+        lblFirstName.Name = "lblFirstName"
+        lblFirstName.Padding = New Padding(5, 0, 0, 0)
+        lblFirstName.Size = New Size(200, 36)
+        lblFirstName.TabIndex = 9
+        lblFirstName.Text = "First Name"
+        lblFirstName.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' lblLastName
+        ' 
+        lblLastName.Dock = DockStyle.Left
+        lblLastName.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        lblLastName.ForeColor = SystemColors.Control
+        lblLastName.Location = New Point(0, 0)
+        lblLastName.Name = "lblLastName"
+        lblLastName.Padding = New Padding(5, 0, 0, 0)
+        lblLastName.Size = New Size(200, 36)
+        lblLastName.TabIndex = 8
+        lblLastName.Text = "Last Name"
+        lblLastName.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Panel3
         ' 
-        Panel3.Controls.Add(Button2)
-        Panel3.Controls.Add(Button1)
-        Panel3.Dock = DockStyle.Fill
-        Panel3.Location = New Point(1014, 0)
+        Panel3.Controls.Add(btnDelete)
+        Panel3.Controls.Add(btnEdit)
+        Panel3.Dock = DockStyle.Right
+        Panel3.Location = New Point(638, 0)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(20, 0, 0, 0)
-        Panel3.Size = New Size(223, 36)
+        Panel3.Size = New Size(205, 36)
         Panel3.TabIndex = 8
         ' 
-        ' Label5
+        ' btnDelete
         ' 
-        Label5.Dock = DockStyle.Left
-        Label5.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label5.ForeColor = SystemColors.Control
-        Label5.Location = New Point(698, 0)
-        Label5.Name = "Label5"
-        Label5.Padding = New Padding(5, 0, 0, 0)
-        Label5.Size = New Size(316, 36)
-        Label5.TabIndex = 7
-        Label5.Text = "Username"
-        Label5.TextAlign = ContentAlignment.MiddleLeft
+        btnDelete.Dock = DockStyle.Left
+        btnDelete.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnDelete.Location = New Point(95, 0)
+        btnDelete.Name = "btnDelete"
+        btnDelete.Size = New Size(75, 36)
+        btnDelete.TabIndex = 1
+        btnDelete.Text = "Delete"
+        btnDelete.UseVisualStyleBackColor = True
         ' 
-        ' Label4
+        ' btnEdit
         ' 
-        Label4.Dock = DockStyle.Left
-        Label4.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label4.ForeColor = SystemColors.Control
-        Label4.Location = New Point(368, 0)
-        Label4.Name = "Label4"
-        Label4.Padding = New Padding(5, 0, 0, 0)
-        Label4.Size = New Size(330, 36)
-        Label4.TabIndex = 6
-        Label4.Text = "First Name"
-        Label4.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' Label2
-        ' 
-        Label2.Dock = DockStyle.Left
-        Label2.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        Label2.ForeColor = SystemColors.Control
-        Label2.Location = New Point(38, 0)
-        Label2.Name = "Label2"
-        Label2.Padding = New Padding(5, 0, 0, 0)
-        Label2.Size = New Size(330, 36)
-        Label2.TabIndex = 5
-        Label2.Text = "Last Name"
-        Label2.TextAlign = ContentAlignment.MiddleLeft
+        btnEdit.Dock = DockStyle.Left
+        btnEdit.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnEdit.Location = New Point(20, 0)
+        btnEdit.Name = "btnEdit"
+        btnEdit.Size = New Size(75, 36)
+        btnEdit.TabIndex = 0
+        btnEdit.Text = "Edit"
+        btnEdit.UseVisualStyleBackColor = True
         ' 
         ' Panel2
         ' 
@@ -106,28 +139,6 @@ Partial Class UserCard
         Panel2.Size = New Size(38, 36)
         Panel2.TabIndex = 0
         ' 
-        ' Button1
-        ' 
-        Button1.Dock = DockStyle.Left
-        Button1.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Button1.Location = New Point(20, 0)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(75, 36)
-        Button1.TabIndex = 0
-        Button1.Text = "Edit"
-        Button1.UseVisualStyleBackColor = True
-        ' 
-        ' Button2
-        ' 
-        Button2.Dock = DockStyle.Left
-        Button2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Button2.Location = New Point(95, 0)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(75, 36)
-        Button2.TabIndex = 1
-        Button2.Text = "Delete"
-        Button2.UseVisualStyleBackColor = True
-        ' 
         ' UserCard
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -135,19 +146,21 @@ Partial Class UserCard
         Controls.Add(Panel1)
         Name = "UserCard"
         Padding = New Padding(0, 2, 0, 2)
-        Size = New Size(1237, 40)
+        Size = New Size(843, 40)
         Panel1.ResumeLayout(False)
+        pnlHeader.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Label4 As Label
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents Label5 As Label
-    Friend WithEvents Button2 As Button
-    Friend WithEvents Button1 As Button
+    Friend WithEvents btnDelete As Button
+    Friend WithEvents btnEdit As Button
+    Friend WithEvents pnlHeader As Panel
+    Friend WithEvents lblUsername As Label
+    Friend WithEvents lblFirstName As Label
+    Friend WithEvents lblLastName As Label
 
 End Class

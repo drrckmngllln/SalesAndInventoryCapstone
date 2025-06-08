@@ -2,7 +2,7 @@
     Public categoryRow As DataRow
     Dim db As New DBHelper()
 
-    Sub OnSubmit(isCreate As Boolean)
+    Async Sub OnSubmit(isCreate As Boolean)
         If String.IsNullOrEmpty(tName.Text) Then
             MsgBox("Error, required fields is missing")
             Return
@@ -12,7 +12,7 @@
             Dim data As New Dictionary(Of String, Object) From {
                 {"Name", tName.Text.Trim()}
             }
-            Dim result = db.Create("categories", data)
+            Dim result = Await db.CreateAsync("categories", data)
 
             If result Then
                 MsgBox("Category created successfully!")
@@ -25,7 +25,7 @@
             Dim data As New Dictionary(Of String, Object) From {
                 {"Name", tName.Text.Trim()}
             }
-            db.Update("categories", data, "id = " & categoryRow("id").ToString())
+            Await db.UpdateAsync("categories", data, "id = " & categoryRow("id").ToString())
             MsgBox("Category updated successfully!")
             Me.Close()
         End If

@@ -6,11 +6,11 @@
         GetCategories()
     End Sub
 
-    Sub GetCategories(Optional search As String = "")
+    Async Sub GetCategories(Optional search As String = "")
         If (Not String.IsNullOrEmpty(search)) Then
-            categories = db.Fetch("select * from categories where name like '%" & search & "%' order by id asc")
+            categories = Await db.Fetch("select * from categories where name like '%" & search & "%' order by id asc")
         Else
-            categories = db.Fetch("select * from categories order by id asc")
+            categories = Await db.Fetch("select * from categories order by id asc")
         End If
 
         If categories.Tables.Count > 0 Then

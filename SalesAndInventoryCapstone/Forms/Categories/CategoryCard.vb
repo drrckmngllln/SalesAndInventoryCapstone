@@ -1,17 +1,29 @@
 ﻿Public Class CategoryCard
     Public data As DataRow
+    Dim db As New DBHelper()
 
-    Sub HandleEditCategory()
+    Async Function HandleRefetch() As Task
+        Dim category = Await db.Fetch("SELECT * FROM categories WHERE id = " & data("id").ToString())
+        If category.Tables.Count > 0 AndAlso category.Tables(0).Rows.Count > 0 Then
+            data = category.Tables(0).Rows(0)
+            lblDescription.Text = data.Item("Name").ToString()
+        Else
+            MsgBox("Category not found.", MsgBoxStyle.Exclamation, "Error")
+        End If
+    End Function
+
+    Async Sub HandleEditCategory()
         Dim frm As New CategoryAEForm
         frm.categoryRow = data
         frm.Text = "Edit Category"
         frm.ShowDialog(Me)
+        Await HandleRefetch()
     End Sub
 
-    Sub HandleDeleteCategory()
+    Async Sub HandleDeleteCategory()
         If MsgBox("Are you sure you want to delete this category?", MsgBoxStyle.YesNo, "Delete Category") = MsgBoxResult.Yes Then
             Dim db As New DBHelper()
-            db.Delete("categories", "id = " & data("id").ToString())
+            Await db.DeleteAsync("categories", "id = " & data("id").ToString())
             MsgBox("Category deleted successfully!")
             Me.Dispose()
         End If
