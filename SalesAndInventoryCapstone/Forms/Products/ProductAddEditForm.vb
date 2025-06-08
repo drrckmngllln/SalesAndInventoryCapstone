@@ -4,6 +4,7 @@ Public Class ProductAddEditForm
     Dim db As New DBHelper()
     Public data As DataRow
 
+    ' Initialize the form and set up the controls
     Async Function GetCategories() As Task
         Dim categories = Await db.Fetch("SELECT Id, `Name` FROM categories")
 
@@ -18,6 +19,7 @@ Public Class ProductAddEditForm
 
     End Function
 
+    ' Initialize the form with data if available, otherwise set it for creating a new product
     Sub DataInit()
         If data IsNot Nothing Then
             tProductName.Text = data("ProductName").ToString()
@@ -35,6 +37,7 @@ Public Class ProductAddEditForm
         End If
     End Sub
 
+    ' Handle the submission of the form, either creating or updating a product
     Async Function OnSubmit(isCreate As Boolean) As Task
         Dim productName = tProductName.Text.Trim()
         Dim categoryId = cmbCategory.SelectedValue

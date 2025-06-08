@@ -7,8 +7,13 @@
     End Sub
 
     Private Async Sub tSearch_TextChanged(sender As Object, e As EventArgs) Handles tSearch.TextChanged
-        pnlData.Controls.Clear()
-        Await GetProducts(tSearch.Text.Trim())
+        If tSearch.Text.Length > 2 Then
+            pnlData.Controls.Clear()
+            Await GetProducts(tSearch.Text.Trim())
+        ElseIf tSearch.Text.Length <= 0 Then
+            pnlData.Controls.Clear()
+            Await GetProducts()
+        End If
     End Sub
 
     Async Function GetProducts(Optional search As String = "") As Task

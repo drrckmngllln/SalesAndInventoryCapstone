@@ -2,6 +2,7 @@
     Public data As DataRow
     Dim db As New DBHelper()
 
+    'when the card if first loaded, it initializes the product card with data from the DataRow
     Sub DataInit()
         If data IsNot Nothing Then
             lblProductName.Text = data.Item("ProductName").ToString()
@@ -12,6 +13,7 @@
         End If
     End Sub
 
+    'this function initializes the product card with data from the DataRow and serve as a refetch when editing a product
     Async Function RefetchData() As Task
         Dim sql As String = $"
             SELECT 
@@ -35,6 +37,7 @@
         End If
     End Function
 
+    'this function handles the edit button click event, opens the ProductAddEditForm, and refetches the data after closing the form
     Async Function HandleEdit() As Task
         Dim frm As New ProductAddEditForm()
         frm.data = data
@@ -42,6 +45,7 @@
         Await RefetchData()
     End Function
 
+    'this function handles the delete button click event, confirms the deletion, and deletes the product from the database
     Async Function HandleDelete() As Task
         Dim id As String = data.Item(0).ToString()
 
