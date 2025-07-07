@@ -6,6 +6,7 @@
         Await GetProducts()
     End Sub
 
+    'this function is called when the user clicks on the search button
     Private Async Sub tSearch_TextChanged(sender As Object, e As EventArgs) Handles tSearch.TextChanged
         If tSearch.Text.Length > 2 Then
             pnlData.Controls.Clear()
@@ -16,6 +17,7 @@
         End If
     End Sub
 
+    'this function fetches the products from the database and displays them in the panel
     Async Function GetProducts(Optional search As String = "") As Task
         Dim sql As String = ""
 
@@ -55,6 +57,7 @@
         Next
     End Function
 
+    'this function is called when the user clicks on the new button
     Private Async Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         Dim frm As New ProductAddEditForm
         frm.ShowDialog(Me)
