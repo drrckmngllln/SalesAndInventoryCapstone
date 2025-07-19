@@ -26,14 +26,24 @@ Partial Class Dashboard
         lSales = New Label()
         Label1 = New Label()
         Panel2 = New Panel()
-        lInventory = New Label()
+        Label5 = New Label()
+        Label7 = New Label()
+        Label8 = New Label()
+        lStockIn = New Label()
+        lStockOut = New Label()
+        lCurrentStock = New Label()
         Label4 = New Label()
         Panel3 = New Panel()
         lProducts = New Label()
         Label6 = New Label()
+        Panel4 = New Panel()
+        Label2 = New Label()
+        dgvNotifications = New DataGridView()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         Panel3.SuspendLayout()
+        Panel4.SuspendLayout()
+        CType(dgvNotifications, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Panel1
@@ -70,23 +80,83 @@ Partial Class Dashboard
         ' Panel2
         ' 
         Panel2.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        Panel2.Controls.Add(lInventory)
+        Panel2.Controls.Add(Label5)
+        Panel2.Controls.Add(Label7)
+        Panel2.Controls.Add(Label8)
+        Panel2.Controls.Add(lStockIn)
+        Panel2.Controls.Add(lStockOut)
+        Panel2.Controls.Add(lCurrentStock)
         Panel2.Controls.Add(Label4)
         Panel2.Location = New Point(352, 12)
         Panel2.Name = "Panel2"
         Panel2.Size = New Size(327, 175)
         Panel2.TabIndex = 1
         ' 
-        ' lInventory
+        ' Label5
         ' 
-        lInventory.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
-        lInventory.ForeColor = SystemColors.Control
-        lInventory.Location = New Point(15, 141)
-        lInventory.Name = "lInventory"
-        lInventory.Size = New Size(298, 21)
-        lInventory.TabIndex = 1
-        lInventory.Text = "00"
-        lInventory.TextAlign = ContentAlignment.MiddleRight
+        Label5.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
+        Label5.ForeColor = SystemColors.Control
+        Label5.Location = New Point(21, 99)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(143, 21)
+        Label5.TabIndex = 6
+        Label5.Text = "Stock In"
+        Label5.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' Label7
+        ' 
+        Label7.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
+        Label7.ForeColor = SystemColors.Control
+        Label7.Location = New Point(21, 120)
+        Label7.Name = "Label7"
+        Label7.Size = New Size(143, 21)
+        Label7.TabIndex = 5
+        Label7.Text = "Stock Out"
+        Label7.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' Label8
+        ' 
+        Label8.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
+        Label8.ForeColor = SystemColors.Control
+        Label8.Location = New Point(21, 141)
+        Label8.Name = "Label8"
+        Label8.Size = New Size(143, 21)
+        Label8.TabIndex = 4
+        Label8.Text = "Current Stock"
+        Label8.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' lStockIn
+        ' 
+        lStockIn.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
+        lStockIn.ForeColor = SystemColors.Control
+        lStockIn.Location = New Point(170, 99)
+        lStockIn.Name = "lStockIn"
+        lStockIn.Size = New Size(143, 21)
+        lStockIn.TabIndex = 3
+        lStockIn.Text = "00"
+        lStockIn.TextAlign = ContentAlignment.MiddleRight
+        ' 
+        ' lStockOut
+        ' 
+        lStockOut.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
+        lStockOut.ForeColor = SystemColors.Control
+        lStockOut.Location = New Point(170, 120)
+        lStockOut.Name = "lStockOut"
+        lStockOut.Size = New Size(143, 21)
+        lStockOut.TabIndex = 2
+        lStockOut.Text = "00"
+        lStockOut.TextAlign = ContentAlignment.MiddleRight
+        ' 
+        ' lCurrentStock
+        ' 
+        lCurrentStock.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
+        lCurrentStock.ForeColor = SystemColors.Control
+        lCurrentStock.Location = New Point(170, 141)
+        lCurrentStock.Name = "lCurrentStock"
+        lCurrentStock.Size = New Size(143, 21)
+        lCurrentStock.TabIndex = 1
+        lCurrentStock.Text = "00"
+        lCurrentStock.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' Label4
         ' 
@@ -129,11 +199,44 @@ Partial Class Dashboard
         Label6.TabIndex = 0
         Label6.Text = "Products"
         ' 
+        ' Panel4
+        ' 
+        Panel4.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        Panel4.Controls.Add(Label2)
+        Panel4.Location = New Point(12, 193)
+        Panel4.Name = "Panel4"
+        Panel4.Size = New Size(1005, 27)
+        Panel4.TabIndex = 3
+        ' 
+        ' Label2
+        ' 
+        Label2.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
+        Label2.ForeColor = SystemColors.Control
+        Label2.Location = New Point(3, 1)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(298, 26)
+        Label2.TabIndex = 1
+        Label2.Text = "Notifications"
+        ' 
+        ' dgvNotifications
+        ' 
+        dgvNotifications.AllowUserToAddRows = False
+        dgvNotifications.AllowUserToDeleteRows = False
+        dgvNotifications.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        dgvNotifications.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvNotifications.Location = New Point(12, 226)
+        dgvNotifications.Name = "dgvNotifications"
+        dgvNotifications.ReadOnly = True
+        dgvNotifications.Size = New Size(1005, 492)
+        dgvNotifications.TabIndex = 4
+        ' 
         ' Dashboard
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1029, 730)
+        Controls.Add(dgvNotifications)
+        Controls.Add(Panel4)
         Controls.Add(Panel3)
         Controls.Add(Panel2)
         Controls.Add(Panel1)
@@ -142,6 +245,8 @@ Partial Class Dashboard
         Panel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         Panel3.ResumeLayout(False)
+        Panel4.ResumeLayout(False)
+        CType(dgvNotifications, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
@@ -149,9 +254,17 @@ Partial Class Dashboard
     Friend WithEvents lSales As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents lInventory As Label
+    Friend WithEvents lCurrentStock As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents Panel3 As Panel
     Friend WithEvents lProducts As Label
     Friend WithEvents Label6 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents lStockIn As Label
+    Friend WithEvents lStockOut As Label
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Label2 As Label
+    Friend WithEvents dgvNotifications As DataGridView
 End Class

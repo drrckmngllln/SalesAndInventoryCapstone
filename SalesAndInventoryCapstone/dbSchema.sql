@@ -38,7 +38,9 @@ CREATE TABLE IF NOT EXISTS `inventories` (
   `CategoryId` int NOT NULL DEFAULT '0',
   `Code` varchar(50) DEFAULT NULL,
   `Description` varchar(100) DEFAULT NULL,
-  `Quantity` int DEFAULT NULL,
+  `CurrentStock` int NOT NULL DEFAULT '0',
+  `StockIn` int NOT NULL DEFAULT '0',
+  `StockOut` int NOT NULL DEFAULT '0',
   `OriginalPrice` decimal(18,2) DEFAULT NULL,
   `SellingPrice` decimal(18,2) DEFAULT NULL,
   `Remarks` varchar(100) DEFAULT NULL,
@@ -46,13 +48,33 @@ CREATE TABLE IF NOT EXISTS `inventories` (
   UNIQUE KEY `Code` (`Code`),
   KEY `CategoryId` (`CategoryId`),
   CONSTRAINT `FK___categories` FOREIGN KEY (`CategoryId`) REFERENCES `categories` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.inventories: ~3 rows (approximately)
-REPLACE INTO `inventories` (`Id`, `CategoryId`, `Code`, `Description`, `Quantity`, `OriginalPrice`, `SellingPrice`, `Remarks`) VALUES
-	(1, 16, 'I1', 'InventoryOne', 50, 950.00, 1000.00, 'Good Condition'),
-	(2, 10, 'I2', 'InventoryTwo', 50, 850.00, 950.00, 'Good Condition'),
-	(3, 8, 'I3', 'InventoryThree', 50, 450.00, 500.00, 'Good Condition');
+-- Dumping data for table salesinventory.inventories: ~4 rows (approximately)
+REPLACE INTO `inventories` (`Id`, `CategoryId`, `Code`, `Description`, `CurrentStock`, `StockIn`, `StockOut`, `OriginalPrice`, `SellingPrice`, `Remarks`) VALUES
+	(1, 16, 'I1', 'InventoryOne', 50, 12, 10, 950.00, 1000.00, 'Good Condition'),
+	(2, 10, 'I2', 'InventoryTwo', 50, 24, 13, 850.00, 950.00, 'Good Condition'),
+	(3, 8, 'I3', 'InventoryThree', 10, 32, 12, 450.00, 500.00, 'Good Condition'),
+	(5, 15, 'I4', 'Inventory Four', 9, 15, 15, 300.00, 350.00, 'Good Condition');
+
+-- Dumping structure for table salesinventory.notifications
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `InventoryId` int NOT NULL,
+  `Message` text NOT NULL,
+  `IsRead` tinyint(1) DEFAULT '0',
+  `CreatedAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`Id`),
+  KEY `InventoryId` (`InventoryId`),
+  CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`InventoryId`) REFERENCES `inventories` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table salesinventory.notifications: ~2 rows (approximately)
+REPLACE INTO `notifications` (`Id`, `InventoryId`, `Message`, `IsRead`, `CreatedAt`) VALUES
+	(1, 1, 'The Inventory is low on stock', 0, '2025-07-19 04:20:12'),
+	(2, 2, 'The Inventory is low on stock', 0, '2025-07-19 04:20:12'),
+	(3, 3, 'Low stock alert for I3. Current stock is 10.', 0, '2025-07-19 07:54:50'),
+	(4, 5, 'Low stock alert for I4. Current stock is 9.', 0, '2025-07-19 07:54:50');
 
 -- Dumping structure for table salesinventory.products
 CREATE TABLE IF NOT EXISTS `products` (
@@ -132,13 +154,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table salesinventory.users: ~6 rows (approximately)
-REPLACE INTO `users` (`Id`, `LastName`, `FirstName`, `Username`, `Password`) VALUES
-	(4, 'Admin', 'Admin', 'admin', '$2a$11$NAmWJD2UB9Txm0nt9S7zP.b5t35ne99Iu7tDwtptgfq0vvsonnfq6'),
-	(5, 'Sales', 'Sales', 'sales', '$2a$11$VUT9ZMLty56DizZRTZIAK.E.31rm6n2hDhGVVj990R8EHT1WJI7Le'),
-	(6, 'Inventory', 'Inventory', 'inventory', '$2a$11$kYh8zH41yV3kE5QSL6wMO.vyWnaygt4spgUDM9lnpPeyFE8TL342u'),
-	(7, 'Manglallan', 'Derrick', 'drrckmngllln', 'password'),
-	(8, 'Leones', 'Divine Grace', 'divinegrace', 'password'),
-	(9, 'user', 'two', 'the user', 'password');
 
 -- Dumping structure for table salesinventory.user_role
 CREATE TABLE IF NOT EXISTS `user_role` (
