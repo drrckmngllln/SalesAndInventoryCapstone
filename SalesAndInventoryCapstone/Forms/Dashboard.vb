@@ -131,6 +131,7 @@
         Await db.UpdateAsync("notifications", New Dictionary(Of String, Object) From {
             {"IsRead", True}
         }, $"Id = {id}")
+
     End Function
 
     '' 📦 Check for Low Stock
