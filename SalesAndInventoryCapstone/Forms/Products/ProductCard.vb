@@ -66,6 +66,13 @@
         End If
     End Function
 
+    Async Function HandleAddStock() As Task
+        Dim frm As New AddStockForm()
+        frm.productId = data.Item("Id").ToString()
+        frm.ShowDialog(Me)
+        Await RefetchData()
+    End Function
+
     Private Async Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
         Await HandleEdit()
     End Sub
@@ -76,5 +83,9 @@
 
     Private Async Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         Await HandleDelete()
+    End Sub
+
+    Private Async Sub btnAddStock_Click(sender As Object, e As EventArgs) Handles btnAddStock.Click
+        Await HandleAddStock()
     End Sub
 End Class

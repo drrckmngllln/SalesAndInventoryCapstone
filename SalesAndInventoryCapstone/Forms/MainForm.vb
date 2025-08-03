@@ -66,8 +66,11 @@
 
     'this function loads the sales form
     Private Sub btnSales_Click(sender As Object, e As EventArgs) Handles btnSales.Click
-        LoadUI(pnlMain, New Sales)
-        ButtonSelector("sales")
+        'LoadUI(pnlMain, New Sales)
+        'ButtonSelector("sales")
+        Dim frm As New Sales()
+        frm.Text = "Sales"
+        frm.ShowDialog()
     End Sub
 
     'this function loads the report form

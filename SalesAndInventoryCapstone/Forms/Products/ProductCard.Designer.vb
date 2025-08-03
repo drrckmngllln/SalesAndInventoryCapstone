@@ -23,6 +23,7 @@ Partial Class ProductCard
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
+        btnAddStock = New Krypton.Toolkit.KryptonButton()
         btnDelete = New Krypton.Toolkit.KryptonButton()
         btnEdit = New Krypton.Toolkit.KryptonButton()
         lblSellingPrice = New Label()
@@ -42,6 +43,7 @@ Partial Class ProductCard
         ' Panel1
         ' 
         Panel1.BackColor = SystemColors.Control
+        Panel1.Controls.Add(btnAddStock)
         Panel1.Controls.Add(btnDelete)
         Panel1.Controls.Add(btnEdit)
         Panel1.Controls.Add(lblSellingPrice)
@@ -58,6 +60,40 @@ Partial Class ProductCard
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(325, 200)
         Panel1.TabIndex = 0
+        ' 
+        ' btnAddStock
+        ' 
+        btnAddStock.Location = New Point(92, 164)
+        btnAddStock.Name = "btnAddStock"
+        btnAddStock.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.OverrideDefault.Border.Color1 = SystemColors.Control
+        btnAddStock.OverrideDefault.Border.Color2 = SystemColors.Control
+        btnAddStock.Size = New Size(75, 33)
+        btnAddStock.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.StateCommon.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.StateCommon.Border.Rounding = 10F
+        btnAddStock.StateCommon.Border.Width = 2
+        btnAddStock.StateCommon.Content.ShortText.Color1 = SystemColors.Control
+        btnAddStock.StateCommon.Content.ShortText.Color2 = SystemColors.Control
+        btnAddStock.StateCommon.Content.ShortText.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        btnAddStock.StateDisabled.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.StateDisabled.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.StateDisabled.Border.Color1 = SystemColors.Control
+        btnAddStock.StateDisabled.Border.Color2 = SystemColors.Control
+        btnAddStock.StateNormal.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.StateNormal.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.StateNormal.Border.Color1 = SystemColors.Control
+        btnAddStock.StateNormal.Border.Color2 = SystemColors.Control
+        btnAddStock.StatePressed.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.StatePressed.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.StatePressed.Border.Color1 = SystemColors.Control
+        btnAddStock.StatePressed.Border.Color2 = SystemColors.Control
+        btnAddStock.StateTracking.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.StateTracking.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddStock.TabIndex = 11
+        btnAddStock.Values.DropDownArrowColor = Color.Empty
+        btnAddStock.Values.Text = "Add Stock"
         ' 
         ' btnDelete
         ' 
@@ -261,5 +297,6 @@ Partial Class ProductCard
     Friend WithEvents Label1 As Label
     Friend WithEvents btnDelete As Krypton.Toolkit.KryptonButton
     Friend WithEvents btnEdit As Krypton.Toolkit.KryptonButton
+    Friend WithEvents btnAddStock As Krypton.Toolkit.KryptonButton
 
 End Class
