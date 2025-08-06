@@ -6,7 +6,7 @@ Public Class UserCard
     Dim db As New DBHelper()
 
     Async Function HandleRefetch() As Task
-        Dim user = Await db.Fetch($"select * from users where id={data("Id").ToString()}")
+        Dim user = Await DBHelper.Fetch($"select * from users where id={data("Id").ToString()}")
         If user.Tables.Count > 0 AndAlso user.Tables(0).Rows.Count > 0 Then
             data = user.Tables(0).Rows(0)
             DataInit()

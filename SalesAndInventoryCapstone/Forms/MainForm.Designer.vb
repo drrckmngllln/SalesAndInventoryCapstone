@@ -39,6 +39,7 @@ Partial Class MainForm
         PictureBox2 = New PictureBox()
         lblTitle = New Label()
         pnlMain = New Panel()
+        btnInventory = New Button()
         Panel2.SuspendLayout()
         Panel3.SuspendLayout()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -46,6 +47,7 @@ Partial Class MainForm
         ' 
         ' Panel2
         ' 
+        Panel2.Controls.Add(btnInventory)
         Panel2.Controls.Add(btnLogout)
         Panel2.Controls.Add(btnReport)
         Panel2.Controls.Add(btnSales)
@@ -63,7 +65,7 @@ Partial Class MainForm
         ' btnLogout
         ' 
         btnLogout.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        btnLogout.Dock = DockStyle.Top
+        btnLogout.Dock = DockStyle.Bottom
         btnLogout.FlatAppearance.BorderSize = 0
         btnLogout.FlatStyle = FlatStyle.Flat
         btnLogout.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
@@ -71,11 +73,11 @@ Partial Class MainForm
         btnLogout.ImageAlign = ContentAlignment.MiddleLeft
         btnLogout.ImageKey = "exit.png"
         btnLogout.ImageList = ImageList1
-        btnLogout.Location = New Point(0, 419)
+        btnLogout.Location = New Point(0, 737)
         btnLogout.Name = "btnLogout"
         btnLogout.Padding = New Padding(30, 0, 0, 0)
         btnLogout.Size = New Size(238, 32)
-        btnLogout.TabIndex = 7
+        btnLogout.TabIndex = 8
         btnLogout.Text = "     Logout"
         btnLogout.TextAlign = ContentAlignment.MiddleLeft
         btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText
@@ -109,7 +111,7 @@ Partial Class MainForm
         btnReport.Name = "btnReport"
         btnReport.Padding = New Padding(30, 0, 0, 0)
         btnReport.Size = New Size(238, 32)
-        btnReport.TabIndex = 6
+        btnReport.TabIndex = 7
         btnReport.Text = "     Report"
         btnReport.TextAlign = ContentAlignment.MiddleLeft
         btnReport.TextImageRelation = TextImageRelation.ImageBeforeText
@@ -130,7 +132,7 @@ Partial Class MainForm
         btnSales.Name = "btnSales"
         btnSales.Padding = New Padding(30, 0, 0, 0)
         btnSales.Size = New Size(238, 32)
-        btnSales.TabIndex = 5
+        btnSales.TabIndex = 6
         btnSales.Text = "     Sales"
         btnSales.TextAlign = ContentAlignment.MiddleLeft
         btnSales.TextImageRelation = TextImageRelation.ImageBeforeText
@@ -259,6 +261,27 @@ Partial Class MainForm
         pnlMain.Size = New Size(1045, 769)
         pnlMain.TabIndex = 2
         ' 
+        ' btnInventory
+        ' 
+        btnInventory.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        btnInventory.Dock = DockStyle.Top
+        btnInventory.FlatAppearance.BorderSize = 0
+        btnInventory.FlatStyle = FlatStyle.Flat
+        btnInventory.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnInventory.ForeColor = SystemColors.Control
+        btnInventory.ImageAlign = ContentAlignment.MiddleLeft
+        btnInventory.ImageKey = "engine.png"
+        btnInventory.ImageList = ImageList1
+        btnInventory.Location = New Point(0, 419)
+        btnInventory.Name = "btnInventory"
+        btnInventory.Padding = New Padding(30, 0, 0, 0)
+        btnInventory.Size = New Size(238, 32)
+        btnInventory.TabIndex = 5
+        btnInventory.Text = "     Inventories"
+        btnInventory.TextAlign = ContentAlignment.MiddleLeft
+        btnInventory.TextImageRelation = TextImageRelation.ImageBeforeText
+        btnInventory.UseVisualStyleBackColor = False
+        ' 
         ' MainForm
         ' 
         BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
@@ -294,4 +317,5 @@ Partial Class MainForm
     Friend WithEvents btnSales As Button
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents btnLogout As Button
+    Friend WithEvents btnInventory As Button
 End Class

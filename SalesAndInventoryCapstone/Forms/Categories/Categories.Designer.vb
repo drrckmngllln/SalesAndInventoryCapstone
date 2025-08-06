@@ -175,6 +175,7 @@ Partial Class Categories
         Controls.Add(btnNew)
         Controls.Add(pnlGrid)
         Controls.Add(Label1)
+        KeyPreview = True
         Name = "Categories"
         Text = "Categories"
         pnlGrid.ResumeLayout(False)

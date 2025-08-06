@@ -83,4 +83,9 @@
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
         Logout()
     End Sub
+
+    Private Sub btnInventory_Click(sender As Object, e As EventArgs) Handles btnInventory.Click
+        LoadUI(pnlMain, New Inventories)
+        ButtonSelector("inventory")
+    End Sub
 End Class

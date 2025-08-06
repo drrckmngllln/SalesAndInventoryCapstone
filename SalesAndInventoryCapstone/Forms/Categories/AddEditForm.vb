@@ -1,18 +1,19 @@
 ﻿Public Class CategoryAEForm
-    Public categoryRow As DataRow
+    Public category As New Category()
     Dim db As New DBHelper()
 
-    Async Sub OnSubmit(isCreate As Boolean)
+    Async Function OnSubmit(isCreate As Boolean) As Task
         If String.IsNullOrEmpty(tName.Text) Then
             MsgBox("Error, required fields is missing")
             Return
         End If
 
         If isCreate Then
-            Dim data As New Dictionary(Of String, Object) From {
-                {"Name", tName.Text.Trim()}
+            Dim data As New Category() With {
+                .Name = tName.Text.Trim()
             }
-            Dim result = Await db.CreateAsync("categories", data)
+
+            Dim result = Await CategoryDbHelper.AddCategory(data)
 
             If result Then
                 MsgBox("Category created successfully!")
@@ -22,31 +23,37 @@
             End If
             Me.Close()
         Else
-            Dim data As New Dictionary(Of String, Object) From {
-                {"Name", tName.Text.Trim()}
+            Dim data As New Category() With {
+                .Id = category.Id,
+                .Name = tName.Text.Trim()
             }
-            Await db.UpdateAsync("categories", data, "id = " & categoryRow("id").ToString())
-            MsgBox("Category updated successfully!")
+            Dim result = Await CategoryDbHelper.UpdateCategory(data)
+            If result Then
+                MsgBox("Category updated successfully!")
+            Else
+                MsgBox("Error updating category, please try again.")
+                Return
+            End If
             Me.Close()
         End If
-    End Sub
+    End Function
 
-    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
-        OnSubmit(categoryRow Is Nothing)
+    Private Async Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
+        Await OnSubmit(category IsNot Nothing)
     End Sub
 
     Private Sub CategoryAEForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If categoryRow Is Nothing Then
+        If category IsNot Nothing Then
             Me.Text = "New Category"
         Else
             Me.Text = "Edit Category"
-            tName.Text = categoryRow("name").ToString()
+            tName.Text = category.Name
         End If
     End Sub
 
-    Private Sub CategoryAEForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Private Async Sub CategoryAEForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Enter Then
-            OnSubmit(categoryRow Is Nothing)
+            Await OnSubmit(category IsNot Nothing)
         ElseIf e.KeyCode = Keys.Escape Then
             Me.Close()
         End If

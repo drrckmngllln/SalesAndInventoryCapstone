@@ -5,12 +5,12 @@
     Async Function GetUsers(Optional search As String = "") As Task
         pnlData.Controls.Clear()
         If (Not String.IsNullOrEmpty(search)) Then
-            users = Await db.Fetch("select * from users where LastName like '%" & search & "%' 
+            users = Await DBHelper.Fetch("select * from users where LastName like '%" & search & "%' 
                 or FirstName like '%" & search & "%'
                 or Username like '%" & search & "%'
                 order by id asc")
         Else
-            users = Await db.Fetch("select * from users order by id asc")
+            users = Await DBHelper.Fetch("select * from users order by id asc")
         End If
         If users.Tables.Count > 0 Then
             For Each row As DataRow In users.Tables(0).Rows

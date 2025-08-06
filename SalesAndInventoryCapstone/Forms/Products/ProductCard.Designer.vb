@@ -23,15 +23,10 @@ Partial Class ProductCard
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
-        btnAddStock = New Krypton.Toolkit.KryptonButton()
         btnDelete = New Krypton.Toolkit.KryptonButton()
         btnEdit = New Krypton.Toolkit.KryptonButton()
-        lblSellingPrice = New Label()
-        lblBuyingPrice = New Label()
-        lblInStock = New Label()
+        lblDescription = New Label()
         lblCategory = New Label()
-        Label4 = New Label()
-        Label3 = New Label()
         Label2 = New Label()
         Label1 = New Label()
         Panel2 = New Panel()
@@ -43,15 +38,10 @@ Partial Class ProductCard
         ' Panel1
         ' 
         Panel1.BackColor = SystemColors.Control
-        Panel1.Controls.Add(btnAddStock)
         Panel1.Controls.Add(btnDelete)
         Panel1.Controls.Add(btnEdit)
-        Panel1.Controls.Add(lblSellingPrice)
-        Panel1.Controls.Add(lblBuyingPrice)
-        Panel1.Controls.Add(lblInStock)
+        Panel1.Controls.Add(lblDescription)
         Panel1.Controls.Add(lblCategory)
-        Panel1.Controls.Add(Label4)
-        Panel1.Controls.Add(Label3)
         Panel1.Controls.Add(Label2)
         Panel1.Controls.Add(Label1)
         Panel1.Controls.Add(Panel2)
@@ -60,40 +50,6 @@ Partial Class ProductCard
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(325, 200)
         Panel1.TabIndex = 0
-        ' 
-        ' btnAddStock
-        ' 
-        btnAddStock.Location = New Point(92, 164)
-        btnAddStock.Name = "btnAddStock"
-        btnAddStock.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.OverrideDefault.Border.Color1 = SystemColors.Control
-        btnAddStock.OverrideDefault.Border.Color2 = SystemColors.Control
-        btnAddStock.Size = New Size(75, 33)
-        btnAddStock.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.StateCommon.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.StateCommon.Border.Rounding = 10F
-        btnAddStock.StateCommon.Border.Width = 2
-        btnAddStock.StateCommon.Content.ShortText.Color1 = SystemColors.Control
-        btnAddStock.StateCommon.Content.ShortText.Color2 = SystemColors.Control
-        btnAddStock.StateCommon.Content.ShortText.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        btnAddStock.StateDisabled.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.StateDisabled.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.StateDisabled.Border.Color1 = SystemColors.Control
-        btnAddStock.StateDisabled.Border.Color2 = SystemColors.Control
-        btnAddStock.StateNormal.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.StateNormal.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.StateNormal.Border.Color1 = SystemColors.Control
-        btnAddStock.StateNormal.Border.Color2 = SystemColors.Control
-        btnAddStock.StatePressed.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.StatePressed.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.StatePressed.Border.Color1 = SystemColors.Control
-        btnAddStock.StatePressed.Border.Color2 = SystemColors.Control
-        btnAddStock.StateTracking.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.StateTracking.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnAddStock.TabIndex = 11
-        btnAddStock.Values.DropDownArrowColor = Color.Empty
-        btnAddStock.Values.Text = "Add Stock"
         ' 
         ' btnDelete
         ' 
@@ -163,38 +119,15 @@ Partial Class ProductCard
         btnEdit.Values.DropDownArrowColor = Color.Empty
         btnEdit.Values.Text = "Edit"
         ' 
-        ' lblSellingPrice
+        ' lblDescription
         ' 
-        lblSellingPrice.AutoSize = True
-        lblSellingPrice.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblSellingPrice.ForeColor = Color.DimGray
-        lblSellingPrice.Location = New Point(125, 129)
-        lblSellingPrice.Name = "lblSellingPrice"
-        lblSellingPrice.Size = New Size(22, 15)
-        lblSellingPrice.TabIndex = 8
-        lblSellingPrice.Text = "---"
-        ' 
-        ' lblBuyingPrice
-        ' 
-        lblBuyingPrice.AutoSize = True
-        lblBuyingPrice.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblBuyingPrice.ForeColor = Color.DimGray
-        lblBuyingPrice.Location = New Point(125, 99)
-        lblBuyingPrice.Name = "lblBuyingPrice"
-        lblBuyingPrice.Size = New Size(22, 15)
-        lblBuyingPrice.TabIndex = 7
-        lblBuyingPrice.Text = "---"
-        ' 
-        ' lblInStock
-        ' 
-        lblInStock.AutoSize = True
-        lblInStock.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblInStock.ForeColor = Color.DimGray
-        lblInStock.Location = New Point(125, 70)
-        lblInStock.Name = "lblInStock"
-        lblInStock.Size = New Size(22, 15)
-        lblInStock.TabIndex = 6
-        lblInStock.Text = "---"
+        lblDescription.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lblDescription.ForeColor = Color.DimGray
+        lblDescription.Location = New Point(23, 85)
+        lblDescription.Name = "lblDescription"
+        lblDescription.Size = New Size(296, 76)
+        lblDescription.TabIndex = 6
+        lblDescription.Text = "---"
         ' 
         ' lblCategory
         ' 
@@ -207,35 +140,15 @@ Partial Class ProductCard
         lblCategory.TabIndex = 5
         lblCategory.Text = "---"
         ' 
-        ' Label4
-        ' 
-        Label4.AutoSize = True
-        Label4.ForeColor = Color.DimGray
-        Label4.Location = New Point(3, 129)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(74, 15)
-        Label4.TabIndex = 4
-        Label4.Text = "Selling Price:"
-        ' 
-        ' Label3
-        ' 
-        Label3.AutoSize = True
-        Label3.ForeColor = Color.DimGray
-        Label3.Location = New Point(3, 99)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(76, 15)
-        Label3.TabIndex = 3
-        Label3.Text = "Buying Price:"
-        ' 
         ' Label2
         ' 
         Label2.AutoSize = True
         Label2.ForeColor = Color.DimGray
         Label2.Location = New Point(3, 70)
         Label2.Name = "Label2"
-        Label2.Size = New Size(52, 15)
+        Label2.Size = New Size(70, 15)
         Label2.TabIndex = 2
-        Label2.Text = "In Stock:"
+        Label2.Text = "Description:"
         ' 
         ' Label1
         ' 
@@ -289,7 +202,7 @@ Partial Class ProductCard
     Friend WithEvents lblProductName As Label
     Friend WithEvents lblSellingPrice As Label
     Friend WithEvents lblBuyingPrice As Label
-    Friend WithEvents lblInStock As Label
+    Friend WithEvents lblDescription As Label
     Friend WithEvents lblCategory As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label

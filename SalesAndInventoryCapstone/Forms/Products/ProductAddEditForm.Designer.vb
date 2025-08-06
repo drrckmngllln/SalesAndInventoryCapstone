@@ -26,11 +26,7 @@ Partial Class ProductAddEditForm
         tProductName = New Krypton.Toolkit.KryptonTextBox()
         Label2 = New Label()
         Label3 = New Label()
-        tInStock = New Krypton.Toolkit.KryptonTextBox()
-        Label4 = New Label()
-        tBuyingPrice = New Krypton.Toolkit.KryptonTextBox()
-        Label5 = New Label()
-        tSellingPrice = New Krypton.Toolkit.KryptonTextBox()
+        tProductDescription = New Krypton.Toolkit.KryptonTextBox()
         btnSave = New Krypton.Toolkit.KryptonButton()
         cmbCategory = New Krypton.Toolkit.KryptonComboBox()
         CType(cmbCategory, ComponentModel.ISupportInitialize).BeginInit()
@@ -69,57 +65,20 @@ Partial Class ProductAddEditForm
         Label3.AutoSize = True
         Label3.Location = New Point(12, 113)
         Label3.Name = "Label3"
-        Label3.Size = New Size(52, 15)
+        Label3.Size = New Size(112, 15)
         Label3.TabIndex = 14
-        Label3.Text = "In Stock:"
+        Label3.Text = "Product Description"
         ' 
-        ' tInStock
+        ' tProductDescription
         ' 
-        tInStock.CueHint.Hint = Krypton.Toolkit.PaletteTextHint.ClearTypeGridFit
-        tInStock.Location = New Point(12, 131)
-        tInStock.Name = "tInStock"
-        tInStock.Size = New Size(370, 31)
-        tInStock.StateActive.Border.Rounding = 10F
-        tInStock.StateActive.Border.Width = 2
-        tInStock.TabIndex = 13
-        ' 
-        ' Label4
-        ' 
-        Label4.AutoSize = True
-        Label4.Location = New Point(12, 165)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(76, 15)
-        Label4.TabIndex = 16
-        Label4.Text = "Buying Price:"
-        ' 
-        ' tBuyingPrice
-        ' 
-        tBuyingPrice.CueHint.Hint = Krypton.Toolkit.PaletteTextHint.ClearTypeGridFit
-        tBuyingPrice.Location = New Point(12, 183)
-        tBuyingPrice.Name = "tBuyingPrice"
-        tBuyingPrice.Size = New Size(370, 31)
-        tBuyingPrice.StateActive.Border.Rounding = 10F
-        tBuyingPrice.StateActive.Border.Width = 2
-        tBuyingPrice.TabIndex = 15
-        ' 
-        ' Label5
-        ' 
-        Label5.AutoSize = True
-        Label5.Location = New Point(12, 217)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(74, 15)
-        Label5.TabIndex = 18
-        Label5.Text = "Selling Price:"
-        ' 
-        ' tSellingPrice
-        ' 
-        tSellingPrice.CueHint.Hint = Krypton.Toolkit.PaletteTextHint.ClearTypeGridFit
-        tSellingPrice.Location = New Point(12, 235)
-        tSellingPrice.Name = "tSellingPrice"
-        tSellingPrice.Size = New Size(370, 31)
-        tSellingPrice.StateActive.Border.Rounding = 10F
-        tSellingPrice.StateActive.Border.Width = 2
-        tSellingPrice.TabIndex = 17
+        tProductDescription.CueHint.Hint = Krypton.Toolkit.PaletteTextHint.ClearTypeGridFit
+        tProductDescription.Location = New Point(12, 131)
+        tProductDescription.Multiline = True
+        tProductDescription.Name = "tProductDescription"
+        tProductDescription.Size = New Size(370, 136)
+        tProductDescription.StateActive.Border.Rounding = 10F
+        tProductDescription.StateActive.Border.Width = 2
+        tProductDescription.TabIndex = 13
         ' 
         ' btnSave
         ' 
@@ -178,12 +137,8 @@ Partial Class ProductAddEditForm
         ControlBox = False
         Controls.Add(cmbCategory)
         Controls.Add(btnSave)
-        Controls.Add(Label5)
-        Controls.Add(tSellingPrice)
-        Controls.Add(Label4)
-        Controls.Add(tBuyingPrice)
         Controls.Add(Label3)
-        Controls.Add(tInStock)
+        Controls.Add(tProductDescription)
         Controls.Add(Label2)
         Controls.Add(Label1)
         Controls.Add(tProductName)
@@ -201,11 +156,7 @@ Partial Class ProductAddEditForm
     Friend WithEvents tProductName As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents tInStock As Krypton.Toolkit.KryptonTextBox
-    Friend WithEvents Label4 As Label
-    Friend WithEvents tBuyingPrice As Krypton.Toolkit.KryptonTextBox
-    Friend WithEvents Label5 As Label
-    Friend WithEvents tSellingPrice As Krypton.Toolkit.KryptonTextBox
+    Friend WithEvents tProductDescription As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents btnSave As Krypton.Toolkit.KryptonButton
     Friend WithEvents cmbCategory As Krypton.Toolkit.KryptonComboBox
 End Class

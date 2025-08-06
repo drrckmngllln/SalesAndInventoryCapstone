@@ -26,11 +26,7 @@ Partial Class Dashboard
         lSales = New Label()
         Label1 = New Label()
         Panel2 = New Panel()
-        Label5 = New Label()
-        Label7 = New Label()
         Label8 = New Label()
-        lStockIn = New Label()
-        lStockOut = New Label()
         lCurrentStock = New Label()
         Label4 = New Label()
         Panel3 = New Panel()
@@ -80,39 +76,13 @@ Partial Class Dashboard
         ' Panel2
         ' 
         Panel2.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        Panel2.Controls.Add(Label5)
-        Panel2.Controls.Add(Label7)
         Panel2.Controls.Add(Label8)
-        Panel2.Controls.Add(lStockIn)
-        Panel2.Controls.Add(lStockOut)
         Panel2.Controls.Add(lCurrentStock)
         Panel2.Controls.Add(Label4)
         Panel2.Location = New Point(352, 12)
         Panel2.Name = "Panel2"
         Panel2.Size = New Size(327, 175)
         Panel2.TabIndex = 1
-        ' 
-        ' Label5
-        ' 
-        Label5.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
-        Label5.ForeColor = SystemColors.Control
-        Label5.Location = New Point(21, 99)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(143, 21)
-        Label5.TabIndex = 6
-        Label5.Text = "Stock In"
-        Label5.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' Label7
-        ' 
-        Label7.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
-        Label7.ForeColor = SystemColors.Control
-        Label7.Location = New Point(21, 120)
-        Label7.Name = "Label7"
-        Label7.Size = New Size(143, 21)
-        Label7.TabIndex = 5
-        Label7.Text = "Stock Out"
-        Label7.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label8
         ' 
@@ -124,28 +94,6 @@ Partial Class Dashboard
         Label8.TabIndex = 4
         Label8.Text = "Current Stock"
         Label8.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' lStockIn
-        ' 
-        lStockIn.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
-        lStockIn.ForeColor = SystemColors.Control
-        lStockIn.Location = New Point(170, 99)
-        lStockIn.Name = "lStockIn"
-        lStockIn.Size = New Size(143, 21)
-        lStockIn.TabIndex = 3
-        lStockIn.Text = "00"
-        lStockIn.TextAlign = ContentAlignment.MiddleRight
-        ' 
-        ' lStockOut
-        ' 
-        lStockOut.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
-        lStockOut.ForeColor = SystemColors.Control
-        lStockOut.Location = New Point(170, 120)
-        lStockOut.Name = "lStockOut"
-        lStockOut.Size = New Size(143, 21)
-        lStockOut.TabIndex = 2
-        lStockOut.Text = "00"
-        lStockOut.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' lCurrentStock
         ' 
@@ -259,11 +207,7 @@ Partial Class Dashboard
     Friend WithEvents Panel3 As Panel
     Friend WithEvents lProducts As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents Label5 As Label
-    Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
-    Friend WithEvents lStockIn As Label
-    Friend WithEvents lStockOut As Label
     Friend WithEvents Panel4 As Panel
     Friend WithEvents Label2 As Label
     Friend WithEvents dgvNotifications As DataGridView

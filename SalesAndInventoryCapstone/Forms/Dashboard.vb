@@ -4,13 +4,11 @@
     Private Async Sub Dashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Await CheckForLowStock()
 
-        lProducts.Text = Await GetProductsCount()
-        lSales.Text = Await GetSalesCount()
+        lProducts.Text = Await ProductDbHelper.GetProductsCount()
+        lSales.Text = Await SaleDbHelper.GetSalesCount()
 
         Dim inventoryData = Await GetInventoryCount()
         lCurrentStock.Text = inventoryData.CurrentStock.ToString()
-        lStockIn.Text = inventoryData.StockIn.ToString()
-        lStockOut.Text = inventoryData.StockOut.ToString()
 
         Dim notifications = Await GetNotifications()
 
@@ -52,45 +50,15 @@
         End If
     End Sub
 
-
-    '' 🛒 Get Products Count
-    Async Function GetProductsCount() As Task(Of String)
-        Dim products = Await db.Fetch("SELECT SUM(InStock * SellingPrice) AS TotalPrice FROM products")
-
-        Dim total As Decimal = 0
-
-        If products.Tables(0).Rows.Count > 0 AndAlso Not IsDBNull(products.Tables(0).Rows(0)("TotalPrice")) Then
-            total = Convert.ToDecimal(products.Tables(0).Rows(0)("TotalPrice"))
-        End If
-
-        Return CurrencyFormatter.FormatAsPeso(total)
-    End Function
-
-    '' 💰 Get Sales Count
-    Async Function GetSalesCount() As Task(Of String)
-        Dim sales = Await db.Fetch("SELECT SUM(TotalSales) AS TotalSales FROM sales")
-        Dim total As Decimal = 0
-        If sales.Tables(0).Rows.Count > 0 AndAlso Not IsDBNull(sales.Tables(0).Rows(0)("TotalSales")) Then
-            total = Convert.ToDecimal(sales.Tables(0).Rows(0)("TotalSales"))
-        End If
-        Return CurrencyFormatter.FormatAsPeso(total)
-    End Function
-
     '' 📦 Get Inventory Count
     Async Function GetInventoryCount() As Task(Of InventorySummary)
-        Dim inventories = Await db.Fetch("
-            SELECT 
-	            SUM(CurrentStock) AS CurrentStock, 
-	            SUM(StockIn) AS StockIn,
-	            SUM(StockOut) AS StockOut
-            FROM inventories
-            ")
+        Dim inventories = Await DBHelper.Fetch("
+            SELECT SUM(CurrentStock) AS CurrentStock FROM inventories
+        ")
 
         Dim summary As New InventorySummary()
         If inventories.Tables(0).Rows.Count > 0 Then
             summary.CurrentStock = If(IsDBNull(inventories.Tables(0).Rows(0)("CurrentStock")), 0, Convert.ToInt32(inventories.Tables(0).Rows(0)("CurrentStock")))
-            summary.StockIn = If(IsDBNull(inventories.Tables(0).Rows(0)("StockIn")), 0, Convert.ToInt32(inventories.Tables(0).Rows(0)("StockIn")))
-            summary.StockOut = If(IsDBNull(inventories.Tables(0).Rows(0)("StockOut")), 0, Convert.ToInt32(inventories.Tables(0).Rows(0)("StockOut")))
         End If
 
         Return summary
@@ -98,7 +66,7 @@
 
     '' 🔔 Get Notifications
     Async Function GetNotifications() As Task(Of List(Of Notifcations))
-        Dim notifications = Await db.Fetch("
+        Dim notifications = Await DBHelper.Fetch("
             SELECT 
 	            a.Id AS Id,
                 b.Id AS InventoryId,
@@ -128,7 +96,7 @@
 
     '' 📬 Mark Notification as Read
     Async Function MarkNotificationAsRead(id As Integer) As Task
-        Await db.UpdateAsync("notifications", New Dictionary(Of String, Object) From {
+        Await DBHelper.UpdateAsync("notifications", New Dictionary(Of String, Object) From {
             {"IsRead", True}
         }, $"Id = {id}")
 
@@ -137,7 +105,7 @@
     '' 📦 Check for Low Stock
     Async Function CheckForLowStock() As Task
         Dim lowStockThreshold As Integer = 10
-        Dim inventories = Await db.Fetch("SELECT * FROM inventories WHERE CurrentStock <= '" & lowStockThreshold & "'")
+        Dim inventories = Await DBHelper.Fetch("SELECT * FROM inventories WHERE CurrentStock <= '" & lowStockThreshold & "'")
 
         Dim dbNotifications = Await GetNotifications()
         Dim existingCodes = dbNotifications.Select(Function(n) n.InventoryId).ToHashSet()
@@ -152,7 +120,7 @@
             Dim message = $"Low stock alert for {inventoryCode}. Current stock is {currentStock}."
 
             ' Insert new notification
-            Await db.CreateAsync("notifications", New Dictionary(Of String, Object) From {
+            Await DBHelper.CreateAsync("notifications", New Dictionary(Of String, Object) From {
                 {"InventoryId", inventoryId},
                 {"Message", message},
                 {"IsRead", False},
@@ -168,8 +136,6 @@ End Class
 
 Public Class InventorySummary
     Public Property CurrentStock As Integer
-    Public Property StockIn As Integer
-    Public Property StockOut As Integer
 End Class
 
 Public Class Notifcations

@@ -2,19 +2,19 @@
 
 Public Class ProductAddEditForm
     Dim db As New DBHelper()
-    Public data As DataRow
+    Public data As Product
 
     ' Initialize the form and set up the controls
     Async Function GetCategories() As Task
-        Dim categories = Await db.Fetch("SELECT Id, `Name` FROM categories")
+        Dim categories = Await CategoryDbHelper.GetCategories()
 
         cmbCategory.Items.Clear()
         cmbCategory.DisplayMember = "Name"
         cmbCategory.ValueMember = "Id"
-        cmbCategory.DataSource = categories.Tables(0)
+        cmbCategory.DataSource = categories
 
         If data IsNot Nothing Then
-            cmbCategory.SelectedValue = data("CategoryId").ToString()
+            cmbCategory.SelectedValue = data.CategoryId
         End If
 
     End Function
@@ -22,11 +22,9 @@ Public Class ProductAddEditForm
     ' Initialize the form with data if available, otherwise set it for creating a new product
     Sub DataInit()
         If data IsNot Nothing Then
-            tProductName.Text = data("ProductName").ToString()
-            tInStock.Text = data("InStock").ToString()
-            tBuyingPrice.Text = data("BuyingPrice").ToString()
-            tSellingPrice.Text = data("SellingPrice").ToString()
-            cmbCategory.SelectedValue = data("CategoryId").ToString()
+            tProductName.Text = data.ProductName
+            tProductDescription.Text = data.ProductDescription
+            cmbCategory.SelectedValue = data.CategoryId
 
             Me.Text = "Edit Product"
             btnSave.Text = "Update Product"
@@ -42,34 +40,24 @@ Public Class ProductAddEditForm
         Dim productName = tProductName.Text.Trim()
         Dim categoryId = cmbCategory.SelectedValue
 
-        Dim inStock As Integer
-        Dim buyingPrice As Decimal
-        Dim sellingPrice As Decimal
-
-        Dim isInStockValid = Integer.TryParse(tInStock.Text.Trim(), inStock)
-        Dim isBuyingPriceValid = Decimal.TryParse(tBuyingPrice.Text.Trim(), buyingPrice)
-        Dim isSellingPriceValid = Decimal.TryParse(tSellingPrice.Text.Trim(), sellingPrice)
-
-        If String.IsNullOrWhiteSpace(productName) OrElse categoryId Is Nothing OrElse
-        Not isInStockValid OrElse Not isBuyingPriceValid OrElse Not isSellingPriceValid Then
+        If String.IsNullOrWhiteSpace(productName) OrElse categoryId Is Nothing Then
 
             MessageBox.Show("Please fill in all fields correctly.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End If
 
-        Dim product = New Dictionary(Of String, Object) From {
-            {"CreatedAt", DateTime.UtcNow},
-            {"ProductName", productName},
-            {"InStock", inStock},
-            {"BuyingPrice", buyingPrice},
-            {"SellingPrice", sellingPrice},
-            {"CategoryId", categoryId}
+
+        Dim product As New ProductInput With {
+            .ProductName = productName,
+            .ProductDescription = tProductDescription.Text,
+            .CategoryId = Convert.ToInt32(categoryId)
         }
 
 
 
         If isCreate Then
-            Dim result = Await db.CreateAsync("products", product)
+            'Dim result = Await db.CreateAsync("products", product)
+            Dim result = Await ProductDbHelper.AddProduct(product)
             If result Then
                 MessageBox.Show("Product created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Me.Close()
@@ -77,7 +65,8 @@ Public Class ProductAddEditForm
                 MessageBox.Show("Failed to create product.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         Else
-            Dim result = Await db.UpdateAsync("products", product, "id = " & data("id").ToString())
+            'Dim result = Await db.UpdateAsync("products", product, "id = " & data.Id)
+            Dim result = Await ProductDbHelper.UpdateProduct(product)
             If result Then
                 MessageBox.Show("Product updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Me.Close()
@@ -103,4 +92,6 @@ Public Class ProductAddEditForm
     Private Async Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Await OnSubmit(data Is Nothing)
     End Sub
+
+
 End Class

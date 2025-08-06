@@ -1,16 +1,21 @@
 ﻿Public Class AddStockForm
-    Dim db As New DBHelper()
     Public productId As String
 
-    Async Function GetStock() As Task(Of StockDto)
-        Dim sql As String = $"SELECT InStock, ProductName FROM products WHERE Id={productId}"
-        Dim result = Await db.Fetch(sql)
+    Async Function GetStock() As Task(Of Inventory)
+        Dim sql As String = $"SELECT * FROM inventoriesview WHERE Id={productId}"
+        Dim result = Await DBHelper.Fetch(sql)
         If result.Tables.Count > 0 AndAlso result.Tables(0).Rows.Count > 0 Then
             Dim row = result.Tables(0).Rows(0)
-            Return New StockDto With {
+            Return New Inventory With {
                 .Id = productId,
+                .Code = row("Code").ToString(),
                 .ProductName = row("ProductName").ToString(),
-                .InStock = Convert.ToInt32(row("InStock"))
+                .ProductDescription = row("ProductDescription").ToString(),
+                .CurrentStock = Convert.ToInt32(row("CurrentStock")),
+                .CategoryName = row("CategoryName").ToString(),
+                .OriginalPrice = Convert.ToDecimal(row("OriginalPrice")),
+                .SellingPrice = Convert.ToDecimal(row("SellingPrice")),
+                .Remarks = row("Remarks").ToString()
             }
         End If
 
@@ -26,16 +31,12 @@
         Dim stock = Await GetStock()
 
 
-        If String.IsNullOrEmpty(productId) OrElse stock.InStock <= 0 Then
+        If String.IsNullOrEmpty(productId) OrElse stock.CurrentStock <= 0 Then
             MessageBox.Show("Please enter a valid product ID and quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End If
 
-        Dim newStock As New Dictionary(Of String, Object) From {
-            {"InStock", stock.InStock + Convert.ToInt32(tStock.Text)}
-        }
-
-        Dim success = Await db.UpdateAsync("products", newStock, "Id=" + productId)
+        Dim success = Await InventoryDbHelper.AddCurrentStock(productId, CInt(tStock.Text))
 
         If success Then
             MessageBox.Show("Stock added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -70,5 +71,5 @@ End Class
 Public Class StockDto
     Public Property Id As String
     Public Property ProductName As String
-    Public Property InStock As Integer
+    Public Property CurrentStock As Integer
 End Class

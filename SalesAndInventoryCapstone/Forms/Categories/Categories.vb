@@ -2,42 +2,50 @@
     Dim categories As New DataSet
     Dim db As New DBHelper()
 
-    Private Sub Categories_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        GetCategories()
+    Private Async Sub Categories_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Await GetCategories()
+
+
     End Sub
 
-    Async Sub GetCategories(Optional search As String = "")
-        If (Not String.IsNullOrEmpty(search)) Then
-            categories = Await db.Fetch("select * from categories where name like '%" & search & "%' order by id asc")
-        Else
-            categories = Await db.Fetch("select * from categories order by id asc")
-        End If
-
-        If categories.Tables.Count > 0 Then
-            For Each row As DataRow In categories.Tables(0).Rows
+    Async Function GetCategories(Optional search As String = "") As Task
+        Dim categories = Await CategoryDbHelper.GetCategories(search)
+        If categories IsNot Nothing AndAlso categories.Count > 0 Then
+            For Each category As Category In categories
                 Dim card As New CategoryCard
-                card.data = row
+                card.data = category
                 card.Dock = DockStyle.Top
                 pnlData.Controls.Add(card)
             Next
         End If
-    End Sub
+    End Function
 
-    Private Sub tSearch_TextChanged(sender As Object, e As EventArgs) Handles tSearch.TextChanged
+    Private Async Sub tSearch_TextChanged(sender As Object, e As EventArgs) Handles tSearch.TextChanged
         If (tSearch.Text.Length > 2) Then
             pnlData.Controls.Clear()
-            GetCategories(tSearch.Text)
+            Await GetCategories(tSearch.Text)
         Else
             pnlData.Controls.Clear()
-            GetCategories()
+            Await GetCategories()
         End If
     End Sub
 
-    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
+    Private Async Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         Dim frm As New CategoryAEForm
         frm.Text = "Add Category"
         frm.ShowDialog(Me)
         pnlData.Controls.Clear()
-        GetCategories()
+        Await GetCategories()
+    End Sub
+
+    Private Async Sub Categories_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.F1 Then
+            Dim frm As New CategoryAEForm
+            frm.Text = "Add Category"
+            frm.ShowDialog(Me)
+            pnlData.Controls.Clear()
+            Await GetCategories()
+        End If
+
     End Sub
 End Class
