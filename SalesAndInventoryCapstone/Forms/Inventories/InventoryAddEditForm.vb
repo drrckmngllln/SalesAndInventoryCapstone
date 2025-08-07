@@ -19,6 +19,7 @@
 
     Private Sub InventoryAddEditForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadProduct()
+
     End Sub
 
     Sub LoadProduct()
@@ -28,11 +29,11 @@
             lProductCategory.Text = product.Category
             ToggleControls(True)
         End If
-        If inventory IsNot Nothing Or product IsNot Nothing Then
+        If inventory IsNot Nothing And product IsNot Nothing Then
             lProductName.Text = If(product Is Nothing, "...", product.ProductName)
             lProductDescription.Text = If(product Is Nothing, "...", product.ProductDescription)
             lProductCategory.Text = If(product Is Nothing, "...", product.Category)
-            tCode.Text = inventory.Code
+            tCode.Text = If(inventory Is Nothing, "...", inventory.Code)
             tCurrentStock.Text = inventory.CurrentStock.ToString()
             tOriginalPrice.Text = inventory.OriginalPrice.ToString("F2")
             tSellingPrice.Text = inventory.SellingPrice.ToString("F2")
@@ -45,7 +46,7 @@
             tOriginalPrice.Clear()
             tSellingPrice.Clear()
             tRemarks.Clear()
-            ToggleControls(False)
+            'ToggleControls(False)
         End If
     End Sub
 

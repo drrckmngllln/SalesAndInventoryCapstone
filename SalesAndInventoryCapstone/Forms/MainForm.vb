@@ -32,6 +32,8 @@
                 btnSales.BackColor = selectedColor
             Case "report"
                 btnReport.BackColor = selectedColor
+            Case "inventory"
+                btnInventory.BackColor = selectedColor
         End Select
     End Sub
 #End Region
