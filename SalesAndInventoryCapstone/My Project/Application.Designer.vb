@@ -41,6 +41,10 @@ Namespace My
             End If
 
             'Me.MainForm = New MainForm
+
+
+            'Me.MainForm = New Sales()
+
         End Sub
     End Class
 End Namespace

@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `inventories` (
 
 -- Dumping data for table salesinventory.inventories: ~4 rows (approximately)
 REPLACE INTO `inventories` (`Id`, `Code`, `ProductId`, `CurrentStock`, `OriginalPrice`, `SellingPrice`, `Remarks`) VALUES
-	(7, 'P2', 25, 60, 250.00, 300.00, ''),
+	(7, 'P2', 25, 57, 250.00, 300.00, ''),
 	(8, 'PTOSHAFT', 23, 20, 1000.00, 1500.00, ''),
 	(9, 'HPUMP', 22, 50, 899.00, 1000.00, ''),
 	(10, 'CLUTCH_PLATE', 27, 20, 950.00, 1000.00, '');
@@ -138,34 +138,36 @@ REPLACE INTO `roles` (`Id`, `Name`) VALUES
 CREATE TABLE IF NOT EXISTS `saleitem` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `SalesId` int NOT NULL DEFAULT '0',
-  `ProductId` int DEFAULT NULL,
+  `InventoryId` int DEFAULT NULL,
   `Quantity` int DEFAULT NULL,
   `Price` decimal(18,2) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `SalesId` (`SalesId`),
-  KEY `ProductId` (`ProductId`),
-  CONSTRAINT `FK_saleitem_products` FOREIGN KEY (`ProductId`) REFERENCES `products` (`Id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `SalesId` (`SalesId`) USING BTREE,
+  KEY `InventoryId` (`InventoryId`),
+  CONSTRAINT `FK_saleitem_inventories` FOREIGN KEY (`InventoryId`) REFERENCES `inventories` (`Id`),
+  CONSTRAINT `FK_saleitem_sales` FOREIGN KEY (`SalesId`) REFERENCES `sales` (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.saleitem: ~3 rows (approximately)
-REPLACE INTO `saleitem` (`Id`, `SalesId`, `ProductId`, `Quantity`, `Price`) VALUES
-	(1, 1, NULL, 2, 20000.00),
-	(2, 1, NULL, 1, 10000.00),
-	(3, 2, NULL, 4, 40000.00);
+-- Dumping data for table salesinventory.saleitem: ~1 rows (approximately)
+REPLACE INTO `saleitem` (`Id`, `SalesId`, `InventoryId`, `Quantity`, `Price`) VALUES
+	(6, 10, 7, 1, 300.00);
 
 -- Dumping structure for table salesinventory.sales
 CREATE TABLE IF NOT EXISTS `sales` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `ReferenceNumber` varchar(50) DEFAULT NULL,
   `TotalSales` decimal(18,2) unsigned NOT NULL,
+  `CashGiven` decimal(18,2) unsigned NOT NULL,
+  `LastName` varchar(50) DEFAULT NULL,
+  `FirstName` varchar(50) DEFAULT NULL,
+  `MiddleName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `ReferenceNumber` (`ReferenceNumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.sales: ~2 rows (approximately)
-REPLACE INTO `sales` (`Id`, `ReferenceNumber`, `TotalSales`) VALUES
-	(1, '000001', 30000.00),
-	(2, '000002', 40000.00);
+-- Dumping data for table salesinventory.sales: ~1 rows (approximately)
+REPLACE INTO `sales` (`Id`, `ReferenceNumber`, `TotalSales`, `CashGiven`, `LastName`, `FirstName`, `MiddleName`) VALUES
+	(10, 'C2FF5F9E-98AD-410B-8157-66E5AC5CBD6E', 300.00, 500.00, 'Dela Cruz', 'Juan', 'Tamad');
 
 -- Dumping structure for table salesinventory.users
 CREATE TABLE IF NOT EXISTS `users` (
