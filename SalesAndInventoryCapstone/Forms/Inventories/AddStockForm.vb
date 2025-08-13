@@ -1,4 +1,5 @@
-﻿Public Class AddStockForm
+﻿Imports Microsoft.EntityFrameworkCore
+Public Class AddStockForm
     Public productId As String
 
     Async Function GetStock() As Task(Of Inventory)
@@ -28,22 +29,29 @@
             Return
         End If
 
-        Dim stock = Await GetStock()
+        'Dim stock = Await GetStock()
+        Using context As New DataContext()
+            Dim stock = Await context.Inventories.FirstOrDefaultAsync(Function(i) i.Id.ToString() = productId)
 
+            If String.IsNullOrEmpty(productId) OrElse stock.CurrentStock <= 0 Then
+                MessageBox.Show("Please enter a valid product ID and quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
 
-        If String.IsNullOrEmpty(productId) OrElse stock.CurrentStock <= 0 Then
-            MessageBox.Show("Please enter a valid product ID and quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
-        End If
+            Dim stockInput = Await context.InventoryInputs.FirstOrDefaultAsync(Function(i) i.Id.ToString() = productId)
 
-        Dim success = Await InventoryDbHelper.AddCurrentStock(productId, CInt(tStock.Text))
+            stockInput.CurrentStock += CInt(tStock.Text)
+            stockInput.StockIn += CInt(tStock.Text)
 
-        If success Then
-            MessageBox.Show("Stock added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Me.Close()
-        Else
-            MessageBox.Show("Failed to add stock. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End If
+            Dim sucess = Await context.SaveChangesAsync() > 0
+
+            If sucess Then
+                MessageBox.Show("Stock added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Me.Close()
+            Else
+                MessageBox.Show("Failed to add stock. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End Using
     End Function
 
     Private Async Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click

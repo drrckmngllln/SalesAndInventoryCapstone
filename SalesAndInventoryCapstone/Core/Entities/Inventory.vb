@@ -16,6 +16,10 @@ Public Class Inventory
     Public Property CategoryName As String
     <Column("CurrentStock")>
     Public Property CurrentStock As Integer
+    <Column("StockIn")>
+    Public Property StockIn As Integer
+    <Column("StockOut")>
+    Public Property StockOut As Integer
     <Column("OriginalPrice")>
     Public Property OriginalPrice As Decimal
     <Column("SellingPrice")>
@@ -34,6 +38,10 @@ Public Class InventoryInput
     Public Property ProductId As Integer
     <Column("CurrentStock")>
     Public Property CurrentStock As Integer
+    <Column("StockIn")>
+    Public Property StockIn As Integer
+    <Column("StockOut")>
+    Public Property StockOut As Integer
     <Column("OriginalPrice")>
     Public Property OriginalPrice As Decimal
     <Column("SellingPrice")>

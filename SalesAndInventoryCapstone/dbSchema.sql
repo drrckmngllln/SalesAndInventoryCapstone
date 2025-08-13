@@ -40,6 +40,8 @@ CREATE TABLE IF NOT EXISTS `inventories` (
   `Code` varchar(50) DEFAULT NULL,
   `ProductId` int DEFAULT NULL,
   `CurrentStock` int NOT NULL DEFAULT '0',
+  `StockIn` int NOT NULL DEFAULT '0',
+  `StockOut` int NOT NULL DEFAULT '0',
   `OriginalPrice` decimal(18,2) DEFAULT NULL,
   `SellingPrice` decimal(18,2) DEFAULT NULL,
   `Remarks` varchar(100) DEFAULT NULL,
@@ -49,12 +51,12 @@ CREATE TABLE IF NOT EXISTS `inventories` (
   CONSTRAINT `FK_inventories_products` FOREIGN KEY (`ProductId`) REFERENCES `products` (`Id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.inventories: ~4 rows (approximately)
-REPLACE INTO `inventories` (`Id`, `Code`, `ProductId`, `CurrentStock`, `OriginalPrice`, `SellingPrice`, `Remarks`) VALUES
-	(7, 'P2', 25, 57, 250.00, 300.00, ''),
-	(8, 'PTOSHAFT', 23, 20, 1000.00, 1500.00, ''),
-	(9, 'HPUMP', 22, 50, 899.00, 1000.00, ''),
-	(10, 'CLUTCH_PLATE', 27, 20, 950.00, 1000.00, '');
+-- Dumping data for table salesinventory.inventories: ~5 rows (approximately)
+REPLACE INTO `inventories` (`Id`, `Code`, `ProductId`, `CurrentStock`, `StockIn`, `StockOut`, `OriginalPrice`, `SellingPrice`, `Remarks`) VALUES
+	(7, 'P2', 25, 67, 10, 0, 250.00, 300.00, ''),
+	(8, 'PTOSHAFT', 23, 30, 10, 0, 1000.00, 1500.00, ''),
+	(9, 'HPUMP', 22, 60, 10, 0, 899.00, 1000.00, ''),
+	(10, 'CLUTCH_PLATE', 27, 20, 0, 0, 950.00, 1000.00, '');
 
 -- Dumping structure for view salesinventory.inventoriesview
 -- Creating temporary table to overcome VIEW dependency errors
@@ -66,6 +68,8 @@ CREATE TABLE `inventoriesview` (
 	`ProductDescription` LONGTEXT NULL COLLATE 'utf8mb4_0900_ai_ci',
 	`CategoryName` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
 	`CurrentStock` INT NOT NULL,
+	`StockIn` INT NOT NULL,
+	`StockOut` INT NOT NULL,
 	`OriginalPrice` DECIMAL(18,2) NULL,
 	`SellingPrice` DECIMAL(18,2) NULL,
 	`Remarks` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci'
@@ -148,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `saleitem` (
   CONSTRAINT `FK_saleitem_sales` FOREIGN KEY (`SalesId`) REFERENCES `sales` (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.saleitem: ~1 rows (approximately)
+-- Dumping data for table salesinventory.saleitem: ~3 rows (approximately)
 REPLACE INTO `saleitem` (`Id`, `SalesId`, `InventoryId`, `Quantity`, `Price`) VALUES
 	(6, 10, 7, 1, 300.00);
 
@@ -165,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `sales` (
   UNIQUE KEY `ReferenceNumber` (`ReferenceNumber`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.sales: ~1 rows (approximately)
+-- Dumping data for table salesinventory.sales: ~2 rows (approximately)
 REPLACE INTO `sales` (`Id`, `ReferenceNumber`, `TotalSales`, `CashGiven`, `LastName`, `FirstName`, `MiddleName`) VALUES
 	(10, 'C2FF5F9E-98AD-410B-8157-66E5AC5CBD6E', 300.00, 500.00, 'Dela Cruz', 'Juan', 'Tamad');
 
@@ -179,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.users: ~3 rows (approximately)
+-- Dumping data for table salesinventory.users: ~2 rows (approximately)
 REPLACE INTO `users` (`Id`, `LastName`, `FirstName`, `Username`, `Password`) VALUES
 	(10, 'Admin', 'Admin', 'admin', '$2a$11$aZmSS9lvkgKGvzbMh02YwuMnzmtZBFmclOMt87dPTf9coFcwe85LO'),
 	(11, 'Sales', 'Sales', 'sales', '$2a$11$zHozTJEy8EMWgCZKU3np6OtY4eoMUpDQMj9zjHrNtCPsacor8x5Lq'),
@@ -199,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `inventoriesview`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `inventoriesview` AS select `i`.`Id` AS `Id`,`i`.`Code` AS `Code`,`p`.`Id` AS `ProductId`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Name` AS `CategoryName`,`i`.`CurrentStock` AS `CurrentStock`,`i`.`OriginalPrice` AS `OriginalPrice`,`i`.`SellingPrice` AS `SellingPrice`,`i`.`Remarks` AS `Remarks` from ((`inventories` `i` left join `products` `p` on((`i`.`ProductId` = `p`.`Id`))) left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)));
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `inventoriesview` AS select `i`.`Id` AS `Id`,`i`.`Code` AS `Code`,`p`.`Id` AS `ProductId`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Name` AS `CategoryName`,`i`.`CurrentStock` AS `CurrentStock`,`i`.`StockIn` AS `StockIn`,`i`.`StockOut` AS `StockOut`,`i`.`OriginalPrice` AS `OriginalPrice`,`i`.`SellingPrice` AS `SellingPrice`,`i`.`Remarks` AS `Remarks` from ((`inventories` `i` left join `products` `p` on((`i`.`ProductId` = `p`.`Id`))) left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)));
 
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `productsview`;

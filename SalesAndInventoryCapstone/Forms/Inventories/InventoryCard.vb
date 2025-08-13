@@ -1,4 +1,5 @@
-﻿Public Class InventoryCard
+﻿Imports Microsoft.EntityFrameworkCore
+Public Class InventoryCard
     Public data As Inventory
 
     Sub DataInit()
@@ -9,6 +10,8 @@
             lCategory.Text = data.CategoryName
             lProductDescription.Text = data.ProductDescription
             lCurrentStock.Text = data.CurrentStock.ToString()
+            lStockIn.Text = data.StockIn.ToString()
+            lStockOut.Text = data.StockOut.ToString()
             lOriginalPrice.Text = data.OriginalPrice.ToString("C2")
             lSellingPrice.Text = data.SellingPrice.ToString("C2")
             lRemarks.Text = If(String.IsNullOrWhiteSpace(data.Remarks), "(No Remarks)", data.Remarks)
@@ -20,13 +23,17 @@
     End Sub
 
     Async Function RefetchData() As Task
-        Dim productData = Await InventoryDbHelper.GetInventoryByIdAsync(data.Id)
-        If productData IsNot Nothing Then
-            data = productData
-            DataInit()
-        Else
-            MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End If
+        Using context As New DataContext()
+            Dim productData = Await context.Inventories.FirstOrDefaultAsync(Function(i) i.Id = data.Id)
+
+            If productData IsNot Nothing Then
+                data = productData
+                DataInit()
+            Else
+                MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End Using
+
     End Function
 
     Private Async Sub HandleEdit()

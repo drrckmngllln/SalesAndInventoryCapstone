@@ -35,7 +35,6 @@ Partial Class InventoryCard
         Label9 = New Label()
         lCategory = New Label()
         Label7 = New Label()
-        lProductDescription = New Label()
         Label5 = New Label()
         lProductName = New Label()
         Label3 = New Label()
@@ -44,6 +43,11 @@ Partial Class InventoryCard
         lCode = New Label()
         Label1 = New Label()
         Panel2 = New Panel()
+        lProductDescription = New Label()
+        lStockIn = New Label()
+        Label4 = New Label()
+        lStockOut = New Label()
+        Label8 = New Label()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
@@ -65,6 +69,10 @@ Partial Class InventoryCard
         ' Panel1
         ' 
         Panel1.BackColor = SystemColors.Control
+        Panel1.Controls.Add(lStockOut)
+        Panel1.Controls.Add(Label8)
+        Panel1.Controls.Add(lStockIn)
+        Panel1.Controls.Add(Label4)
         Panel1.Controls.Add(KryptonButton1)
         Panel1.Controls.Add(lRemarks)
         Panel1.Controls.Add(Label19)
@@ -88,12 +96,12 @@ Partial Class InventoryCard
         Panel1.Dock = DockStyle.Fill
         Panel1.Location = New Point(0, 0)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(325, 249)
+        Panel1.Size = New Size(325, 281)
         Panel1.TabIndex = 1
         ' 
         ' KryptonButton1
         ' 
-        KryptonButton1.Location = New Point(86, 213)
+        KryptonButton1.Location = New Point(85, 243)
         KryptonButton1.Name = "KryptonButton1"
         KryptonButton1.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         KryptonButton1.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -130,7 +138,7 @@ Partial Class InventoryCard
         lRemarks.AutoSize = True
         lRemarks.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lRemarks.ForeColor = Color.DimGray
-        lRemarks.Location = New Point(126, 132)
+        lRemarks.Location = New Point(125, 162)
         lRemarks.Name = "lRemarks"
         lRemarks.Size = New Size(22, 15)
         lRemarks.TabIndex = 28
@@ -140,7 +148,7 @@ Partial Class InventoryCard
         ' 
         Label19.AutoSize = True
         Label19.ForeColor = Color.DimGray
-        Label19.Location = New Point(4, 132)
+        Label19.Location = New Point(3, 162)
         Label19.Name = "Label19"
         Label19.Size = New Size(52, 15)
         Label19.TabIndex = 27
@@ -151,7 +159,7 @@ Partial Class InventoryCard
         lSellingPrice.AutoSize = True
         lSellingPrice.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lSellingPrice.ForeColor = Color.DimGray
-        lSellingPrice.Location = New Point(126, 117)
+        lSellingPrice.Location = New Point(125, 147)
         lSellingPrice.Name = "lSellingPrice"
         lSellingPrice.Size = New Size(22, 15)
         lSellingPrice.TabIndex = 26
@@ -161,7 +169,7 @@ Partial Class InventoryCard
         ' 
         Label17.AutoSize = True
         Label17.ForeColor = Color.DimGray
-        Label17.Location = New Point(4, 117)
+        Label17.Location = New Point(3, 147)
         Label17.Name = "Label17"
         Label17.Size = New Size(71, 15)
         Label17.TabIndex = 25
@@ -172,7 +180,7 @@ Partial Class InventoryCard
         lOriginalPrice.AutoSize = True
         lOriginalPrice.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lOriginalPrice.ForeColor = Color.DimGray
-        lOriginalPrice.Location = New Point(126, 102)
+        lOriginalPrice.Location = New Point(125, 132)
         lOriginalPrice.Name = "lOriginalPrice"
         lOriginalPrice.Size = New Size(22, 15)
         lOriginalPrice.TabIndex = 24
@@ -182,7 +190,7 @@ Partial Class InventoryCard
         ' 
         Label15.AutoSize = True
         Label15.ForeColor = Color.DimGray
-        Label15.Location = New Point(4, 102)
+        Label15.Location = New Point(3, 132)
         Label15.Name = "Label15"
         Label15.Size = New Size(78, 15)
         Label15.TabIndex = 23
@@ -230,21 +238,11 @@ Partial Class InventoryCard
         Label7.TabIndex = 15
         Label7.Text = "Category"
         ' 
-        ' lProductDescription
-        ' 
-        lProductDescription.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lProductDescription.ForeColor = Color.DimGray
-        lProductDescription.Location = New Point(36, 162)
-        lProductDescription.Name = "lProductDescription"
-        lProductDescription.Size = New Size(286, 48)
-        lProductDescription.TabIndex = 14
-        lProductDescription.Text = "---"
-        ' 
         ' Label5
         ' 
         Label5.AutoSize = True
         Label5.ForeColor = Color.DimGray
-        Label5.Location = New Point(4, 147)
+        Label5.Location = New Point(3, 177)
         Label5.Name = "Label5"
         Label5.Size = New Size(112, 15)
         Label5.TabIndex = 13
@@ -273,7 +271,7 @@ Partial Class InventoryCard
         ' 
         ' btnDelete
         ' 
-        btnDelete.Location = New Point(252, 213)
+        btnDelete.Location = New Point(251, 243)
         btnDelete.Name = "btnDelete"
         btnDelete.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnDelete.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -307,7 +305,7 @@ Partial Class InventoryCard
         ' 
         ' btnEdit
         ' 
-        btnEdit.Location = New Point(176, 213)
+        btnEdit.Location = New Point(175, 243)
         btnEdit.Name = "btnEdit"
         btnEdit.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnEdit.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -370,13 +368,65 @@ Partial Class InventoryCard
         Panel2.Size = New Size(325, 25)
         Panel2.TabIndex = 0
         ' 
+        ' lProductDescription
+        ' 
+        lProductDescription.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lProductDescription.ForeColor = Color.DimGray
+        lProductDescription.Location = New Point(35, 192)
+        lProductDescription.Name = "lProductDescription"
+        lProductDescription.Size = New Size(286, 48)
+        lProductDescription.TabIndex = 14
+        lProductDescription.Text = "---"
+        ' 
+        ' lStockIn
+        ' 
+        lStockIn.AutoSize = True
+        lStockIn.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lStockIn.ForeColor = Color.DimGray
+        lStockIn.Location = New Point(125, 102)
+        lStockIn.Name = "lStockIn"
+        lStockIn.Size = New Size(22, 15)
+        lStockIn.TabIndex = 31
+        lStockIn.Text = "---"
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.ForeColor = Color.DimGray
+        Label4.Location = New Point(3, 102)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(49, 15)
+        Label4.TabIndex = 30
+        Label4.Text = "Stock In"
+        ' 
+        ' lStockOut
+        ' 
+        lStockOut.AutoSize = True
+        lStockOut.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lStockOut.ForeColor = Color.DimGray
+        lStockOut.Location = New Point(125, 117)
+        lStockOut.Name = "lStockOut"
+        lStockOut.Size = New Size(22, 15)
+        lStockOut.TabIndex = 33
+        lStockOut.Text = "---"
+        ' 
+        ' Label8
+        ' 
+        Label8.AutoSize = True
+        Label8.ForeColor = Color.DimGray
+        Label8.Location = New Point(3, 117)
+        Label8.Name = "Label8"
+        Label8.Size = New Size(59, 15)
+        Label8.TabIndex = 32
+        Label8.Text = "Stock Out"
+        ' 
         ' InventoryCard
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         Controls.Add(Panel1)
         Name = "InventoryCard"
-        Size = New Size(325, 249)
+        Size = New Size(325, 281)
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
         Panel2.ResumeLayout(False)
@@ -402,8 +452,12 @@ Partial Class InventoryCard
     Friend WithEvents Label9 As Label
     Friend WithEvents lCategory As Label
     Friend WithEvents Label7 As Label
-    Friend WithEvents lProductDescription As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents KryptonButton1 As Krypton.Toolkit.KryptonButton
+    Friend WithEvents lStockOut As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents lStockIn As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents lProductDescription As Label
 
 End Class
