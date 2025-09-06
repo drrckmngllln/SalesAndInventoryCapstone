@@ -43,8 +43,21 @@ Public Class Sales
         colPrice.HeaderText = "Price"
         colPrice.DataPropertyName = "Price"
 
-        dgv.Columns.AddRange({colCode, colDesc, colQty, colPrice})
+        Dim colOriginalPrice As New DataGridViewTextBoxColumn()
+        colOriginalPrice.Name = "OriginalPrice"
+        colOriginalPrice.HeaderText = "Original Price"
+        colOriginalPrice.DataPropertyName = "OriginalPrice"
+        colOriginalPrice.Visible = False
+
+        Dim colSellingPrice As New DataGridViewTextBoxColumn()
+        colSellingPrice.Name = "SellingPrice"
+        colSellingPrice.HeaderText = "Selling Price"
+        colSellingPrice.DataPropertyName = "SellingPrice"
+        colSellingPrice.Visible = False
+
+        dgv.Columns.AddRange({colCode, colDesc, colQty, colPrice, colOriginalPrice, colSellingPrice})
     End Sub
+
 
     Private Function CalculateTotal() As Decimal
         Dim total As Decimal = 0
@@ -63,16 +76,20 @@ Public Class Sales
 
         Dim existingItem = inventoryItems.FirstOrDefault(Function(i) i.Code = code.ToUpper())
         If existingItem IsNot Nothing Then
+            ' Update existing item
             existingItem.Quantity += 1
-            existingItem.Price = inventory.SellingPrice * existingItem.Quantity
-            dgv.Refresh() ' Refresh to see updated quantity/price
+            existingItem.Price = existingItem.SellingPrice * existingItem.Quantity
+            dgv.Refresh() ' Refresh grid
         Else
+            ' Add new row with OriginalPrice + SellingPrice
             inventoryItems.Add(New SaleItemGrid With {
-                .Code = inventory.Code,
-                .Description = inventory.ProductName,
-                .Quantity = 1,
-                .Price = inventory.SellingPrice
-            })
+            .Code = inventory.Code,
+            .Description = inventory.ProductName,
+            .Quantity = 1,
+            .Price = inventory.SellingPrice,
+            .OriginalPrice = inventory.OriginalPrice,
+            .SellingPrice = inventory.SellingPrice
+        })
         End If
 
         ' Clear search box
@@ -89,6 +106,7 @@ Public Class Sales
             dgv.FirstDisplayedScrollingRowIndex = lastRowIndex
         End If
     End Sub
+
 
 
     Private Sub tSearch_KeyDown(sender As Object, e As KeyEventArgs) Handles tSearch.KeyDown
@@ -142,7 +160,9 @@ Public Class Sales
                     .Code = inv.Code,
                     .Description = inv.ProductName,
                     .Quantity = 1,
-                    .Price = inv.SellingPrice
+                    .Price = inv.SellingPrice,
+                    .OriginalPrice = inv.OriginalPrice,
+                    .SellingPrice = inv.SellingPrice
                 })
             End If
 
@@ -202,39 +222,69 @@ Public Class Sales
                                      lastName As String, firstName As String, middleName As String,
                                      items As List(Of SaleItemGrid)) As Task
         Using ctx As New DataContext()
-            ' Create sale record
+            ' Create sale record (initialize totals to 0)
             Dim sale As New Sale() With {
+                .CreatedAt = DateTime.UtcNow,
                 .ReferenceNumber = referenceNo,
                 .TotalSales = totalSales,
                 .CashGiven = cashGiven,
                 .LastName = lastName,
                 .FirstName = firstName,
-                .MiddleName = middleName
-            }
+                .MiddleName = middleName,
+                .OriginalPrice = 0D,
+                .SellingPrice = 0D,
+                .Profit = 0D
+        }
 
             ctx.Sales.Add(sale)
             Await ctx.SaveChangesAsync()
 
+            ' Track totals
+            Dim totalOriginal As Decimal = 0D
+            Dim totalSelling As Decimal = 0D
+            Dim totalProfit As Decimal = 0D
+
             ' Add sale items and update inventory stock
             For Each item In items
-                ' Get inventory ID
+                ' Get inventory entity
                 Dim invEntity = Await ctx.InventoryInputs.FirstOrDefaultAsync(Function(x) x.Code = item.Code)
                 If invEntity Is Nothing Then Continue For
 
+                ' Compute per-line values
+                Dim lineOriginal As Decimal = item.OriginalPrice * item.Quantity
+                Dim lineSelling As Decimal = item.SellingPrice * item.Quantity
+                Dim lineProfit As Decimal = lineSelling - lineOriginal
+
+                ' Add sale item record
                 ctx.SaleItems.Add(New SaleItem() With {
-                    .SaleId = sale.Id,
-                    .InventoryId = invEntity.Id,
-                    .Quantity = item.Quantity,
-                    .Price = item.Price
-                })
+                .SaleId = sale.Id,
+                .InventoryId = invEntity.Id,
+                .Quantity = item.Quantity,
+                .Price = item.Price, ' total for this line (usually SellingPrice × Qty)
+                .OriginalPrice = lineOriginal,
+                .SellingPrice = lineSelling,
+                .Profit = lineProfit
+            })
 
                 ' Deduct stock
                 invEntity.CurrentStock -= item.Quantity
+
+                ' Accumulate totals
+                totalOriginal += lineOriginal
+                totalSelling += lineSelling
+                totalProfit += lineProfit
             Next
+
+            ' Update sale totals
+            sale.OriginalPrice = totalOriginal
+            sale.SellingPrice = totalSelling
+            sale.Profit = totalProfit
 
             Await ctx.SaveChangesAsync()
         End Using
     End Function
+
+
 
     Private Sub ResetSaleForm()
         ' Clear DataGridView
@@ -261,9 +311,11 @@ Public Class Sales
 End Class
 
 Public Class SaleItemGrid
-    Public Property Id As Integer
     Public Property Code As String
     Public Property Description As String
-    Public Property Quantity As Integer = 1
+    Public Property Quantity As Integer
     Public Property Price As Decimal
+    Public Property OriginalPrice As Decimal
+    Public Property SellingPrice As Decimal
 End Class
+

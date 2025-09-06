@@ -16,13 +16,23 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Corrected.Microsoft.ReportingServices.ReportViewerControl.Winforms" Version="150.1358.0" />
+    <PackageReference Include="FastReport.OpenSource" Version="2025.2.11" />
     <PackageReference Include="Krypton.Toolkit" Version="95.25.4.111" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.13" />
+    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms" Version="150.1652.0" />
+    <PackageReference Include="Microsoft.ReportViewer.WinForms" Version="10.0.40219.1" />
     <PackageReference Include="MySql.Data" Version="9.0.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.3" />
+    <PackageReference Include="ReportViewerCore.WinForms" Version="15.1.26" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Forms\Report\ReportDs.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ReportDs.xsd</DependentUpon>
+    </Compile>
     <Compile Update="My Project\Application.Designer.vb">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -44,6 +54,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Forms\Report\ReportDs.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReportDs.Designer.vb</LastGenOutput>
+    </None>
     <None Update="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
