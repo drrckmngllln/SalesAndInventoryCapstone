@@ -2,8 +2,8 @@
 Imports MySql.Data.MySqlClient
 
 Module Connection
-    Public Connstring As String = "Server=localhost;Port=3307;User Id=root;password=password;database=salesinventory"
-    'Public Connstring As String = "Server=localhost;Port=3306;User Id=root;password=password;database=salesinventory"
+    'Public Connstring As String = "Server=localhost;Port=3307;User Id=root;password=password;database=salesinventory"
+    Public Connstring As String = "Server=localhost;Port=3306;User Id=root;password=password;database=salesinventory"
 
     Public con As New MySqlConnection(Connstring)
 
