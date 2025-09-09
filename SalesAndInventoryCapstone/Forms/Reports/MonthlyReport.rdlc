@@ -10,17 +10,20 @@
             <TextRuns>
               <TextRun>
                 <Value>Monthly Report</Value>
-                <Style />
+                <Style>
+                  <FontSize>15pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.44662cm</Top>
-        <Left>10.42141cm</Left>
-        <Height>0.6cm</Height>
-        <Width>2.5cm</Width>
+        <Height>1.12917cm</Height>
+        <Width>27.94cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -35,31 +38,31 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.08681cm</Width>
+              <Width>3.57706cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.69403cm</Width>
+              <Width>3.18428cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.74694cm</Width>
+              <Width>3.23719cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.99025cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.99025cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.99025cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.99025cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.99025cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.99025cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -638,11 +641,10 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>Report</DataSetName>
+        <DataSetName>ReportDs</DataSetName>
         <Top>4.38891cm</Top>
-        <Left>0.60537cm</Left>
         <Height>1.2cm</Height>
-        <Width>23.52778cm</Width>
+        <Width>27.94cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -651,17 +653,17 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>5.65625in</Height>
+    <Height>3.20036in</Height>
     <Style />
   </Body>
-  <Width>9.68874in</Width>
+  <Width>11in</Width>
   <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
+    <PageHeight>8.5in</PageHeight>
+    <PageWidth>11in</PageWidth>
+    <LeftMargin>0.25in</LeftMargin>
+    <RightMargin>0.25in</RightMargin>
+    <TopMargin>0.25in</TopMargin>
+    <BottomMargin>0.25in</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
@@ -676,7 +678,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="Report">
+    <DataSet Name="ReportDs">
       <Query>
         <DataSourceName>ReportDs</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -729,7 +731,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDs</rd:DataSetName>
-        <rd:SchemaPath>C:\Github\SalesAndInventoryCapstone\SalesAndInventoryCapstone\Forms\Report\ReportDs.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\dev\SalesAndInventoryCapstone\SalesAndInventoryCapstone\Forms\Reports\ReportDs.xsd</rd:SchemaPath>
         <rd:TableName>MonthlyReport</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />

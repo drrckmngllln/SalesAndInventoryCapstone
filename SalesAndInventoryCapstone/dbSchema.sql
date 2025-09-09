@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Server version:               8.4.5 - MySQL Community Server - GPL
--- Server OS:                    Win64
--- HeidiSQL Version:             12.10.0.7000
+-- Host:                         localhost
+-- Server version:               8.0.42 - MySQL Community Server - GPL
+-- Server OS:                    Linux
+-- HeidiSQL Version:             12.8.0.6908
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -23,8 +23,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table salesinventory.categories: ~9 rows (approximately)
-DELETE FROM `categories`;
-INSERT INTO `categories` (`Id`, `Name`) VALUES
+REPLACE INTO `categories` (`Id`, `Name`) VALUES
 	(23, 'Brake System'),
 	(25, 'Cabin Accessories'),
 	(16, 'category 1'),
@@ -53,12 +52,11 @@ CREATE TABLE IF NOT EXISTS `inventories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table salesinventory.inventories: ~4 rows (approximately)
-DELETE FROM `inventories`;
-INSERT INTO `inventories` (`Id`, `Code`, `ProductId`, `CurrentStock`, `StockIn`, `StockOut`, `OriginalPrice`, `SellingPrice`, `Remarks`) VALUES
+REPLACE INTO `inventories` (`Id`, `Code`, `ProductId`, `CurrentStock`, `StockIn`, `StockOut`, `OriginalPrice`, `SellingPrice`, `Remarks`) VALUES
 	(7, 'P2', 25, 57, 10, 0, 250.00, 300.00, ''),
 	(8, 'PTOSHAFT', 23, 23, 10, 0, 1000.00, 1500.00, ''),
-	(9, 'HPUMP', 22, 60, 10, 0, 899.00, 1000.00, ''),
-	(10, 'CLUTCH_PLATE', 27, 20, 0, 0, 950.00, 1000.00, '');
+	(9, 'HPUMP', 22, 55, 10, 0, 899.00, 1000.00, ''),
+	(10, 'CLUTCH_PLATE', 27, 19, 0, 0, 950.00, 1000.00, '');
 
 -- Dumping structure for view salesinventory.inventoriesview
 -- Creating temporary table to overcome VIEW dependency errors
@@ -90,7 +88,6 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table salesinventory.notifications: ~0 rows (approximately)
-DELETE FROM `notifications`;
 
 -- Dumping structure for table salesinventory.products
 CREATE TABLE IF NOT EXISTS `products` (
@@ -106,8 +103,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table salesinventory.products: ~10 rows (approximately)
-DELETE FROM `products`;
-INSERT INTO `products` (`Id`, `CreatedAt`, `ProductName`, `ProductDescription`, `CategoryId`) VALUES
+REPLACE INTO `products` (`Id`, `CreatedAt`, `ProductName`, `ProductDescription`, `CategoryId`) VALUES
 	(22, '2025-08-04 02:32:16', 'Hydraulic Pump', 'High-pressure pump for hydraulic fluid transfer', 19),
 	(23, '2025-08-04 02:32:54', 'PTO Shaft', 'Power Take-Off shaft for transmitting engine power', 20),
 	(24, '2025-08-04 02:35:16', 'Front Axle Assembly', 'Complete front axle for 4WD tractor models', 21),
@@ -136,9 +132,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.roles: ~0 rows (approximately)
-DELETE FROM `roles`;
-INSERT INTO `roles` (`Id`, `Name`) VALUES
+-- Dumping data for table salesinventory.roles: ~3 rows (approximately)
+REPLACE INTO `roles` (`Id`, `Name`) VALUES
 	(5, 'Admin'),
 	(6, 'Sales'),
 	(7, 'Inventory');
@@ -158,13 +153,14 @@ CREATE TABLE IF NOT EXISTS `saleitem` (
   KEY `InventoryId` (`InventoryId`),
   CONSTRAINT `FK_saleitem_inventories` FOREIGN KEY (`InventoryId`) REFERENCES `inventories` (`Id`),
   CONSTRAINT `FK_saleitem_sales` FOREIGN KEY (`SalesId`) REFERENCES `sales` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.saleitem: ~0 rows (approximately)
-DELETE FROM `saleitem`;
-INSERT INTO `saleitem` (`Id`, `SalesId`, `InventoryId`, `Quantity`, `Price`, `OriginalPrice`, `SellingPrice`, `Profit`) VALUES
+-- Dumping data for table salesinventory.saleitem: ~4 rows (approximately)
+REPLACE INTO `saleitem` (`Id`, `SalesId`, `InventoryId`, `Quantity`, `Price`, `OriginalPrice`, `SellingPrice`, `Profit`) VALUES
 	(9, 12, 7, 5, 1500.00, 1250.00, 1500.00, 250.00),
-	(10, 12, 8, 2, 3000.00, 2000.00, 3000.00, 1000.00);
+	(10, 12, 8, 2, 3000.00, 2000.00, 3000.00, 1000.00),
+	(11, 13, 9, 5, 5000.00, 4495.00, 5000.00, 505.00),
+	(12, 14, 10, 1, 1000.00, 950.00, 1000.00, 50.00);
 
 -- Dumping structure for table salesinventory.sales
 CREATE TABLE IF NOT EXISTS `sales` (
@@ -181,12 +177,13 @@ CREATE TABLE IF NOT EXISTS `sales` (
   `Profit` decimal(18,2) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `ReferenceNumber` (`ReferenceNumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.sales: ~1 rows (approximately)
-DELETE FROM `sales`;
-INSERT INTO `sales` (`Id`, `ReferenceNumber`, `TotalSales`, `CashGiven`, `LastName`, `FirstName`, `MiddleName`, `CreatedAt`, `OriginalPrice`, `SellingPrice`, `Profit`) VALUES
-	(12, '5DE08E01-6186-4636-9703-56413E135B80', 4500.00, 5000.00, 'Dela Cruz', 'Juan', 'Tamad', '2025-09-06 05:26:30', 3250.00, 4500.00, 1250.00);
+-- Dumping data for table salesinventory.sales: ~3 rows (approximately)
+REPLACE INTO `sales` (`Id`, `ReferenceNumber`, `TotalSales`, `CashGiven`, `LastName`, `FirstName`, `MiddleName`, `CreatedAt`, `OriginalPrice`, `SellingPrice`, `Profit`) VALUES
+	(12, '5DE08E01-6186-4636-9703-56413E135B80', 4500.00, 5000.00, 'Dela Cruz', 'Juan', 'Tamad', '2025-09-06 05:26:30', 3250.00, 4500.00, 1250.00),
+	(13, '81DA52DD-A7C0-4609-AE62-EA8AC7CF79FB', 5000.00, 5000.00, 'James', 'Lebron', 'James', '2025-09-07 12:50:23', 4495.00, 5000.00, 505.00),
+	(14, 'D9489661-A7D6-40CC-BDCA-36CB6EBDA96D', 1000.00, 1000.00, 'Perez', 'Sergio', 'Ballad', '2025-09-09 11:18:53', 950.00, 1000.00, 50.00);
 
 -- Dumping structure for table salesinventory.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -198,9 +195,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.users: ~0 rows (approximately)
-DELETE FROM `users`;
-INSERT INTO `users` (`Id`, `LastName`, `FirstName`, `Username`, `Password`) VALUES
+-- Dumping data for table salesinventory.users: ~3 rows (approximately)
+REPLACE INTO `users` (`Id`, `LastName`, `FirstName`, `Username`, `Password`) VALUES
 	(10, 'Admin', 'Admin', 'admin', '$2a$11$aZmSS9lvkgKGvzbMh02YwuMnzmtZBFmclOMt87dPTf9coFcwe85LO'),
 	(11, 'Sales', 'Sales', 'sales', '$2a$11$zHozTJEy8EMWgCZKU3np6OtY4eoMUpDQMj9zjHrNtCPsacor8x5Lq'),
 	(12, 'Inventory', 'Inventory', 'inventory', '$2a$11$WtgTSYlpKiuAo804CXU20uDTcX9xd.z4jRQNksmDpCxoHQxT19eP6');
@@ -216,17 +212,14 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table salesinventory.user_role: ~0 rows (approximately)
-DELETE FROM `user_role`;
 
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `inventoriesview`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `inventoriesview` AS select `i`.`Id` AS `Id`,`i`.`Code` AS `Code`,`p`.`Id` AS `ProductId`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Name` AS `CategoryName`,`i`.`CurrentStock` AS `CurrentStock`,`i`.`StockIn` AS `StockIn`,`i`.`StockOut` AS `StockOut`,`i`.`OriginalPrice` AS `OriginalPrice`,`i`.`SellingPrice` AS `SellingPrice`,`i`.`Remarks` AS `Remarks` from ((`inventories` `i` left join `products` `p` on((`i`.`ProductId` = `p`.`Id`))) left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)))
-;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `inventoriesview` AS select `i`.`Id` AS `Id`,`i`.`Code` AS `Code`,`p`.`Id` AS `ProductId`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Name` AS `CategoryName`,`i`.`CurrentStock` AS `CurrentStock`,`i`.`StockIn` AS `StockIn`,`i`.`StockOut` AS `StockOut`,`i`.`OriginalPrice` AS `OriginalPrice`,`i`.`SellingPrice` AS `SellingPrice`,`i`.`Remarks` AS `Remarks` from ((`inventories` `i` left join `products` `p` on((`i`.`ProductId` = `p`.`Id`))) left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)));
 
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `productsview`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `productsview` AS select `p`.`Id` AS `Id`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Name` AS `Category`,`c`.`Id` AS `CategoryId` from (`products` `p` left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)))
-;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `productsview` AS select `p`.`Id` AS `Id`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Name` AS `Category`,`c`.`Id` AS `CategoryId` from (`products` `p` left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)));
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

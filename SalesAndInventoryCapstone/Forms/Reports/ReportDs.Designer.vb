@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-Namespace SalesAndInventoryCapstone.Forms.Report
+Namespace SalesAndInventoryCapstone.Forms.Reports
     
     '''<summary>
     '''Represents a strongly typed in-memory cache of data.

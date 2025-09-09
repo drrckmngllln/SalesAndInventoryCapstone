@@ -77,7 +77,7 @@
 
     'this function loads the report form
     Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
-        LoadUI(pnlMain, New Report)
+        LoadUI(pnlMain, New ReportForm)
         ButtonSelector("report")
     End Sub
 

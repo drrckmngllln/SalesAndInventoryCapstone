@@ -1,0 +1,70 @@
+﻿Imports Microsoft.EntityFrameworkCore
+Imports Microsoft.Reporting.WinForms
+
+Public Class ReportForm
+
+    Private ReadOnly DataSetName As String = "ReportDs"
+    Private ReadOnly ReportPath As String =
+        IO.Path.Combine(Application.StartupPath, "Reports", "MonthlyReport.rdlc")
+
+    ' Keep only this - don’t create another ReportForm inside itself
+    Private Property ReportViewer1 As ReportViewer
+
+    ' Initialize and embed ReportViewer inside a Panel
+    Public Sub InitializeReport(hostPanel As Panel)
+        Dim rptViewer As New ReportViewer()
+        With rptViewer
+            .Dock = DockStyle.Fill
+            .ProcessingMode = ProcessingMode.Local
+            .LocalReport.ReportPath = ReportPath
+            .SetDisplayMode(DisplayMode.PrintLayout)
+        End With
+
+        hostPanel.Controls.Clear()
+        hostPanel.Controls.Add(rptViewer)
+
+        ReportViewer1 = rptViewer
+    End Sub
+
+    Private Async Sub ReportForm_Load(sender As Object, e As EventArgs) Handles Me.Load
+        InitializeReport(pnlReport)
+
+        ' Example: load last month's sales
+        Await LoadSalesDataAsync(dateFrom.Value.Date, dateTo.Value.Date)
+    End Sub
+
+    ' Async loader for sales data
+    Public Async Function LoadSalesDataAsync(fromDate As DateTime, toDate As DateTime) As Task
+        Using ctx As New DataContext()
+            Dim salesInRange = Await ctx.Sales _
+                .Where(Function(s) s.CreatedAt >= fromDate AndAlso s.CreatedAt <= toDate) _
+                .Select(Function(s) New With {
+                    .ReferenceNumber = s.ReferenceNumber,
+                    .CreatedAt = s.CreatedAt,
+                    .TotalSales = s.TotalSales,
+                    .CashGiven = s.CashGiven,
+                    .LastName = s.LastName,
+                    .FirstName = s.FirstName,
+                    .MiddleName = s.MiddleName,
+                    .OriginalPrice = s.OriginalPrice,
+                    .SellingPrice = s.SellingPrice,
+                    .Profit = s.Profit
+                }) _
+                .OrderBy(Function(s) s.CreatedAt) _
+                .ToListAsync()
+
+            Dim rds As New ReportDataSource(DataSetName, salesInRange)
+            ReportViewer1.LocalReport.DataSources.Clear()
+            ReportViewer1.LocalReport.DataSources.Add(rds)
+            ReportViewer1.LocalReport.ReportPath = ReportPath
+
+            ReportViewer1.RefreshReport()
+        End Using
+    End Function
+
+    Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        InitializeReport(pnlReport)
+
+        Await LoadSalesDataAsync(dateFrom.Value.Date, dateTo.Value.Date)
+    End Sub
+End Class
