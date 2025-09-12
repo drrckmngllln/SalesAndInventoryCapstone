@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- Host:                         localhost
+-- Host:                         127.0.0.1
 -- Server version:               8.0.42 - MySQL Community Server - GPL
 -- Server OS:                    Linux
 -- HeidiSQL Version:             12.8.0.6908
@@ -20,19 +20,17 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `Name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table salesinventory.categories: ~9 rows (approximately)
 REPLACE INTO `categories` (`Id`, `Name`) VALUES
 	(23, 'Brake System'),
 	(25, 'Cabin Accessories'),
-	(16, 'category 1'),
 	(24, 'Cooling System'),
 	(22, 'Engine Components'),
 	(19, 'Hydraulic System'),
-	(21, 'Suspension System'),
-	(20, 'Transmission Parts'),
-	(26, 'Wheel Assembly');
+	(27, 'Sample category'),
+	(21, 'Suspension System');
 
 -- Dumping structure for table salesinventory.inventories
 CREATE TABLE IF NOT EXISTS `inventories` (
@@ -105,15 +103,15 @@ CREATE TABLE IF NOT EXISTS `products` (
 -- Dumping data for table salesinventory.products: ~10 rows (approximately)
 REPLACE INTO `products` (`Id`, `CreatedAt`, `ProductName`, `ProductDescription`, `CategoryId`) VALUES
 	(22, '2025-08-04 02:32:16', 'Hydraulic Pump', 'High-pressure pump for hydraulic fluid transfer', 19),
-	(23, '2025-08-04 02:32:54', 'PTO Shaft', 'Power Take-Off shaft for transmitting engine power', 20),
+	(23, '2025-08-04 02:32:54', 'PTO Shaft', 'Power Take-Off shaft for transmitting engine power', NULL),
 	(24, '2025-08-04 02:35:16', 'Front Axle Assembly', 'Complete front axle for 4WD tractor models', 21),
 	(25, '2025-08-04 02:36:40', 'Fuel Injector', 'Precision injector for diesel engine combustion', 22),
 	(26, '2025-08-04 02:37:09', 'Air Filter Element', 'Filters air intake to prevent engine contamination', 22),
-	(27, '2025-08-04 02:39:07', 'Clutch Plate', 'Friction plate for transmission engagement', 20),
+	(27, '2025-08-04 02:39:07', 'Clutch Plate', 'Friction plate for transmission engagement', NULL),
 	(28, '2025-08-04 02:39:23', 'Brake Disc', 'Heavy-duty brake disc for rear wheels', 23),
 	(29, '2025-08-04 02:39:45', 'Radiator Hose', 'Flexible hose for engine cooling system', 24),
 	(30, '2025-08-04 02:40:16', 'Tractor Seat Cushion', 'Padded seat cushion with ergonomic support', 25),
-	(31, '2025-08-04 02:40:37', 'Rear Wheel Rim', 'Steel rim compatible with 18-inch tractor tires', 26);
+	(31, '2025-08-04 02:40:37', 'Rear Wheel Rim', 'Steel rim compatible with 18-inch tractor tires', NULL);
 
 -- Dumping structure for view salesinventory.productsview
 -- Creating temporary table to overcome VIEW dependency errors
@@ -155,12 +153,27 @@ CREATE TABLE IF NOT EXISTS `saleitem` (
   CONSTRAINT `FK_saleitem_sales` FOREIGN KEY (`SalesId`) REFERENCES `sales` (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.saleitem: ~4 rows (approximately)
+-- Dumping data for table salesinventory.saleitem: ~2 rows (approximately)
 REPLACE INTO `saleitem` (`Id`, `SalesId`, `InventoryId`, `Quantity`, `Price`, `OriginalPrice`, `SellingPrice`, `Profit`) VALUES
 	(9, 12, 7, 5, 1500.00, 1250.00, 1500.00, 250.00),
 	(10, 12, 8, 2, 3000.00, 2000.00, 3000.00, 1000.00),
 	(11, 13, 9, 5, 5000.00, 4495.00, 5000.00, 505.00),
 	(12, 14, 10, 1, 1000.00, 950.00, 1000.00, 50.00);
+
+-- Dumping structure for view salesinventory.saleitemview
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `saleitemview` (
+	`Id` INT NOT NULL,
+	`CreatedAt` TIMESTAMP NULL,
+	`ReferenceNo` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`ProductName` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`Category` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`Quantity` INT NULL,
+	`Price` DECIMAL(18,2) NOT NULL,
+	`OriginalPrice` DECIMAL(18,2) NULL,
+	`SellingPrice` DECIMAL(18,2) NULL,
+	`Profit` DECIMAL(18,2) NULL
+) ENGINE=MyISAM;
 
 -- Dumping structure for table salesinventory.sales
 CREATE TABLE IF NOT EXISTS `sales` (
@@ -220,6 +233,10 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `inventoriesview` AS select
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `productsview`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `productsview` AS select `p`.`Id` AS `Id`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Name` AS `Category`,`c`.`Id` AS `CategoryId` from (`products` `p` left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)));
+
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `saleitemview`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `saleitemview` AS select `si`.`Id` AS `Id`,`s`.`CreatedAt` AS `CreatedAt`,`s`.`ReferenceNumber` AS `ReferenceNo`,`p`.`ProductName` AS `ProductName`,`c`.`Name` AS `Category`,`si`.`Quantity` AS `Quantity`,`si`.`Price` AS `Price`,`si`.`OriginalPrice` AS `OriginalPrice`,`si`.`SellingPrice` AS `SellingPrice`,`si`.`Profit` AS `Profit` from ((((`saleitem` `si` left join `sales` `s` on((`s`.`Id` = `si`.`SalesId`))) left join `inventories` `i` on((`i`.`Id` = `si`.`InventoryId`))) left join `products` `p` on((`p`.`Id` = `i`.`ProductId`))) left join `categories` `c` on((`c`.`Id` = `p`.`CategoryId`)));
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

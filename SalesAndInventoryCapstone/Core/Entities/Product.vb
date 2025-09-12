@@ -9,7 +9,7 @@ Public Class Product
     <Column("ProductDescription")>
     Public Property ProductDescription As String
     <Column("CategoryId")>
-    Public Property CategoryId As Integer
+    Public Property CategoryId As Integer?
     <Column("Category")>
     Public Property Category As String
 End Class

@@ -1,26 +1,15 @@
-﻿Public Class ProductDbHelper
+﻿Imports Microsoft.EntityFrameworkCore
+
+Public Class ProductDbHelper
     Public Shared Async Function GetProducts(Optional search As String = Nothing) As Task(Of List(Of Product))
-        Dim sql As String = "SELECT * FROM productsview"
+        Using context As New DataContext()
+            Dim productLists = context.Products.AsQueryable()
 
-        If Not String.IsNullOrEmpty(search) Then
-            sql &= " WHERE ProductName LIKE '%" & search.Replace("'", "''") & "%'"
-        End If
-
-        Dim productsDataSet As DataSet = Await DBHelper.Fetch(sql)
-        Dim products As New List(Of Product)()
-        If productsDataSet.Tables.Count > 0 Then
-            For Each row As DataRow In productsDataSet.Tables(0).Rows
-                Dim product As New Product With {
-                    .Id = Convert.ToInt32(row("Id")),
-                    .ProductName = row("ProductName").ToString(),
-                    .ProductDescription = If(String.IsNullOrWhiteSpace(row("ProductDescription").ToString()), "(No Product Description)", row("ProductDescription").ToString()),
-                    .Category = row("Category").ToString(),
-                    .CategoryId = Convert.ToInt32(row("CategoryId"))
-                }
-                products.Add(product)
-            Next
-        End If
-        Return products
+            If Not String.IsNullOrEmpty(search) Then
+                productLists = productLists.Where(Function(p) p.ProductName.Contains(search))
+            End If
+            Return Await productLists.ToListAsync()
+        End Using
     End Function
 
     Public Shared Async Function GetProductById(productId As Integer) As Task(Of Product)

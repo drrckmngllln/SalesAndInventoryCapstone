@@ -15,6 +15,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Forms\Reports\MonthlyReport.rdlc" />
+    <None Remove="Forms\Reports\SaleItemReport.rdlc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Forms\Reports\MonthlyReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Forms\Reports\SaleItemReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
     <Import Include="System.Windows.Forms" />
@@ -67,6 +81,10 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Debug\net8.0-windows\Reports\" />
   </ItemGroup>
 
 </Project>

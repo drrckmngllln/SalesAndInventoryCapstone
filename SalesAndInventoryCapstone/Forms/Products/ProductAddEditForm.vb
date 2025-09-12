@@ -1,30 +1,49 @@
 ﻿Imports Krypton.Toolkit
+Imports Microsoft.EntityFrameworkCore
 
 Public Class ProductAddEditForm
-    Dim db As New DBHelper()
-    Public data As Product
+    Public data As Products
+    Public productId As Integer
 
     ' Initialize the form and set up the controls
     Async Function GetCategories() As Task
-        Dim categories = Await CategoryDbHelper.GetCategories()
+        Using context As New DataContext()
+            Dim categories = Await context.Categories.ToListAsync
+            cmbCategory.Items.Clear()
+            cmbCategory.DisplayMember = "Name"
+            cmbCategory.ValueMember = "Id"
+            cmbCategory.DataSource = categories
 
-        cmbCategory.Items.Clear()
-        cmbCategory.DisplayMember = "Name"
-        cmbCategory.ValueMember = "Id"
-        cmbCategory.DataSource = categories
 
-        If data IsNot Nothing Then
-            cmbCategory.SelectedValue = data.CategoryId
-        End If
+            If productId Then
+                cmbCategory.SelectedValue = data
+            End If
+        End Using
 
     End Function
 
+    Async Function GetProductById(id As Integer) As Task(Of Product)
+        Using context As New DataContext()
+            Dim productData = Await context.Products.FindAsync(id)
+            If productData IsNot Nothing Then
+                Return productData
+            Else
+                MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.Close()
+            End If
+        End Using
+    End Function
+
     ' Initialize the form with data if available, otherwise set it for creating a new product
-    Sub DataInit()
-        If data IsNot Nothing Then
-            tProductName.Text = data.ProductName
-            tProductDescription.Text = data.ProductDescription
-            cmbCategory.SelectedValue = data.CategoryId
+    Async Sub DataInit()
+        Dim product = Await GetProductById(productId)
+
+        If product IsNot Nothing Then
+
+
+            tProductName.Text = product.ProductName
+            tProductDescription.Text = product.ProductDescription
+            cmbCategory.SelectedValue = product.CategoryId
 
             Me.Text = "Edit Product"
             btnSave.Text = "Update Product"

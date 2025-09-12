@@ -5,26 +5,28 @@
     Sub DataInit()
         If data IsNot Nothing Then
             lblProductName.Text = data.ProductName
-            lblCategory.Text = data.Category
+            lblCategory.Text = If(String.IsNullOrWhiteSpace(data.Category), "(No Category)", data.Category)
             lblDescription.Text = data.ProductDescription
         End If
     End Sub
 
     'this function initializes the product card with data from the DataRow and serve as a refetch when editing a product
     Async Function RefetchData() As Task
-        Dim productData = Await ProductDbHelper.GetProductById(data.Id)
-        If productData IsNot Nothing Then
-            data = productData
-            DataInit()
-        Else
-            MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End If
+        Using context As New DataContext()
+            Dim productData = Await context.ProductsViews.FindAsync(data.Id)
+            If productData IsNot Nothing Then
+                data = productData
+                DataInit()
+            Else
+                MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End Using
     End Function
 
     'this function handles the edit button click event, opens the ProductAddEditForm, and refetches the data after closing the form
     Async Function HandleEdit() As Task
         Dim frm As New ProductAddEditForm()
-        frm.data = data
+        frm.productId = data.Id
         frm.ShowDialog(Me)
         Await RefetchData()
     End Function

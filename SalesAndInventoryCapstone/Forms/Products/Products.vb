@@ -1,5 +1,8 @@
-﻿Public Class Products
-    Dim products As New DataSet
+﻿Imports System.Text.Json
+Imports Microsoft.EntityFrameworkCore
+
+Public Class Products
+    'Dim products As New DataSet
 
     Private Async Sub Products_Load(sender As Object, e As EventArgs) Handles Me.Load
         Await GetProducts()
@@ -18,13 +21,21 @@
 
     'this function fetches the products from the database and displays them in the panel
     Async Function GetProducts(Optional search As String = Nothing) As Task
-        Dim products = Await ProductDbHelper.GetProducts(search)
+        Using context As New DataContext()
+            Dim productLists = context.Products.AsQueryable()
+            If Not String.IsNullOrEmpty(search) Then
+                productLists = productLists.Where(Function(p) p.ProductName.Contains(search))
+            End If
 
-        For Each data As Product In products
-            Dim card As New ProductCard()
-            card.data = data
-            pnlData.Controls.Add(card)
-        Next
+            Dim products = Await productLists.ToListAsync()
+
+            For Each data As Product In products
+                Dim card As New ProductCard()
+                card.data = data
+                pnlData.Controls.Add(card)
+            Next
+        End Using
+
     End Function
 
     'this function is called when the user clicks on the new button
