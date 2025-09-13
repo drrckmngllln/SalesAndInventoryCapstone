@@ -2,13 +2,12 @@
 Imports Microsoft.EntityFrameworkCore
 
 Public Class ProductAddEditForm
-    Public data As Products
     Public productId As Integer
 
     ' Initialize the form and set up the controls
     Async Function GetCategories() As Task
         Using context As New DataContext()
-            Dim categories = Await context.Categories.ToListAsync
+            Dim categories = Await context.Categories.ToListAsync()
             cmbCategory.Items.Clear()
             cmbCategory.DisplayMember = "Name"
             cmbCategory.ValueMember = "Id"
@@ -16,7 +15,9 @@ Public Class ProductAddEditForm
 
 
             If productId Then
-                cmbCategory.SelectedValue = data
+
+                Dim data = Await GetProductById(productId)
+                cmbCategory.SelectedValue = data.CategoryId
             End If
         End Using
 
@@ -102,14 +103,14 @@ Public Class ProductAddEditForm
 
     Private Async Sub ProductAddEditForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Enter Then
-            Await OnSubmit(data Is Nothing)
+            Await OnSubmit(productId <> 0)
         ElseIf e.KeyCode = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
     Private Async Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        Await OnSubmit(data Is Nothing)
+        Await OnSubmit(productId <> 0)
     End Sub
 
 

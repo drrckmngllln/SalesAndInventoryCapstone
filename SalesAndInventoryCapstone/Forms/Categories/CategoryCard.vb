@@ -13,10 +13,10 @@
     End Function
 
     Async Sub HandleEditCategory()
-        Dim frm As New CategoryAEForm
-        frm.category = data
+        Dim frm As New CategoryAEForm()
+        frm.id = data.Id
         frm.Text = "Edit Category"
-        frm.ShowDialog(Me)
+        frm.ShowDialog()
         Await HandleRefetch()
     End Sub
 

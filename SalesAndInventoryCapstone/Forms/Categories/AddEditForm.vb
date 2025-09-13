@@ -1,5 +1,5 @@
 ﻿Public Class CategoryAEForm
-    Public category As New Category()
+    Public id As Integer
     Dim db As New DBHelper()
 
     Async Function OnSubmit(isCreate As Boolean) As Task
@@ -8,13 +8,58 @@
             Return
         End If
 
-        If isCreate Then
+        Using context As New DataContext()
+            If isCreate Then
+                Dim data As New Category() With {
+                .Name = tName.Text.Trim()
+                }
+
+                context.Categories.Add(data)
+
+                Dim result = Await context.SaveChangesAsync() > 0
+
+                If result Then
+                    MsgBox("Category created successfully!")
+                Else
+                    MsgBox("Error creating category, please try again.")
+                    Return
+                End If
+                Me.Close()
+            Else
+                Dim update = Await context.Categories.FindAsync()
+
+                If update Is Nothing Then
+                    MsgBox("Category not found, please try again.")
+                    Return
+                End If
+
+                update.Name = tName.Text.Trim()
+
+                Dim result = Await context.SaveChangesAsync() > 0
+
+                If result Then
+                    MsgBox("Category updated successfully!")
+                Else
+                    MsgBox("Error updating category, please try again.")
+                    Return
+                End If
+                Me.Close()
+            End If
+        End Using
+
+    End Function
+
+    Async Function CreateAsync() As Task
+        If String.IsNullOrEmpty(tName.Text) Then
+            MsgBox("Error, required fields is missing")
+            Return
+        End If
+        Using context As New DataContext()
             Dim data As New Category() With {
                 .Name = tName.Text.Trim()
             }
-
-            Dim result = Await CategoryDbHelper.AddCategory(data)
-
+            context.Categories.Add(data)
+            Dim result = Await context.SaveChangesAsync() > 0
             If result Then
                 MsgBox("Category created successfully!")
             Else
@@ -22,12 +67,22 @@
                 Return
             End If
             Me.Close()
-        Else
-            Dim data As New Category() With {
-                .Id = category.Id,
-                .Name = tName.Text.Trim()
-            }
-            Dim result = Await CategoryDbHelper.UpdateCategory(data)
+        End Using
+    End Function
+
+    Async Function UpdateAsync() As Task
+        If String.IsNullOrEmpty(tName.Text) Then
+            MsgBox("Error, required fields is missing")
+            Return
+        End If
+        Using context As New DataContext()
+            Dim update = Await context.Categories.FindAsync(id)
+            If update Is Nothing Then
+                MsgBox("Category not found, please try again.")
+                Return
+            End If
+            update.Name = tName.Text.Trim()
+            Dim result = Await context.SaveChangesAsync() > 0
             If result Then
                 MsgBox("Category updated successfully!")
             Else
@@ -35,25 +90,29 @@
                 Return
             End If
             Me.Close()
-        End If
+        End Using
     End Function
 
     Private Async Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
-        Await OnSubmit(category IsNot Nothing)
+        If Me.Text = "New Category" Then
+            Await CreateAsync()
+        ElseIf Me.Text = "Edit Category" Then
+            Await UpdateAsync()
+        End If
+
     End Sub
 
     Private Sub CategoryAEForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If category IsNot Nothing Then
-            Me.Text = "New Category"
-        Else
-            Me.Text = "Edit Category"
-            tName.Text = category.Name
-        End If
+
     End Sub
 
     Private Async Sub CategoryAEForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Enter Then
-            Await OnSubmit(category IsNot Nothing)
+            If Me.Text = "New Category" Then
+                Await CreateAsync()
+            ElseIf Me.Text = "Edit Category" Then
+                Await UpdateAsync()
+            End If
         ElseIf e.KeyCode = Keys.Escape Then
             Me.Close()
         End If

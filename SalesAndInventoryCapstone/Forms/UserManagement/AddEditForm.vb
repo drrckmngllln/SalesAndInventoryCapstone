@@ -1,10 +1,10 @@
-﻿Public Class AddEditForm
+﻿Imports Microsoft.EntityFrameworkCore
+
+Public Class AddEditForm
     Public data As DataRow
     Dim db As New DBHelper()
 
     Async Sub OnSubmit(isCreate As Boolean)
-
-
         If isCreate Then
             Dim textBoxes As New List(Of Krypton.Toolkit.KryptonTextBox) From {tLastName, tFirstName, tUsername, tPassword}
 
@@ -19,20 +19,33 @@
                 Return
             End If
 
-            Dim newData As New Dictionary(Of String, Object) From {
-                {"LastName", tLastName.Text.Trim()},
-                {"FirstName", tFirstName.Text.Trim()},
-                {"Username", tUsername.Text.Trim()},
-                {"Password", tPassword.Text.Trim()}
-            }
-            Dim result = Await db.CreateAsync("users", newData)
-            If result Then
-                MsgBox("User created successfully!")
-                Me.Close()
-            Else
-                MsgBox("Error creating user, please try again.")
-                Return
-            End If
+            Using context As New DataContext()
+                Dim user = Await context.Users _
+                .AnyAsync(Function(u) u.Username = tUsername.Text.Trim() _
+                    Or (u.LastName = tLastName.Text _
+                    AndAlso u.FirstName = tFirstName.Text))
+                If user Then
+                    MsgBox("Error, user already exists")
+                    Return
+                End If
+
+                context.Users.Add(New User With {
+                    .LastName = tLastName.Text.Trim(),
+                    .FirstName = tFirstName.Text.Trim(),
+                    .Username = tUsername.Text.Trim(),
+                    .Password = HashPassword(tPassword.Text.Trim())
+                })
+
+                Dim result = Await context.SaveChangesAsync() > 0
+
+                If result Then
+                    MsgBox("User created successfully!")
+                    Me.Close()
+                Else
+                    MsgBox("Error creating user, please try again.")
+                    Return
+                End If
+            End Using
         Else
             Dim textBoxes As New List(Of Krypton.Toolkit.KryptonTextBox) From {tLastName, tFirstName, tUsername}
 
@@ -47,16 +60,30 @@
                 Return
             End If
 
-            Dim updatedData As New Dictionary(Of String, Object) From {
-                {"LastName", tLastName.Text.Trim()},
-                {"FirstName", tFirstName.Text.Trim()},
-                {"Username", tUsername.Text.Trim()}
-            }
-            If Not String.IsNullOrEmpty(tPassword.Text.Trim()) Then
-                updatedData("Password") = tPassword.Text.Trim()
-            End If
-            Await db.UpdateAsync("users", updatedData, "id = " & data("id").ToString())
-            MsgBox("User updated successfully!")
+            Using context As New DataContext()
+                Dim user = Await context.Users.FindAsync(Convert.ToInt32(data("id")))
+                If user Is Nothing Then
+                    MsgBox("Error, user not found")
+                    Return
+                End If
+
+                user.LastName = tLastName.Text.Trim()
+                user.FirstName = tFirstName.Text.Trim()
+                user.Username = tUsername.Text.Trim()
+                If Not String.IsNullOrEmpty(tPassword.Text.Trim()) Then
+                    user.Password = HashPassword(tPassword.Text.Trim())
+                End If
+
+                Dim result = Await context.SaveChangesAsync() > 0
+
+                If result Then
+                    MsgBox("User updated successfully!")
+                    Me.Close()
+                Else
+                    MsgBox("Error updating user, please try again.")
+                    Return
+                End If
+            End Using
             Me.Close()
         End If
 
@@ -94,4 +121,7 @@
             tPassword.UseSystemPasswordChar = True
         End If
     End Sub
+    Function HashPassword(password As String) As String
+        Return BCrypt.Net.BCrypt.HashPassword(password)
+    End Function
 End Class

@@ -141,7 +141,7 @@ Partial Class AddEditForm
         ' 
         ' tPassword
         ' 
-        tPassword.CueHint.CueHintText = "Username"
+        tPassword.CueHint.CueHintText = "Password"
         tPassword.CueHint.Hint = Krypton.Toolkit.PaletteTextHint.ClearTypeGridFit
         tPassword.Location = New Point(19, 183)
         tPassword.Name = "tPassword"
@@ -166,7 +166,7 @@ Partial Class AddEditForm
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(464, 314)
+        ClientSize = New Size(466, 308)
         ControlBox = False
         Controls.Add(chkShowPassword)
         Controls.Add(lblPassword)
