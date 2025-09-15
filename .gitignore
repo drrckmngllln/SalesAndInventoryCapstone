@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 database
+/SalesAndInventoryCapstone/My Project/Application.Designer.vb
+/SalesAndInventoryCapstone/Connection.vb

@@ -102,8 +102,19 @@
 
     End Sub
 
-    Private Sub CategoryAEForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Async Sub CategoryAEForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If id <> 0 Then
+            Using context As New DataContext()
+                Dim category = Await context.Categories.FindAsync(id)
+                If category Is Nothing Then
+                    MsgBox("Category not found, please try again.")
+                    Me.Close()
+                    Return
+                End If
 
+                tName.Text = category.Name
+            End Using
+        End If
     End Sub
 
     Private Async Sub CategoryAEForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown

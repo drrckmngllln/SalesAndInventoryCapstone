@@ -14,6 +14,7 @@ Public Class Product
     Public Property Category As String
 End Class
 
+<Table("products")>
 Public Class ProductInput
     Public Property Id As Integer
     Public Property CreatedAt As DateTime = DateTime.UtcNow

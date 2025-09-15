@@ -44,7 +44,7 @@ Public Class Categories
 
     Private Async Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         Dim frm As New CategoryAEForm
-        frm.Text = "Add Category"
+        frm.Text = "New Category"
         frm.ShowDialog(Me)
         pnlData.Controls.Clear()
         Await GetCategories()

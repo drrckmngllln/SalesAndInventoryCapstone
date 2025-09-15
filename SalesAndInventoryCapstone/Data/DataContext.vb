@@ -18,8 +18,10 @@ Public Class DataContext
     Public Property Inventories As DbSet(Of Inventory)
     Public Property InventoryInputs As DbSet(Of InventoryInput)
     Public Property ProductsViews As DbSet(Of Product)
+    Public Property ProductInputs As DbSet(Of ProductInput)
     Public Property SaleItemViews As DbSet(Of SaleItemView)
     Public Property Users As DbSet(Of User)
+
 
     Protected Overrides Sub OnConfiguring(optionsBuilder As DbContextOptionsBuilder)
         If Not optionsBuilder.IsConfigured Then
