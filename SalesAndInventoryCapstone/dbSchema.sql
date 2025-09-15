@@ -20,13 +20,13 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `Name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.categories: ~9 rows (approximately)
+-- Dumping data for table salesinventory.categories: ~14 rows (approximately)
 REPLACE INTO `categories` (`Id`, `Name`) VALUES
 	(23, 'Brake System'),
-	(25, 'Cabin Accessories'),
 	(24, 'Cooling System'),
+	(31, 'Edit Testing'),
 	(22, 'Engine Components'),
 	(19, 'Hydraulic System'),
 	(27, 'Sample category'),
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `inventories` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Code` (`Code`),
   KEY `ProductId` (`ProductId`),
-  CONSTRAINT `FK_inventories_products` FOREIGN KEY (`ProductId`) REFERENCES `products` (`Id`) ON DELETE SET NULL ON UPDATE SET NULL
+  CONSTRAINT `FK_inventories_products` FOREIGN KEY (`ProductId`) REFERENCES `products` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table salesinventory.inventories: ~4 rows (approximately)
@@ -97,21 +97,19 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `ProductName` (`ProductName`),
   KEY `FK__categories` (`CategoryId`),
-  CONSTRAINT `FK__categories` FOREIGN KEY (`CategoryId`) REFERENCES `categories` (`Id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `FK__categories` FOREIGN KEY (`CategoryId`) REFERENCES `categories` (`Id`) ON DELETE CASCADE ON UPDATE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.products: ~10 rows (approximately)
+-- Dumping data for table salesinventory.products: ~8 rows (approximately)
 REPLACE INTO `products` (`Id`, `CreatedAt`, `ProductName`, `ProductDescription`, `CategoryId`) VALUES
-	(22, '2025-08-04 02:32:16', 'Hydraulic Pump', 'High-pressure pump for hydraulic fluid transfer', 19),
+	(22, '2025-08-04 02:32:16', 'Hydraulic Pumps', 'High-pressure pump for hydraulic fluid transfer', 19),
 	(23, '2025-08-04 02:32:54', 'PTO Shaft', 'Power Take-Off shaft for transmitting engine power', NULL),
 	(24, '2025-08-04 02:35:16', 'Front Axle Assembly', 'Complete front axle for 4WD tractor models', 21),
 	(25, '2025-08-04 02:36:40', 'Fuel Injector', 'Precision injector for diesel engine combustion', 22),
 	(26, '2025-08-04 02:37:09', 'Air Filter Element', 'Filters air intake to prevent engine contamination', 22),
 	(27, '2025-08-04 02:39:07', 'Clutch Plate', 'Friction plate for transmission engagement', NULL),
 	(28, '2025-08-04 02:39:23', 'Brake Disc', 'Heavy-duty brake disc for rear wheels', 23),
-	(29, '2025-08-04 02:39:45', 'Radiator Hose', 'Flexible hose for engine cooling system', 24),
-	(30, '2025-08-04 02:40:16', 'Tractor Seat Cushion', 'Padded seat cushion with ergonomic support', 25),
-	(31, '2025-08-04 02:40:37', 'Rear Wheel Rim', 'Steel rim compatible with 18-inch tractor tires', NULL);
+	(29, '2025-08-04 02:39:45', 'Radiator Hose', 'Flexible hose for engine cooling system', 24);
 
 -- Dumping structure for view salesinventory.productsview
 -- Creating temporary table to overcome VIEW dependency errors
@@ -149,11 +147,11 @@ CREATE TABLE IF NOT EXISTS `saleitem` (
   PRIMARY KEY (`Id`),
   KEY `SalesId` (`SalesId`) USING BTREE,
   KEY `InventoryId` (`InventoryId`),
-  CONSTRAINT `FK_saleitem_inventories` FOREIGN KEY (`InventoryId`) REFERENCES `inventories` (`Id`),
-  CONSTRAINT `FK_saleitem_sales` FOREIGN KEY (`SalesId`) REFERENCES `sales` (`Id`)
+  CONSTRAINT `FK_saleitem_inventories` FOREIGN KEY (`InventoryId`) REFERENCES `inventories` (`Id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_saleitem_sales` FOREIGN KEY (`SalesId`) REFERENCES `sales` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.saleitem: ~2 rows (approximately)
+-- Dumping data for table salesinventory.saleitem: ~4 rows (approximately)
 REPLACE INTO `saleitem` (`Id`, `SalesId`, `InventoryId`, `Quantity`, `Price`, `OriginalPrice`, `SellingPrice`, `Profit`) VALUES
 	(9, 12, 7, 5, 1500.00, 1250.00, 1500.00, 250.00),
 	(10, 12, 8, 2, 3000.00, 2000.00, 3000.00, 1000.00),
@@ -206,13 +204,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `Username` varchar(100) NOT NULL DEFAULT '0',
   `Password` varchar(100) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.users: ~3 rows (approximately)
+-- Dumping data for table salesinventory.users: ~4 rows (approximately)
 REPLACE INTO `users` (`Id`, `LastName`, `FirstName`, `Username`, `Password`) VALUES
 	(10, 'Admin', 'Admin', 'admin', '$2a$11$aZmSS9lvkgKGvzbMh02YwuMnzmtZBFmclOMt87dPTf9coFcwe85LO'),
 	(11, 'Sales', 'Sales', 'sales', '$2a$11$zHozTJEy8EMWgCZKU3np6OtY4eoMUpDQMj9zjHrNtCPsacor8x5Lq'),
-	(12, 'Inventory', 'Inventory', 'inventory', '$2a$11$WtgTSYlpKiuAo804CXU20uDTcX9xd.z4jRQNksmDpCxoHQxT19eP6');
+	(12, 'Inventory', 'Inventory', 'inventory', '$2a$11$WtgTSYlpKiuAo804CXU20uDTcX9xd.z4jRQNksmDpCxoHQxT19eP6'),
+	(13, 'Dela Cruz', 'Juan', 'juan', '$2a$11$Xm8SLhSSFXE5oFPNKGRDX.89RJYkrZ4xgpN1yqh0M1yEsN8i1AOwm'),
+	(14, 'askjdhaksjdh', 'aksjdhkasjdh', 'user', '$2a$11$Omm89QHxyI7qgqZKHqoWqOzgwA46Y32CqvGtFtt6llGYiFYCsTOEC');
 
 -- Dumping structure for table salesinventory.user_role
 CREATE TABLE IF NOT EXISTS `user_role` (

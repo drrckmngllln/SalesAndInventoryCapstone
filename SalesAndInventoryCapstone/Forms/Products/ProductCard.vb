@@ -41,15 +41,26 @@
         End If
 
         Dim result = MessageBox.Show("Are you sure you want to delete this product?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-        If result = DialogResult.Yes Then
-            Dim success = Await ProductDbHelper.DeleteProduct(data.Id)
-            If success Then
-                MessageBox.Show("Product deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Me.Dispose()
-            Else
-                MessageBox.Show("Failed to delete product.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End If
-        End If
+        Using context As New DataContext()
+            Try
+                Dim product = Await context.Products.FindAsync(data.Id)
+                If product Is Nothing Then
+                    MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return
+                End If
+                context.Products.Remove(product)
+                Dim saveResult = Await context.SaveChangesAsync() > 0
+                If saveResult Then
+                    MessageBox.Show("Product deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Me.Dispose()
+                Else
+                    MessageBox.Show("Failed to delete product.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            Catch ex As Exception
+                MsgBox("Delete Operation not allowed, current Product is being used", MsgBoxStyle.Critical, "Error")
+            End Try
+
+        End Using
     End Function
 
     Async Function HandleAddStock() As Task

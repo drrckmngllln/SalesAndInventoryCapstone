@@ -21,15 +21,30 @@
     End Sub
 
     Async Sub HandleDeleteCategory()
-        If MsgBox("Are you sure you want to delete this category?", MsgBoxStyle.YesNo, "Delete Category") = MsgBoxResult.Yes Then
-            Dim result = Await CategoryDbHelper.DeleteCategory(data.Id)
-            If Not result Then
-                MsgBox("Failed to delete category.", MsgBoxStyle.Critical, "Error")
-                Return
-            End If
-            MsgBox("Category deleted successfully!")
-            Me.Dispose()
-        End If
+        Using context As New DataContext()
+            Try
+                If MsgBox("Are you sure you want to delete this category?", MsgBoxStyle.YesNo, "Delete Category") = MsgBoxResult.Yes Then
+                    Dim category = Await context.Categories.FindAsync(data.Id)
+                    If category Is Nothing Then
+                        MsgBox("Category not found.", MsgBoxStyle.Exclamation, "Error")
+                        Return
+                    End If
+
+                    context.Categories.Remove(category)
+                    Dim result = Await context.SaveChangesAsync() > 0
+
+                    If Not result Then
+                        MsgBox("Failed to delete category.", MsgBoxStyle.Critical, "Error")
+                        Return
+                    End If
+                    MsgBox("Category deleted successfully!")
+                    Me.Dispose()
+                End If
+            Catch ex As Exception
+                MsgBox("Delete Operation not allowed, Current Category is being used", MsgBoxStyle.Critical, "Error")
+            End Try
+        End Using
+
     End Sub
 
     Private Sub CategoryCard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
