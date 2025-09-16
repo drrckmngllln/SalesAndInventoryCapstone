@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   UNIQUE KEY `Name` (`Name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.categories: ~14 rows (approximately)
+-- Dumping data for table salesinventory.categories: ~8 rows (approximately)
 REPLACE INTO `categories` (`Id`, `Name`) VALUES
 	(23, 'Brake System'),
 	(24, 'Cooling System'),
@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `sales` (
   UNIQUE KEY `ReferenceNumber` (`ReferenceNumber`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.sales: ~3 rows (approximately)
+-- Dumping data for table salesinventory.sales: ~2 rows (approximately)
 REPLACE INTO `sales` (`Id`, `ReferenceNumber`, `TotalSales`, `CashGiven`, `LastName`, `FirstName`, `MiddleName`, `CreatedAt`, `OriginalPrice`, `SellingPrice`, `Profit`) VALUES
 	(12, '5DE08E01-6186-4636-9703-56413E135B80', 4500.00, 5000.00, 'Dela Cruz', 'Juan', 'Tamad', '2025-09-06 05:26:30', 3250.00, 4500.00, 1250.00),
 	(13, '81DA52DD-A7C0-4609-AE62-EA8AC7CF79FB', 5000.00, 5000.00, 'James', 'Lebron', 'James', '2025-09-07 12:50:23', 4495.00, 5000.00, 505.00),
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table salesinventory.users: ~4 rows (approximately)
+-- Dumping data for table salesinventory.users: ~3 rows (approximately)
 REPLACE INTO `users` (`Id`, `LastName`, `FirstName`, `Username`, `Password`) VALUES
 	(10, 'Admin', 'Admin', 'admin', '$2a$11$aZmSS9lvkgKGvzbMh02YwuMnzmtZBFmclOMt87dPTf9coFcwe85LO'),
 	(11, 'Sales', 'Sales', 'sales', '$2a$11$zHozTJEy8EMWgCZKU3np6OtY4eoMUpDQMj9zjHrNtCPsacor8x5Lq'),
