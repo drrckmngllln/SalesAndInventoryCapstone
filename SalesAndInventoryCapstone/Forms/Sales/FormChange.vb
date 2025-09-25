@@ -20,35 +20,27 @@ Public Class FormChange
         referenceNo = saleReferenceNo
     End Sub
 
-    'Async Function PrintReceipt() As Task
-    '    Using ctx As New DataContext()
-    '        Dim sale = Await ctx.Sales.FirstOrDefaultAsync(Function(s) s.ReferenceNumber = referenceNo)
-    '        Dim saleItems = Await ctx.SaleItems.Where(Function(si) si.SaleId = sale.Id).ToListAsync()
-
-
-    '        Dim rdsSale As New ReportDataSource(DataSetName, sale)
-    '        Dim rdsSaleItems As New ReportDataSource(DataSetName, saleItems)
-
-    '        ReportViewer1.LocalReport.DataSources.Clear()
-    '        ReportViewer1.LocalReport.DataSources.Add(rdsSale)
-    '        ReportViewer1.LocalReport.DataSources.Add(rdsSaleItems)
-    '        ReportViewer1.LocalReport.ReportPath = ReceiptRpt
-
-    '        ReportViewer1.RefreshReport()
-    '        ReportViewer1.PrintDialog()
-    '    End Using
-    'End Function
-
     Async Function PrintReceipt() As Task
         Using ctx As New DataContext()
             Dim sale = Await ctx.Sales.
             FirstOrDefaultAsync(Function(s) s.ReferenceNumber = referenceNo)
 
-            Dim saleItems = Await ctx.SaleItems.
-            Where(Function(si) si.SaleId = sale.Id).
-            ToListAsync()
+            Dim saleItems = Await ctx.SaleItemViews.
+            Where(Function(si) si.SaleId = sale.Id).Select(Function(s) New With {
+                .Id = s.Id,
+                .SaleId = s.SaleId,
+                .ReferenceNo = s.ReferenceNo,
+                .ProductName = s.ProductName,
+                .Quantity = s.Quantity,
+                .Price = s.Price,
+                .OriginalPrice = s.OriginalPrice,
+                .SellingPrice = s.SellingPrice,
+                .Profit = s.Profit,
+                .Total = (s.Price * s.Quantity).ToString("F2")
+            }) _
+            .ToListAsync()
 
-            Dim rdsSale As New ReportDataSource("SaleReportDs", New List(Of Sale) From {sale})
+            Dim rdsSale As New ReportDataSource("SaleReportDs", New List(Of Object) From {sale})
             Dim rdsSaleItems As New ReportDataSource("SaleItemReportDs", saleItems)
 
             ReportViewer1.LocalReport.DataSources.Clear()
@@ -85,6 +77,7 @@ Public Class FormChange
             .Dock = DockStyle.Fill
             .ProcessingMode = ProcessingMode.Local
             .LocalReport.ReportPath = ReceiptRpt
+            .SetDisplayMode(DisplayMode.PrintLayout)
         End With
 
         hostPanel.Controls.Clear()

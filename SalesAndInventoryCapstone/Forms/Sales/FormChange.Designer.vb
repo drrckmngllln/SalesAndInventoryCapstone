@@ -96,7 +96,7 @@ Partial Class FormChange
         ' btnClose
         ' 
         btnClose.Font = New Font("Segoe UI", 12F)
-        btnClose.Location = New Point(12, 197)
+        btnClose.Location = New Point(572, 485)
         btnClose.Name = "btnClose"
         btnClose.Size = New Size(505, 42)
         btnClose.TabIndex = 6
@@ -106,25 +106,25 @@ Partial Class FormChange
         ' btnPrintReceipt
         ' 
         btnPrintReceipt.Font = New Font("Segoe UI", 12F)
-        btnPrintReceipt.Location = New Point(12, 149)
+        btnPrintReceipt.Location = New Point(12, 485)
         btnPrintReceipt.Name = "btnPrintReceipt"
-        btnPrintReceipt.Size = New Size(505, 42)
+        btnPrintReceipt.Size = New Size(554, 42)
         btnPrintReceipt.TabIndex = 7
         btnPrintReceipt.Text = "Print Receipt"
         btnPrintReceipt.UseVisualStyleBackColor = True
         ' 
         ' pnlRpt
         ' 
-        pnlRpt.Location = New Point(641, 14)
+        pnlRpt.Location = New Point(12, 111)
         pnlRpt.Name = "pnlRpt"
-        pnlRpt.Size = New Size(435, 225)
+        pnlRpt.Size = New Size(1065, 368)
         pnlRpt.TabIndex = 8
         ' 
         ' FormChange
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(530, 251)
+        ClientSize = New Size(1089, 548)
         ControlBox = False
         Controls.Add(pnlRpt)
         Controls.Add(btnPrintReceipt)

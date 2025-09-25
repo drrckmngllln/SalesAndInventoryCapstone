@@ -3,6 +3,7 @@
 <Table("SaleItemView")>
 Public Class SaleItemView
     Public Property Id As Integer
+    Public Property SaleId As Integer
     Public Property CreatedAt As DateTime
     Public Property ReferenceNo As String
     Public Property ProductName As String

@@ -760,6 +760,8 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
             
             Private columnProfit As Global.System.Data.DataColumn
             
+            Private columnTotal As Global.System.Data.DataColumn
+            
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
             Public Sub New()
@@ -870,6 +872,14 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
             End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property TotalColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnTotal
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
              Global.System.ComponentModel.Browsable(false)>  _
             Public ReadOnly Property Count() As Integer
@@ -906,9 +916,9 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
-            Public Overloads Function AddSaleItemReportRow(ByVal Id As String, ByVal ReferenceNo As String, ByVal ProductName As String, ByVal Category As String, ByVal Quantity As Integer, ByVal Price As String, ByVal OriginalPrice As Decimal, ByVal SellingPrice As Decimal, ByVal Profit As Decimal) As SaleItemReportRow
+            Public Overloads Function AddSaleItemReportRow(ByVal Id As String, ByVal ReferenceNo As String, ByVal ProductName As String, ByVal Category As String, ByVal Quantity As Integer, ByVal Price As String, ByVal OriginalPrice As Decimal, ByVal SellingPrice As Decimal, ByVal Profit As Decimal, ByVal Total As String) As SaleItemReportRow
                 Dim rowSaleItemReportRow As SaleItemReportRow = CType(Me.NewRow,SaleItemReportRow)
-                Dim columnValuesArray() As Object = New Object() {Id, ReferenceNo, ProductName, Category, Quantity, Price, OriginalPrice, SellingPrice, Profit}
+                Dim columnValuesArray() As Object = New Object() {Id, ReferenceNo, ProductName, Category, Quantity, Price, OriginalPrice, SellingPrice, Profit, Total}
                 rowSaleItemReportRow.ItemArray = columnValuesArray
                 Me.Rows.Add(rowSaleItemReportRow)
                 Return rowSaleItemReportRow
@@ -940,6 +950,7 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
                 Me.columnOriginalPrice = MyBase.Columns("OriginalPrice")
                 Me.columnSellingPrice = MyBase.Columns("SellingPrice")
                 Me.columnProfit = MyBase.Columns("Profit")
+                Me.columnTotal = MyBase.Columns("Total")
             End Sub
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -963,6 +974,8 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
                 MyBase.Columns.Add(Me.columnSellingPrice)
                 Me.columnProfit = New Global.System.Data.DataColumn("Profit", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
                 MyBase.Columns.Add(Me.columnProfit)
+                Me.columnTotal = New Global.System.Data.DataColumn("Total", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnTotal)
             End Sub
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1934,6 +1947,21 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property Total() As String
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleItemReport.TotalColumn),String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Total' in table 'SaleItemReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleItemReport.TotalColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
             Public Function IsIdNull() As Boolean
                 Return Me.IsNull(Me.tableSaleItemReport.IdColumn)
             End Function
@@ -2038,6 +2066,18 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
             Public Sub SetProfitNull()
                 Me(Me.tableSaleItemReport.ProfitColumn) = Global.System.Convert.DBNull
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsTotalNull() As Boolean
+                Return Me.IsNull(Me.tableSaleItemReport.TotalColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetTotalNull()
+                Me(Me.tableSaleItemReport.TotalColumn) = Global.System.Convert.DBNull
             End Sub
         End Class
         
