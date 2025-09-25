@@ -208,7 +208,7 @@ Public Class Sales
         MessageBox.Show("Sale completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         ' Open change form
-        Dim changeForm As New FormChange(totalAmount, cashGiven)
+        Dim changeForm As New FormChange(totalAmount, cashGiven, lReferenceNo.Text)
         If changeForm.ShowDialog() = DialogResult.OK Then
             MessageBox.Show("Change given: " & (cashGiven - totalAmount).ToString("C2"), "Change", MessageBoxButtons.OK, MessageBoxIcon.Information)
 

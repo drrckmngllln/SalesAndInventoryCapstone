@@ -29,6 +29,8 @@ Partial Class FormChange
         lblCash = New Label()
         lblChange = New Label()
         btnClose = New Button()
+        btnPrintReceipt = New Button()
+        pnlRpt = New Panel()
         SuspendLayout()
         ' 
         ' Label1
@@ -94,19 +96,38 @@ Partial Class FormChange
         ' btnClose
         ' 
         btnClose.Font = New Font("Segoe UI", 12F)
-        btnClose.Location = New Point(12, 112)
+        btnClose.Location = New Point(12, 197)
         btnClose.Name = "btnClose"
         btnClose.Size = New Size(505, 42)
         btnClose.TabIndex = 6
         btnClose.Text = "Close"
         btnClose.UseVisualStyleBackColor = True
         ' 
+        ' btnPrintReceipt
+        ' 
+        btnPrintReceipt.Font = New Font("Segoe UI", 12F)
+        btnPrintReceipt.Location = New Point(12, 149)
+        btnPrintReceipt.Name = "btnPrintReceipt"
+        btnPrintReceipt.Size = New Size(505, 42)
+        btnPrintReceipt.TabIndex = 7
+        btnPrintReceipt.Text = "Print Receipt"
+        btnPrintReceipt.UseVisualStyleBackColor = True
+        ' 
+        ' pnlRpt
+        ' 
+        pnlRpt.Location = New Point(641, 14)
+        pnlRpt.Name = "pnlRpt"
+        pnlRpt.Size = New Size(435, 225)
+        pnlRpt.TabIndex = 8
+        ' 
         ' FormChange
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(529, 166)
+        ClientSize = New Size(530, 251)
         ControlBox = False
+        Controls.Add(pnlRpt)
+        Controls.Add(btnPrintReceipt)
         Controls.Add(btnClose)
         Controls.Add(lblChange)
         Controls.Add(lblCash)
@@ -129,4 +150,6 @@ Partial Class FormChange
     Friend WithEvents lblCash As Label
     Friend WithEvents lblChange As Label
     Friend WithEvents btnClose As Button
+    Friend WithEvents btnPrintReceipt As Button
+    Friend WithEvents pnlRpt As Panel
 End Class

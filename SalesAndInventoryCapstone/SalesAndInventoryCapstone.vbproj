@@ -77,6 +77,9 @@
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ReportDs.Designer.vb</LastGenOutput>
     </None>
+    <None Update="Forms\Sales\Receipt.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

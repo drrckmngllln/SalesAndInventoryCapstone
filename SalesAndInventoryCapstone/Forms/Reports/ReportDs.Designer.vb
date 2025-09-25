@@ -30,6 +30,8 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
         
         Private tableSaleItemReport As SaleItemReportDataTable
         
+        Private tableSaleReport As SaleReportDataTable
+        
         Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -67,6 +69,9 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
                 If (Not (ds.Tables("SaleItemReport")) Is Nothing) Then
                     MyBase.Tables.Add(New SaleItemReportDataTable(ds.Tables("SaleItemReport")))
                 End If
+                If (Not (ds.Tables("SaleReport")) Is Nothing) Then
+                    MyBase.Tables.Add(New SaleReportDataTable(ds.Tables("SaleReport")))
+                End If
                 Me.DataSetName = ds.DataSetName
                 Me.Prefix = ds.Prefix
                 Me.Namespace = ds.Namespace
@@ -101,6 +106,16 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
         Public ReadOnly Property SaleItemReport() As SaleItemReportDataTable
             Get
                 Return Me.tableSaleItemReport
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
+         Global.System.ComponentModel.Browsable(false),  _
+         Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
+        Public ReadOnly Property SaleReport() As SaleReportDataTable
+            Get
+                Return Me.tableSaleReport
             End Get
         End Property
         
@@ -177,6 +192,9 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
                 If (Not (ds.Tables("SaleItemReport")) Is Nothing) Then
                     MyBase.Tables.Add(New SaleItemReportDataTable(ds.Tables("SaleItemReport")))
                 End If
+                If (Not (ds.Tables("SaleReport")) Is Nothing) Then
+                    MyBase.Tables.Add(New SaleReportDataTable(ds.Tables("SaleReport")))
+                End If
                 Me.DataSetName = ds.DataSetName
                 Me.Prefix = ds.Prefix
                 Me.Namespace = ds.Namespace
@@ -221,6 +239,12 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
                     Me.tableSaleItemReport.InitVars
                 End If
             End If
+            Me.tableSaleReport = CType(MyBase.Tables("SaleReport"),SaleReportDataTable)
+            If (initTable = true) Then
+                If (Not (Me.tableSaleReport) Is Nothing) Then
+                    Me.tableSaleReport.InitVars
+                End If
+            End If
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -235,6 +259,8 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
             MyBase.Tables.Add(Me.tableMonthlyReport)
             Me.tableSaleItemReport = New SaleItemReportDataTable()
             MyBase.Tables.Add(Me.tableSaleItemReport)
+            Me.tableSaleReport = New SaleReportDataTable()
+            MyBase.Tables.Add(Me.tableSaleReport)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -246,6 +272,12 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Private Function ShouldSerializeSaleItemReport() As Boolean
+            Return false
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Private Function ShouldSerializeSaleReport() As Boolean
             Return false
         End Function
         
@@ -312,6 +344,9 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Delegate Sub SaleItemReportRowChangeEventHandler(ByVal sender As Object, ByVal e As SaleItemReportRowChangeEvent)
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Delegate Sub SaleReportRowChangeEventHandler(ByVal sender As Object, ByVal e As SaleReportRowChangeEvent)
         
         '''<summary>
         '''Represents the strongly named DataTable class.
@@ -1058,6 +1093,399 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
         End Class
         
         '''<summary>
+        '''Represents the strongly named DataTable class.
+        '''</summary>
+        <Global.System.Serializable(),  _
+         Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
+        Partial Public Class SaleReportDataTable
+            Inherits Global.System.Data.TypedTableBase(Of SaleReportRow)
+            
+            Private columnId As Global.System.Data.DataColumn
+            
+            Private columnReferenceNumber As Global.System.Data.DataColumn
+            
+            Private columnTotalSales As Global.System.Data.DataColumn
+            
+            Private columnCashGiven As Global.System.Data.DataColumn
+            
+            Private columnLastName As Global.System.Data.DataColumn
+            
+            Private columnFirstName As Global.System.Data.DataColumn
+            
+            Private columnMiddleName As Global.System.Data.DataColumn
+            
+            Private columnCreatedAt As Global.System.Data.DataColumn
+            
+            Private columnOriginalPrice As Global.System.Data.DataColumn
+            
+            Private columnSellingPrice As Global.System.Data.DataColumn
+            
+            Private columnProfit As Global.System.Data.DataColumn
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub New()
+                MyBase.New
+                Me.TableName = "SaleReport"
+                Me.BeginInit
+                Me.InitClass
+                Me.EndInit
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Friend Sub New(ByVal table As Global.System.Data.DataTable)
+                MyBase.New
+                Me.TableName = table.TableName
+                If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                    Me.CaseSensitive = table.CaseSensitive
+                End If
+                If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                    Me.Locale = table.Locale
+                End If
+                If (table.Namespace <> table.DataSet.Namespace) Then
+                    Me.Namespace = table.Namespace
+                End If
+                Me.Prefix = table.Prefix
+                Me.MinimumCapacity = table.MinimumCapacity
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
+             System.ObsoleteAttribute("This API supports obsolete formatter-based serialization. It should not be called"& _ 
+                " or extended by application code.", DiagnosticId:="SYSLIB0051")>  _
+            Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+                MyBase.New(info, context)
+                Me.InitVars
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property IdColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnId
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property ReferenceNumberColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnReferenceNumber
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property TotalSalesColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnTotalSales
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property CashGivenColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnCashGiven
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property LastNameColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnLastName
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property FirstNameColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnFirstName
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property MiddleNameColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnMiddleName
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property CreatedAtColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnCreatedAt
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property OriginalPriceColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnOriginalPrice
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property SellingPriceColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnSellingPrice
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property ProfitColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnProfit
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
+             Global.System.ComponentModel.Browsable(false)>  _
+            Public ReadOnly Property Count() As Integer
+                Get
+                    Return Me.Rows.Count
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Default ReadOnly Property Item(ByVal index As Integer) As SaleReportRow
+                Get
+                    Return CType(Me.Rows(index),SaleReportRow)
+                End Get
+            End Property
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Event SaleReportRowChanging As SaleReportRowChangeEventHandler
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Event SaleReportRowChanged As SaleReportRowChangeEventHandler
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Event SaleReportRowDeleting As SaleReportRowChangeEventHandler
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Event SaleReportRowDeleted As SaleReportRowChangeEventHandler
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Overloads Sub AddSaleReportRow(ByVal row As SaleReportRow)
+                Me.Rows.Add(row)
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Overloads Function AddSaleReportRow(ByVal Id As String, ByVal ReferenceNumber As String, ByVal TotalSales As Decimal, ByVal CashGiven As Decimal, ByVal LastName As String, ByVal FirstName As String, ByVal MiddleName As String, ByVal CreatedAt As Date, ByVal OriginalPrice As Decimal, ByVal SellingPrice As Decimal, ByVal Profit As Decimal) As SaleReportRow
+                Dim rowSaleReportRow As SaleReportRow = CType(Me.NewRow,SaleReportRow)
+                Dim columnValuesArray() As Object = New Object() {Id, ReferenceNumber, TotalSales, CashGiven, LastName, FirstName, MiddleName, CreatedAt, OriginalPrice, SellingPrice, Profit}
+                rowSaleReportRow.ItemArray = columnValuesArray
+                Me.Rows.Add(rowSaleReportRow)
+                Return rowSaleReportRow
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function FindById(ByVal Id As String) As SaleReportRow
+                Return CType(Me.Rows.Find(New Object() {Id}),SaleReportRow)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Overrides Function Clone() As Global.System.Data.DataTable
+                Dim cln As SaleReportDataTable = CType(MyBase.Clone,SaleReportDataTable)
+                cln.InitVars
+                Return cln
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+                Return New SaleReportDataTable()
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Friend Sub InitVars()
+                Me.columnId = MyBase.Columns("Id")
+                Me.columnReferenceNumber = MyBase.Columns("ReferenceNumber")
+                Me.columnTotalSales = MyBase.Columns("TotalSales")
+                Me.columnCashGiven = MyBase.Columns("CashGiven")
+                Me.columnLastName = MyBase.Columns("LastName")
+                Me.columnFirstName = MyBase.Columns("FirstName")
+                Me.columnMiddleName = MyBase.Columns("MiddleName")
+                Me.columnCreatedAt = MyBase.Columns("CreatedAt")
+                Me.columnOriginalPrice = MyBase.Columns("OriginalPrice")
+                Me.columnSellingPrice = MyBase.Columns("SellingPrice")
+                Me.columnProfit = MyBase.Columns("Profit")
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Private Sub InitClass()
+                Me.columnId = New Global.System.Data.DataColumn("Id", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnId)
+                Me.columnReferenceNumber = New Global.System.Data.DataColumn("ReferenceNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnReferenceNumber)
+                Me.columnTotalSales = New Global.System.Data.DataColumn("TotalSales", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnTotalSales)
+                Me.columnCashGiven = New Global.System.Data.DataColumn("CashGiven", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnCashGiven)
+                Me.columnLastName = New Global.System.Data.DataColumn("LastName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnLastName)
+                Me.columnFirstName = New Global.System.Data.DataColumn("FirstName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnFirstName)
+                Me.columnMiddleName = New Global.System.Data.DataColumn("MiddleName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnMiddleName)
+                Me.columnCreatedAt = New Global.System.Data.DataColumn("CreatedAt", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnCreatedAt)
+                Me.columnOriginalPrice = New Global.System.Data.DataColumn("OriginalPrice", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnOriginalPrice)
+                Me.columnSellingPrice = New Global.System.Data.DataColumn("SellingPrice", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnSellingPrice)
+                Me.columnProfit = New Global.System.Data.DataColumn("Profit", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnProfit)
+                Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnId}, true))
+                Me.columnId.AllowDBNull = false
+                Me.columnId.Unique = true
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function NewSaleReportRow() As SaleReportRow
+                Return CType(Me.NewRow,SaleReportRow)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+                Return New SaleReportRow(builder)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Protected Overrides Function GetRowType() As Global.System.Type
+                Return GetType(SaleReportRow)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanged(e)
+                If (Not (Me.SaleReportRowChangedEvent) Is Nothing) Then
+                    RaiseEvent SaleReportRowChanged(Me, New SaleReportRowChangeEvent(CType(e.Row,SaleReportRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanging(e)
+                If (Not (Me.SaleReportRowChangingEvent) Is Nothing) Then
+                    RaiseEvent SaleReportRowChanging(Me, New SaleReportRowChangeEvent(CType(e.Row,SaleReportRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleted(e)
+                If (Not (Me.SaleReportRowDeletedEvent) Is Nothing) Then
+                    RaiseEvent SaleReportRowDeleted(Me, New SaleReportRowChangeEvent(CType(e.Row,SaleReportRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleting(e)
+                If (Not (Me.SaleReportRowDeletingEvent) Is Nothing) Then
+                    RaiseEvent SaleReportRowDeleting(Me, New SaleReportRowChangeEvent(CType(e.Row,SaleReportRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub RemoveSaleReportRow(ByVal row As SaleReportRow)
+                Me.Rows.Remove(row)
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+                Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+                Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+                Dim ds As ReportDs = New ReportDs()
+                Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+                any1.MinOccurs = New Decimal(0)
+                any1.MaxOccurs = Decimal.MaxValue
+                any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any1)
+                Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+                any2.MinOccurs = New Decimal(1)
+                any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any2)
+                Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute1.Name = "namespace"
+                attribute1.FixedValue = ds.Namespace
+                type.Attributes.Add(attribute1)
+                Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute2.Name = "tableTypeName"
+                attribute2.FixedValue = "SaleReportDataTable"
+                type.Attributes.Add(attribute2)
+                type.Particle = sequence
+                Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+                If xs.Contains(dsSchema.TargetNamespace) Then
+                    Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Try 
+                        Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                        dsSchema.Write(s1)
+                        Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                        Do While schemas.MoveNext
+                            schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
+                            s2.SetLength(0)
+                            schema.Write(s2)
+                            If (s1.Length = s2.Length) Then
+                                s1.Position = 0
+                                s2.Position = 0
+                                
+                                Do While ((s1.Position <> s1.Length)  _
+                                            AndAlso (s1.ReadByte = s2.ReadByte))
+                                    
+                                    
+                                Loop
+                                If (s1.Position = s1.Length) Then
+                                    Return type
+                                End If
+                            End If
+                            
+                        Loop
+                    Finally
+                        If (Not (s1) Is Nothing) Then
+                            s1.Close
+                        End If
+                        If (Not (s2) Is Nothing) Then
+                            s2.Close
+                        End If
+                    End Try
+                End If
+                xs.Add(dsSchema)
+                Return type
+            End Function
+        End Class
+        
+        '''<summary>
         '''Represents strongly named DataRow class.
         '''</summary>
         Partial Public Class MonthlyReportRow
@@ -1614,6 +2042,303 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
         End Class
         
         '''<summary>
+        '''Represents strongly named DataRow class.
+        '''</summary>
+        Partial Public Class SaleReportRow
+            Inherits Global.System.Data.DataRow
+            
+            Private tableSaleReport As SaleReportDataTable
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+                MyBase.New(rb)
+                Me.tableSaleReport = CType(Me.Table,SaleReportDataTable)
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property Id() As String
+                Get
+                    Return CType(Me(Me.tableSaleReport.IdColumn),String)
+                End Get
+                Set
+                    Me(Me.tableSaleReport.IdColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property ReferenceNumber() As String
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleReport.ReferenceNumberColumn),String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'ReferenceNumber' in table 'SaleReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleReport.ReferenceNumberColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property TotalSales() As Decimal
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleReport.TotalSalesColumn),Decimal)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'TotalSales' in table 'SaleReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleReport.TotalSalesColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property CashGiven() As Decimal
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleReport.CashGivenColumn),Decimal)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'CashGiven' in table 'SaleReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleReport.CashGivenColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property LastName() As String
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleReport.LastNameColumn),String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'LastName' in table 'SaleReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleReport.LastNameColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property FirstName() As String
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleReport.FirstNameColumn),String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'FirstName' in table 'SaleReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleReport.FirstNameColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property MiddleName() As String
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleReport.MiddleNameColumn),String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'MiddleName' in table 'SaleReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleReport.MiddleNameColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property CreatedAt() As Date
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleReport.CreatedAtColumn),Date)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'CreatedAt' in table 'SaleReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleReport.CreatedAtColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property OriginalPrice() As Decimal
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleReport.OriginalPriceColumn),Decimal)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'OriginalPrice' in table 'SaleReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleReport.OriginalPriceColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property SellingPrice() As Decimal
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleReport.SellingPriceColumn),Decimal)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'SellingPrice' in table 'SaleReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleReport.SellingPriceColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Property Profit() As Decimal
+                Get
+                    Try 
+                        Return CType(Me(Me.tableSaleReport.ProfitColumn),Decimal)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Profit' in table 'SaleReport' is DBNull.", e)
+                    End Try
+                End Get
+                Set
+                    Me(Me.tableSaleReport.ProfitColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsReferenceNumberNull() As Boolean
+                Return Me.IsNull(Me.tableSaleReport.ReferenceNumberColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetReferenceNumberNull()
+                Me(Me.tableSaleReport.ReferenceNumberColumn) = Global.System.Convert.DBNull
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsTotalSalesNull() As Boolean
+                Return Me.IsNull(Me.tableSaleReport.TotalSalesColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetTotalSalesNull()
+                Me(Me.tableSaleReport.TotalSalesColumn) = Global.System.Convert.DBNull
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsCashGivenNull() As Boolean
+                Return Me.IsNull(Me.tableSaleReport.CashGivenColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetCashGivenNull()
+                Me(Me.tableSaleReport.CashGivenColumn) = Global.System.Convert.DBNull
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsLastNameNull() As Boolean
+                Return Me.IsNull(Me.tableSaleReport.LastNameColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetLastNameNull()
+                Me(Me.tableSaleReport.LastNameColumn) = Global.System.Convert.DBNull
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsFirstNameNull() As Boolean
+                Return Me.IsNull(Me.tableSaleReport.FirstNameColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetFirstNameNull()
+                Me(Me.tableSaleReport.FirstNameColumn) = Global.System.Convert.DBNull
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsMiddleNameNull() As Boolean
+                Return Me.IsNull(Me.tableSaleReport.MiddleNameColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetMiddleNameNull()
+                Me(Me.tableSaleReport.MiddleNameColumn) = Global.System.Convert.DBNull
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsCreatedAtNull() As Boolean
+                Return Me.IsNull(Me.tableSaleReport.CreatedAtColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetCreatedAtNull()
+                Me(Me.tableSaleReport.CreatedAtColumn) = Global.System.Convert.DBNull
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsOriginalPriceNull() As Boolean
+                Return Me.IsNull(Me.tableSaleReport.OriginalPriceColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetOriginalPriceNull()
+                Me(Me.tableSaleReport.OriginalPriceColumn) = Global.System.Convert.DBNull
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsSellingPriceNull() As Boolean
+                Return Me.IsNull(Me.tableSaleReport.SellingPriceColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetSellingPriceNull()
+                Me(Me.tableSaleReport.SellingPriceColumn) = Global.System.Convert.DBNull
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Function IsProfitNull() As Boolean
+                Return Me.IsNull(Me.tableSaleReport.ProfitColumn)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub SetProfitNull()
+                Me(Me.tableSaleReport.ProfitColumn) = Global.System.Convert.DBNull
+            End Sub
+        End Class
+        
+        '''<summary>
         '''Row event argument class
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
@@ -1671,6 +2396,42 @@ Namespace SalesAndInventoryCapstone.Forms.Reports
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
             Public ReadOnly Property Row() As SaleItemReportRow
+                Get
+                    Return Me.eventRow
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+                Get
+                    Return Me.eventAction
+                End Get
+            End Property
+        End Class
+        
+        '''<summary>
+        '''Row event argument class
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Class SaleReportRowChangeEvent
+            Inherits Global.System.EventArgs
+            
+            Private eventRow As SaleReportRow
+            
+            Private eventAction As Global.System.Data.DataRowAction
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public Sub New(ByVal row As SaleReportRow, ByVal action As Global.System.Data.DataRowAction)
+                MyBase.New
+                Me.eventRow = row
+                Me.eventAction = action
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+            Public ReadOnly Property Row() As SaleReportRow
                 Get
                     Return Me.eventRow
                 End Get
