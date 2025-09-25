@@ -613,7 +613,7 @@
         <Top>0.65828cm</Top>
         <Left>0.00003cm</Left>
         <Height>1.2cm</Height>
-        <Width>27.93999cm</Width>
+        <Width>27.94003cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -624,7 +624,7 @@
     <Height>3.09619in</Height>
     <Style />
   </Body>
-  <Width>11.00001in</Width>
+  <Width>11.00002in</Width>
   <Page>
     <PageHeader>
       <Height>2.86646cm</Height>
@@ -705,7 +705,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Monthly Sale Report</Value>
+                  <Value>Monthly Sales Report of Farm Machineries</Value>
                   <Style>
                     <FontSize>18pt</FontSize>
                     <FontWeight>Bold</FontWeight>
