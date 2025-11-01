@@ -29,6 +29,7 @@ Partial Class CategoryAEForm
         tName = New KryptonTextBox()
         btnNew = New KryptonButton()
         Label1 = New Label()
+        btnCancel = New KryptonButton()
         SuspendLayout()
         ' 
         ' tName
@@ -44,7 +45,7 @@ Partial Class CategoryAEForm
         ' 
         ' btnNew
         ' 
-        btnNew.Location = New Point(306, 61)
+        btnNew.Location = New Point(174, 64)
         btnNew.Name = "btnNew"
         btnNew.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnNew.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -85,12 +86,47 @@ Partial Class CategoryAEForm
         Label1.TabIndex = 5
         Label1.Text = "Category Name"
         ' 
+        ' btnCancel
+        ' 
+        btnCancel.Location = New Point(306, 64)
+        btnCancel.Name = "btnCancel"
+        btnCancel.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.OverrideDefault.Border.Color1 = SystemColors.Control
+        btnCancel.OverrideDefault.Border.Color2 = SystemColors.Control
+        btnCancel.Size = New Size(126, 33)
+        btnCancel.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateCommon.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateCommon.Border.Rounding = 10F
+        btnCancel.StateCommon.Border.Width = 2
+        btnCancel.StateCommon.Content.ShortText.Color1 = SystemColors.Control
+        btnCancel.StateCommon.Content.ShortText.Color2 = SystemColors.Control
+        btnCancel.StateCommon.Content.ShortText.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        btnCancel.StateDisabled.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateDisabled.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateDisabled.Border.Color1 = SystemColors.Control
+        btnCancel.StateDisabled.Border.Color2 = SystemColors.Control
+        btnCancel.StateNormal.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateNormal.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateNormal.Border.Color1 = SystemColors.Control
+        btnCancel.StateNormal.Border.Color2 = SystemColors.Control
+        btnCancel.StatePressed.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StatePressed.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StatePressed.Border.Color1 = SystemColors.Control
+        btnCancel.StatePressed.Border.Color2 = SystemColors.Control
+        btnCancel.StateTracking.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateTracking.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.TabIndex = 6
+        btnCancel.Values.DropDownArrowColor = Color.Empty
+        btnCancel.Values.Text = "Cancel"
+        ' 
         ' CategoryAEForm
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(444, 105)
+        ClientSize = New Size(446, 99)
         ControlBox = False
+        Controls.Add(btnCancel)
         Controls.Add(Label1)
         Controls.Add(btnNew)
         Controls.Add(tName)
@@ -113,4 +149,5 @@ Partial Class CategoryAEForm
     Friend WithEvents tName As KryptonTextBox
     Friend WithEvents btnNew As KryptonButton
     Friend WithEvents Label1 As Label
+    Friend WithEvents btnCancel As KryptonButton
 End Class

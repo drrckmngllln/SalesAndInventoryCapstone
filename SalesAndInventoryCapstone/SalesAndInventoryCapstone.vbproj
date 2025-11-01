@@ -9,12 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="bin\**" />
-    <EmbeddedResource Remove="bin\**" />
-    <None Remove="bin\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Forms\Reports\MonthlyReport.rdlc" />
     <None Remove="Forms\Reports\SaleItemReport.rdlc" />
   </ItemGroup>
@@ -84,10 +78,6 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="bin\Debug\net8.0-windows\Reports\" />
   </ItemGroup>
 
 </Project>

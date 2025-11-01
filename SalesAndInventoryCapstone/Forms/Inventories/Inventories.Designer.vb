@@ -24,8 +24,9 @@ Partial Class Inventories
     Private Sub InitializeComponent()
         tSearch = New Krypton.Toolkit.KryptonTextBox()
         btnNew = New Krypton.Toolkit.KryptonButton()
-        pnlData = New FlowLayoutPanel()
         Label2 = New Label()
+        dgv = New DataGridView()
+        CType(dgv, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' tSearch
@@ -73,17 +74,6 @@ Partial Class Inventories
         btnNew.Values.DropDownArrowColor = Color.Empty
         btnNew.Values.Text = "Add Inventory"
         ' 
-        ' pnlData
-        ' 
-        pnlData.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlData.AutoScroll = True
-        pnlData.BackColor = Color.FromArgb(CByte(50), CByte(50), CByte(50))
-        pnlData.Location = New Point(12, 85)
-        pnlData.Name = "pnlData"
-        pnlData.Padding = New Padding(3)
-        pnlData.Size = New Size(1132, 537)
-        pnlData.TabIndex = 10
-        ' 
         ' Label2
         ' 
         Label2.AutoSize = True
@@ -94,23 +84,37 @@ Partial Class Inventories
         Label2.TabIndex = 9
         Label2.Text = "Inventories"
         ' 
+        ' dgv
+        ' 
+        dgv.AllowUserToAddRows = False
+        dgv.AllowUserToDeleteRows = False
+        dgv.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells
+        dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgv.Location = New Point(12, 85)
+        dgv.Name = "dgv"
+        dgv.ReadOnly = True
+        dgv.Size = New Size(1132, 537)
+        dgv.TabIndex = 13
+        ' 
         ' Inventories
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1156, 634)
+        Controls.Add(dgv)
         Controls.Add(tSearch)
         Controls.Add(btnNew)
-        Controls.Add(pnlData)
         Controls.Add(Label2)
         Name = "Inventories"
         Text = "Inventories"
+        CType(dgv, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
 
     Friend WithEvents tSearch As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents btnNew As Krypton.Toolkit.KryptonButton
-    Friend WithEvents pnlData As FlowLayoutPanel
     Friend WithEvents Label2 As Label
+    Friend WithEvents dgv As DataGridView
 End Class

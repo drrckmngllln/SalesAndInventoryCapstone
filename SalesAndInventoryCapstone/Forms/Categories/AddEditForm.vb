@@ -1,4 +1,6 @@
-﻿Public Class CategoryAEForm
+﻿Imports Microsoft.EntityFrameworkCore
+
+Public Class CategoryAEForm
     Public id As Integer
     Dim db As New DBHelper()
 
@@ -55,6 +57,13 @@
             Return
         End If
         Using context As New DataContext()
+            Dim validated = Await context.Categories.AnyAsync(Function(c) c.Name = tName.Text.Trim())
+
+            If validated Then
+                MsgBox("Category already exists, please try again.")
+                Return
+            End If
+
             Dim data As New Category() With {
                 .Name = tName.Text.Trim()
             }
@@ -127,5 +136,9 @@
         ElseIf e.KeyCode = Keys.Escape Then
             Me.Close()
         End If
+    End Sub
+
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Me.Close()
     End Sub
 End Class

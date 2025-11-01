@@ -123,5 +123,7 @@ Public Class ProductAddEditForm
         Await OnSubmit()
     End Sub
 
-
+    Private Sub KryptonButton1_Click(sender As Object, e As EventArgs) Handles KryptonButton1.Click
+        Me.Close()
+    End Sub
 End Class

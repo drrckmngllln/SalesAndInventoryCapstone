@@ -29,6 +29,7 @@ Partial Class ProductAddEditForm
         tProductDescription = New Krypton.Toolkit.KryptonTextBox()
         btnSave = New Krypton.Toolkit.KryptonButton()
         cmbCategory = New Krypton.Toolkit.KryptonComboBox()
+        KryptonButton1 = New Krypton.Toolkit.KryptonButton()
         CType(cmbCategory, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -82,7 +83,7 @@ Partial Class ProductAddEditForm
         ' 
         ' btnSave
         ' 
-        btnSave.Location = New Point(250, 273)
+        btnSave.Location = New Point(124, 273)
         btnSave.Name = "btnSave"
         btnSave.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnSave.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -128,6 +129,40 @@ Partial Class ProductAddEditForm
         cmbCategory.StateCommon.ComboBox.Content.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
         cmbCategory.TabIndex = 20
         ' 
+        ' KryptonButton1
+        ' 
+        KryptonButton1.Location = New Point(256, 273)
+        KryptonButton1.Name = "KryptonButton1"
+        KryptonButton1.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.OverrideDefault.Border.Color1 = SystemColors.Control
+        KryptonButton1.OverrideDefault.Border.Color2 = SystemColors.Control
+        KryptonButton1.Size = New Size(126, 33)
+        KryptonButton1.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.StateCommon.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.StateCommon.Border.Rounding = 10F
+        KryptonButton1.StateCommon.Border.Width = 2
+        KryptonButton1.StateCommon.Content.ShortText.Color1 = SystemColors.Control
+        KryptonButton1.StateCommon.Content.ShortText.Color2 = SystemColors.Control
+        KryptonButton1.StateCommon.Content.ShortText.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        KryptonButton1.StateDisabled.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.StateDisabled.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.StateDisabled.Border.Color1 = SystemColors.Control
+        KryptonButton1.StateDisabled.Border.Color2 = SystemColors.Control
+        KryptonButton1.StateNormal.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.StateNormal.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.StateNormal.Border.Color1 = SystemColors.Control
+        KryptonButton1.StateNormal.Border.Color2 = SystemColors.Control
+        KryptonButton1.StatePressed.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.StatePressed.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.StatePressed.Border.Color1 = SystemColors.Control
+        KryptonButton1.StatePressed.Border.Color2 = SystemColors.Control
+        KryptonButton1.StateTracking.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.StateTracking.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        KryptonButton1.TabIndex = 21
+        KryptonButton1.Values.DropDownArrowColor = Color.Empty
+        KryptonButton1.Values.Text = "Cancel"
+        ' 
         ' ProductAddEditForm
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -135,6 +170,7 @@ Partial Class ProductAddEditForm
         BackColor = SystemColors.Control
         ClientSize = New Size(394, 318)
         ControlBox = False
+        Controls.Add(KryptonButton1)
         Controls.Add(cmbCategory)
         Controls.Add(btnSave)
         Controls.Add(Label3)
@@ -159,4 +195,5 @@ Partial Class ProductAddEditForm
     Friend WithEvents tProductDescription As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents btnSave As Krypton.Toolkit.KryptonButton
     Friend WithEvents cmbCategory As Krypton.Toolkit.KryptonComboBox
+    Friend WithEvents KryptonButton1 As Krypton.Toolkit.KryptonButton
 End Class

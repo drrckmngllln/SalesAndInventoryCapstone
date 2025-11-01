@@ -23,9 +23,10 @@ Partial Class Products
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Label1 = New Label()
-        pnlData = New FlowLayoutPanel()
         tSearch = New Krypton.Toolkit.KryptonTextBox()
         btnNew = New Krypton.Toolkit.KryptonButton()
+        dgv = New DataGridView()
+        CType(dgv, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Label1
@@ -37,17 +38,6 @@ Partial Class Products
         Label1.Size = New Size(56, 15)
         Label1.TabIndex = 0
         Label1.Text = "Products"
-        ' 
-        ' pnlData
-        ' 
-        pnlData.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlData.AutoScroll = True
-        pnlData.BackColor = Color.FromArgb(CByte(50), CByte(50), CByte(50))
-        pnlData.Location = New Point(12, 85)
-        pnlData.Name = "pnlData"
-        pnlData.Padding = New Padding(3)
-        pnlData.Size = New Size(973, 506)
-        pnlData.TabIndex = 1
         ' 
         ' tSearch
         ' 
@@ -94,23 +84,36 @@ Partial Class Products
         btnNew.Values.DropDownArrowColor = Color.Empty
         btnNew.Values.Text = "Add Products"
         ' 
+        ' dgv
+        ' 
+        dgv.AllowUserToAddRows = False
+        dgv.AllowUserToDeleteRows = False
+        dgv.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgv.Location = New Point(12, 85)
+        dgv.Name = "dgv"
+        dgv.ReadOnly = True
+        dgv.Size = New Size(973, 506)
+        dgv.TabIndex = 9
+        ' 
         ' Products
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(997, 603)
+        Controls.Add(dgv)
         Controls.Add(tSearch)
         Controls.Add(btnNew)
-        Controls.Add(pnlData)
         Controls.Add(Label1)
         Name = "Products"
         Text = "Products"
+        CType(dgv, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
 
     Friend WithEvents Label1 As Label
-    Friend WithEvents pnlData As FlowLayoutPanel
     Friend WithEvents tSearch As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents btnNew As Krypton.Toolkit.KryptonButton
+    Friend WithEvents dgv As DataGridView
 End Class

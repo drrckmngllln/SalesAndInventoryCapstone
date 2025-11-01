@@ -1,77 +1,103 @@
 ﻿Imports Krypton.Toolkit
+Imports Microsoft.EntityFrameworkCore
 Imports MySql.Data.MySqlClient
 
 Public Class LoginForm
-    Inherits KryptonForm
 
-    Dim failedAttempts As Integer = 0
+
     Dim lockoutSeconds As Integer = 30
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         Me.Close()
     End Sub
 
-    'This is a function that initializes the login form by seeding roles and users if there is no data in the database
-    Sub LoginInitialize()
-        RoleSeeder.SeedRoles()
-        UserSeeder.RoleSeeder()
-    End Sub
-
-    'This is a function that handles the login process
-    Sub Login()
+    Async Sub Login()
         Dim username As String = tUsername.Text
         Dim password As String = tPassword.Text
-        If String.IsNullOrEmpty(username) Or String.IsNullOrEmpty(password) Then
+
+        If String.IsNullOrEmpty(username) OrElse String.IsNullOrEmpty(password) Then
             MsgBox("Please fill in all fields.")
             Return
         End If
 
-        da = New MySqlDataAdapter("select * from users where username='" & username & "'", con)
-        ds = New DataSet
-        da.Fill(ds, "users")
+        Using context As New DataContext()
+            Dim user = Await context.Users _
+            .AsNoTracking() _
+            .FirstOrDefaultAsync(Function(u) u.Username = username)
 
-        If ds.Tables(0).Rows.Count <= 0 Then
-            failedAttempts += 1
-            MsgBox($"Username not found. Invalid Attempts: {failedAttempts}")
-
-            If failedAttempts >= 3 Then
-                StartLockout()
+            If user Is Nothing OrElse Not user.Username.Equals(username, StringComparison.Ordinal) Then
+                MsgBox("Username not found")
+                Return
             End If
 
-            'This is to prevent further execution if the username is not found
-            Return
-        End If
 
-        Dim result As Boolean = BCrypt.Net.BCrypt.Verify(password, ds.Tables(0).Rows(0).Item("Password").ToString())
+            If user Is Nothing Then
+                MsgBox("Username not found.")
+                Return
+            End If
 
-        If result Then
-            MsgBox("Access Granted")
-            Me.Hide()
-            MainForm.Show()
-        Else
-            failedAttempts += 1
-            MsgBox($"Invalid Password. Invalid Attempts: {failedAttempts}")
-        End If
+            ' Handle lockout
+            If user.IsLockedOut Then
+                Dim remaining = user.LastLockedOut.Value.AddSeconds(lockoutSeconds) - DateTime.Now
+                Dim secondsLeft = CInt(Math.Max(remaining.TotalSeconds, 0))
 
-        If failedAttempts >= 3 Then
-            StartLockout()
-        End If
+                If secondsLeft > 0 Then
+                    MsgBox($"Your account is locked for {secondsLeft} more seconds.")
+                    Return
+                Else
+                    user.ResetFailedAttempts()
+                    Await context.SaveChangesAsync()
+                End If
+            End If
 
+            ' Password check
+            Dim result As Boolean = BCrypt.Net.BCrypt.Verify(password, user.Password)
+
+            If Not result Then
+                user.AddFailedAttempt()
+                Await context.SaveChangesAsync()
+
+                MsgBox($"Invalid Password. Invalid Attempts: {user.FailedAttempt}")
+
+                If user.FailedAttempt >= 5 Then
+                    user.LockOut()
+                    Await context.SaveChangesAsync()
+                    MsgBox("Your account has been locked due to multiple failed login attempts.")
+                    StartLockout()
+                    Return
+                End If
+            Else
+                user.ResetFailedAttempts()
+                Await context.SaveChangesAsync()
+                MsgBox("Access Granted")
+
+                If (user.Role = "Admin") Then
+                    Me.Hide()
+                    MainForm.Show()
+                Else
+                    Dim frm As New Sales()
+                    frm.Text = "Sales"
+                    frm.Show()
+                    Me.Hide()
+                End If
+
+
+
+            End If
+        End Using
     End Sub
 
-    'This is a function that starts the lockout timer and disables the login fields
     Sub StartLockout()
         tUsername.Enabled = False
         tPassword.Enabled = False
         btnLogin.Enabled = False
-        lockoutSeconds = 30
         lblLockoutTimer.Text = $"Too many failed attempts. Please wait {lockoutSeconds} seconds."
         lblLockoutTimer.Visible = True
         lockoutTimer.Start()
     End Sub
 
     Private Sub LoginForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoginInitialize()
+
     End Sub
 
     'This is a function that handles the key down event for the login form
@@ -108,7 +134,12 @@ Public Class LoginForm
             tPassword.Enabled = True
             btnLogin.Enabled = True
             lblLockoutTimer.Visible = False
-            failedAttempts = 0
+            'failedAttempts = 0
         End If
+    End Sub
+
+    Private Sub btnForgotPassword_Click(sender As Object, e As EventArgs) Handles btnForgotPassword.Click
+        Dim frm As New frmSecurityQuestion
+        frm.ShowDialog()
     End Sub
 End Class

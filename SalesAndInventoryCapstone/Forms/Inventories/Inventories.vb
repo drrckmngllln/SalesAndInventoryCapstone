@@ -18,14 +18,55 @@ Public Class Inventories
                 )
             End If
             Dim inventoriesList = Await inventories.ToListAsync()
-            pnlData.Controls.Clear()
-            If inventoriesList IsNot Nothing AndAlso inventories.Count > 0 Then
-                For Each inventory As Inventory In inventories
-                    Dim card As New InventoryCard()
-                    card.data = inventory
-                    pnlData.Controls.Add(card)
-                Next
-            End If
+
+            dgv.Rows.Clear()
+            dgv.Columns.Clear()
+
+            dgv.Columns.Add("Id", "Id")
+            dgv.Columns.Add("Code", "Code")
+            dgv.Columns.Add("ProductName", "Product Name")
+            dgv.Columns.Add("ProductDescription", "Product Description")
+            dgv.Columns.Add("CategoryName", "Category Name")
+            dgv.Columns.Add("CurrentStock", "Current Stock")
+            dgv.Columns.Add("StockIn", "Stock In")
+            dgv.Columns.Add("StockOut", "Stock Out")
+            dgv.Columns.Add("OriginalPrice", "Original Price")
+            dgv.Columns.Add("SellingPrice", "Selling Price")
+            dgv.Columns.Add("Remarks", "Remarks")
+
+            dgv.Columns("Id").Visible = False
+
+            Dim editButton As New DataGridViewButtonColumn()
+            editButton.Name = "btnEdit"
+            editButton.HeaderText = ""
+            editButton.Text = "Edit"
+            editButton.UseColumnTextForButtonValue = True
+            editButton.Width = 100
+            dgv.Columns.Add(editButton)
+
+            Dim deleteButton As New DataGridViewButtonColumn()
+            deleteButton.Name = "btnDelete"
+            deleteButton.HeaderText = ""
+            deleteButton.Text = "Delete"
+            deleteButton.Width = 100
+            deleteButton.UseColumnTextForButtonValue = True
+            dgv.Columns.Add(deleteButton)
+
+            For Each inventory In inventoriesList
+                dgv.Rows.Add(
+                    inventory.Id,
+                    inventory.Code,
+                    inventory.ProductName,
+                    inventory.ProductDescription,
+                    inventory.CategoryName,
+                    inventory.CurrentStock,
+                    inventory.StockIn,
+                    inventory.StockOut,
+                    inventory.OriginalPrice,
+                    inventory.SellingPrice,
+                    inventory.Remarks
+                )
+            Next
         End Using
     End Function
 
@@ -41,6 +82,29 @@ Public Class Inventories
             Await LoadAsync(tSearch.Text)
         Else
             Await LoadAsync()
+        End If
+    End Sub
+
+    Private Async Sub dgv_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv.CellContentClick
+        If e.RowIndex < 0 Then Return ' Ignore header clicks
+
+        Dim id As String = dgv.Rows(e.RowIndex).Cells("Id").Value.ToString()
+        Dim product As String = dgv.Rows(e.RowIndex).Cells("ProductName").Value.ToString()
+
+        If dgv.Columns(e.ColumnIndex).Name = "btnEdit" Then
+            ' === Handle Edit ===
+            Dim frm As New InventoryAddEditForm()
+            frm.inventoryId = id
+            frm.Text = "Edit User"
+            frm.ShowDialog(Me)
+            Await LoadAsync()
+
+        ElseIf dgv.Columns(e.ColumnIndex).Name = "btnDelete" Then
+            ' === Handle Delete ===
+            Dim confirm = MessageBox.Show($"Are you sure you want to delete {product}?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+            If confirm = DialogResult.Yes Then
+                'Await DeleteProduct(id)
+            End If
         End If
     End Sub
 End Class

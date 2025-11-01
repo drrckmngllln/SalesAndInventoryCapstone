@@ -1,6 +1,9 @@
-﻿Public Class InventoryAddEditForm
+﻿Imports Microsoft.EntityFrameworkCore
+
+Public Class InventoryAddEditForm
     Public product As Product
     Public inventory As Inventory
+    Public inventoryId As Integer
 
     Sub OpenProductSelector()
         Dim frm As New ProductSelector()
@@ -17,10 +20,36 @@
         LoadProduct()
     End Sub
 
-    Private Sub InventoryAddEditForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadProduct()
-
+    Private Async Sub InventoryAddEditForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'LoadProduct()
+        Await GetInventory()
     End Sub
+
+    Async Function GetInventory() As Task
+        Using db As New DataContext()
+            Dim product = Await db.Inventories.FirstOrDefaultAsync(Function(i) i.Id = inventoryId)
+            If Not inventory Is Nothing Then
+                MsgBox("Inventory found.")
+                tCode.Clear()
+                tCurrentStock.Clear()
+                tOriginalPrice.Clear()
+                tSellingPrice.Clear()
+                tRemarks.Clear()
+                Return
+            End If
+
+            lProductName.Text = product.ProductName
+            lProductDescription.Text = product.ProductDescription
+            lProductCategory.Text = product.CategoryName
+            tCode.Text = product.Code
+            tCurrentStock.Text = product.CurrentStock.ToString()
+            tOriginalPrice.Text = product.OriginalPrice.ToString("F2")
+            tSellingPrice.Text = product.SellingPrice.ToString("F2")
+            tRemarks.Text = product.Remarks
+            ToggleControls(True)
+
+        End Using
+    End Function
 
     Sub LoadProduct()
         If product IsNot Nothing Then

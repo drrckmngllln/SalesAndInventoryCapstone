@@ -1,7 +1,7 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class AddEditForm
-    'Inherits System.Windows.Forms.Form
-    Inherits Krypton.Toolkit.KryptonForm
+    Inherits System.Windows.Forms.Form
+    'Inherits Krypton.Toolkit.KryptonForm
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -33,6 +33,11 @@ Partial Class AddEditForm
         lblPassword = New Label()
         tPassword = New Krypton.Toolkit.KryptonTextBox()
         chkShowPassword = New CheckBox()
+        btnCancel = New Krypton.Toolkit.KryptonButton()
+        Label4 = New Label()
+        Label5 = New Label()
+        tSecurityQuestion = New Krypton.Toolkit.KryptonRichTextBox()
+        tSecurityAnswer = New Krypton.Toolkit.KryptonRichTextBox()
         SuspendLayout()
         ' 
         ' Label1
@@ -46,7 +51,7 @@ Partial Class AddEditForm
         ' 
         ' btnSave
         ' 
-        btnSave.Location = New Point(313, 259)
+        btnSave.Location = New Point(626, 220)
         btnSave.Name = "btnSave"
         btnSave.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnSave.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -162,12 +167,87 @@ Partial Class AddEditForm
         chkShowPassword.Text = "Show Password"
         chkShowPassword.UseVisualStyleBackColor = True
         ' 
+        ' btnCancel
+        ' 
+        btnCancel.Location = New Point(758, 220)
+        btnCancel.Name = "btnCancel"
+        btnCancel.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.OverrideDefault.Border.Color1 = SystemColors.Control
+        btnCancel.OverrideDefault.Border.Color2 = SystemColors.Control
+        btnCancel.Size = New Size(126, 33)
+        btnCancel.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateCommon.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateCommon.Border.Rounding = 10F
+        btnCancel.StateCommon.Border.Width = 2
+        btnCancel.StateCommon.Content.ShortText.Color1 = SystemColors.Control
+        btnCancel.StateCommon.Content.ShortText.Color2 = SystemColors.Control
+        btnCancel.StateCommon.Content.ShortText.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        btnCancel.StateDisabled.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateDisabled.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateDisabled.Border.Color1 = SystemColors.Control
+        btnCancel.StateDisabled.Border.Color2 = SystemColors.Control
+        btnCancel.StateNormal.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateNormal.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateNormal.Border.Color1 = SystemColors.Control
+        btnCancel.StateNormal.Border.Color2 = SystemColors.Control
+        btnCancel.StatePressed.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StatePressed.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StatePressed.Border.Color1 = SystemColors.Control
+        btnCancel.StatePressed.Border.Color2 = SystemColors.Control
+        btnCancel.StateTracking.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.StateTracking.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnCancel.TabIndex = 15
+        btnCancel.Values.DropDownArrowColor = Color.Empty
+        btnCancel.Values.Text = "Cancel"
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Location = New Point(466, 9)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(100, 15)
+        Label4.TabIndex = 17
+        Label4.Text = "Security Question"
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Location = New Point(466, 113)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(91, 15)
+        Label5.TabIndex = 19
+        Label5.Text = "Security Answer"
+        ' 
+        ' tSecurityQuestion
+        ' 
+        tSecurityQuestion.Location = New Point(466, 27)
+        tSecurityQuestion.Name = "tSecurityQuestion"
+        tSecurityQuestion.Size = New Size(418, 83)
+        tSecurityQuestion.StateActive.Border.Rounding = 10F
+        tSecurityQuestion.TabIndex = 23
+        tSecurityQuestion.Text = ""
+        ' 
+        ' tSecurityAnswer
+        ' 
+        tSecurityAnswer.Location = New Point(466, 131)
+        tSecurityAnswer.Name = "tSecurityAnswer"
+        tSecurityAnswer.Size = New Size(418, 83)
+        tSecurityAnswer.StateActive.Border.Rounding = 10F
+        tSecurityAnswer.TabIndex = 24
+        tSecurityAnswer.Text = ""
+        ' 
         ' AddEditForm
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(466, 308)
+        ClientSize = New Size(898, 270)
         ControlBox = False
+        Controls.Add(tSecurityAnswer)
+        Controls.Add(tSecurityQuestion)
+        Controls.Add(Label5)
+        Controls.Add(Label4)
+        Controls.Add(btnCancel)
         Controls.Add(chkShowPassword)
         Controls.Add(lblPassword)
         Controls.Add(tPassword)
@@ -178,17 +258,10 @@ Partial Class AddEditForm
         Controls.Add(Label1)
         Controls.Add(btnSave)
         Controls.Add(tLastName)
+        FormBorderStyle = FormBorderStyle.FixedSingle
         KeyPreview = True
         Name = "AddEditForm"
         StartPosition = FormStartPosition.CenterScreen
-        StateActive.Back.Color1 = SystemColors.Control
-        StateActive.Back.Color2 = SystemColors.Control
-        StateActive.Border.Color1 = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        StateActive.Border.Color2 = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        StateActive.Border.Rounding = 10F
-        StateActive.Border.Width = 1
-        StateActive.Header.Back.Color1 = SystemColors.Control
-        StateActive.Header.Back.Color2 = SystemColors.Control
         Text = "AddEditForm"
         ResumeLayout(False)
         PerformLayout()
@@ -204,4 +277,9 @@ Partial Class AddEditForm
     Friend WithEvents lblPassword As Label
     Friend WithEvents tPassword As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents chkShowPassword As CheckBox
+    Friend WithEvents btnCancel As Krypton.Toolkit.KryptonButton
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents tSecurityQuestion As Krypton.Toolkit.KryptonRichTextBox
+    Friend WithEvents tSecurityAnswer As Krypton.Toolkit.KryptonRichTextBox
 End Class

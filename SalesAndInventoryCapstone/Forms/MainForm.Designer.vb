@@ -27,8 +27,9 @@ Partial Class MainForm
         components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Panel2 = New Panel()
-        btnLogout = New Button()
+        btnInventory = New Button()
         ImageList1 = New ImageList(components)
+        btnLogout = New Button()
         btnReport = New Button()
         btnSales = New Button()
         btnProducts = New Button()
@@ -39,7 +40,6 @@ Partial Class MainForm
         PictureBox2 = New PictureBox()
         lblTitle = New Label()
         pnlMain = New Panel()
-        btnInventory = New Button()
         Panel2.SuspendLayout()
         Panel3.SuspendLayout()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -47,6 +47,7 @@ Partial Class MainForm
         ' 
         ' Panel2
         ' 
+        Panel2.BackColor = Color.DarkGreen
         Panel2.Controls.Add(btnInventory)
         Panel2.Controls.Add(btnLogout)
         Panel2.Controls.Add(btnReport)
@@ -62,26 +63,26 @@ Partial Class MainForm
         Panel2.Size = New Size(238, 769)
         Panel2.TabIndex = 1
         ' 
-        ' btnLogout
+        ' btnInventory
         ' 
-        btnLogout.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        btnLogout.Dock = DockStyle.Bottom
-        btnLogout.FlatAppearance.BorderSize = 0
-        btnLogout.FlatStyle = FlatStyle.Flat
-        btnLogout.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        btnLogout.ForeColor = SystemColors.Control
-        btnLogout.ImageAlign = ContentAlignment.MiddleLeft
-        btnLogout.ImageKey = "exit.png"
-        btnLogout.ImageList = ImageList1
-        btnLogout.Location = New Point(0, 737)
-        btnLogout.Name = "btnLogout"
-        btnLogout.Padding = New Padding(30, 0, 0, 0)
-        btnLogout.Size = New Size(238, 32)
-        btnLogout.TabIndex = 8
-        btnLogout.Text = "     Logout"
-        btnLogout.TextAlign = ContentAlignment.MiddleLeft
-        btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText
-        btnLogout.UseVisualStyleBackColor = False
+        btnInventory.BackColor = Color.DarkGreen
+        btnInventory.Dock = DockStyle.Top
+        btnInventory.FlatAppearance.BorderSize = 0
+        btnInventory.FlatStyle = FlatStyle.Flat
+        btnInventory.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnInventory.ForeColor = SystemColors.Control
+        btnInventory.ImageAlign = ContentAlignment.MiddleLeft
+        btnInventory.ImageKey = "engine.png"
+        btnInventory.ImageList = ImageList1
+        btnInventory.Location = New Point(0, 419)
+        btnInventory.Name = "btnInventory"
+        btnInventory.Padding = New Padding(30, 0, 0, 0)
+        btnInventory.Size = New Size(238, 32)
+        btnInventory.TabIndex = 5
+        btnInventory.Text = "     Inventories"
+        btnInventory.TextAlign = ContentAlignment.MiddleLeft
+        btnInventory.TextImageRelation = TextImageRelation.ImageBeforeText
+        btnInventory.UseVisualStyleBackColor = False
         ' 
         ' ImageList1
         ' 
@@ -96,13 +97,34 @@ Partial Class MainForm
         ImageList1.Images.SetKeyName(5, "file.png")
         ImageList1.Images.SetKeyName(6, "exit.png")
         ' 
+        ' btnLogout
+        ' 
+        btnLogout.BackColor = Color.DarkGreen
+        btnLogout.Dock = DockStyle.Bottom
+        btnLogout.FlatAppearance.BorderSize = 0
+        btnLogout.FlatStyle = FlatStyle.Flat
+        btnLogout.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        btnLogout.ForeColor = SystemColors.Control
+        btnLogout.ImageAlign = ContentAlignment.MiddleLeft
+        btnLogout.ImageKey = "exit.png"
+        btnLogout.ImageList = ImageList1
+        btnLogout.Location = New Point(0, 737)
+        btnLogout.Name = "btnLogout"
+        btnLogout.Padding = New Padding(30, 0, 0, 0)
+        btnLogout.Size = New Size(238, 32)
+        btnLogout.TabIndex = 8
+        btnLogout.Text = "     Logout"
+        btnLogout.TextAlign = ContentAlignment.MiddleLeft
+        btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText
+        btnLogout.UseVisualStyleBackColor = False
+        ' 
         ' btnReport
         ' 
-        btnReport.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        btnReport.BackColor = Color.DarkGreen
         btnReport.Dock = DockStyle.Top
         btnReport.FlatAppearance.BorderSize = 0
         btnReport.FlatStyle = FlatStyle.Flat
-        btnReport.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnReport.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnReport.ForeColor = SystemColors.Control
         btnReport.ImageAlign = ContentAlignment.MiddleLeft
         btnReport.ImageKey = "report.png"
@@ -119,11 +141,11 @@ Partial Class MainForm
         ' 
         ' btnSales
         ' 
-        btnSales.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        btnSales.BackColor = Color.DarkGreen
         btnSales.Dock = DockStyle.Top
         btnSales.FlatAppearance.BorderSize = 0
         btnSales.FlatStyle = FlatStyle.Flat
-        btnSales.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnSales.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnSales.ForeColor = SystemColors.Control
         btnSales.ImageAlign = ContentAlignment.MiddleLeft
         btnSales.ImageKey = "discount.png"
@@ -140,11 +162,11 @@ Partial Class MainForm
         ' 
         ' btnProducts
         ' 
-        btnProducts.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        btnProducts.BackColor = Color.DarkGreen
         btnProducts.Dock = DockStyle.Top
         btnProducts.FlatAppearance.BorderSize = 0
         btnProducts.FlatStyle = FlatStyle.Flat
-        btnProducts.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnProducts.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnProducts.ForeColor = SystemColors.Control
         btnProducts.ImageAlign = ContentAlignment.MiddleLeft
         btnProducts.ImageKey = "engine.png"
@@ -161,11 +183,11 @@ Partial Class MainForm
         ' 
         ' btnUserManagement
         ' 
-        btnUserManagement.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        btnUserManagement.BackColor = Color.DarkGreen
         btnUserManagement.Dock = DockStyle.Top
         btnUserManagement.FlatAppearance.BorderSize = 0
         btnUserManagement.FlatStyle = FlatStyle.Flat
-        btnUserManagement.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnUserManagement.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnUserManagement.ForeColor = SystemColors.Control
         btnUserManagement.ImageAlign = ContentAlignment.MiddleLeft
         btnUserManagement.ImageKey = "user.png"
@@ -182,11 +204,11 @@ Partial Class MainForm
         ' 
         ' btnCategories
         ' 
-        btnCategories.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        btnCategories.BackColor = Color.DarkGreen
         btnCategories.Dock = DockStyle.Top
         btnCategories.FlatAppearance.BorderSize = 0
         btnCategories.FlatStyle = FlatStyle.Flat
-        btnCategories.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnCategories.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnCategories.ForeColor = SystemColors.Control
         btnCategories.ImageAlign = ContentAlignment.MiddleLeft
         btnCategories.ImageKey = "file.png"
@@ -203,11 +225,11 @@ Partial Class MainForm
         ' 
         ' btnDashboard
         ' 
-        btnDashboard.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        btnDashboard.BackColor = Color.DarkGreen
         btnDashboard.Dock = DockStyle.Top
         btnDashboard.FlatAppearance.BorderSize = 0
         btnDashboard.FlatStyle = FlatStyle.Flat
-        btnDashboard.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnDashboard.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnDashboard.ForeColor = SystemColors.Control
         btnDashboard.ImageAlign = ContentAlignment.MiddleLeft
         btnDashboard.ImageKey = "dashboard.png"
@@ -234,7 +256,6 @@ Partial Class MainForm
         ' 
         ' PictureBox2
         ' 
-        PictureBox2.Image = My.Resources.Resources.tractor
         PictureBox2.Location = New Point(3, 3)
         PictureBox2.Name = "PictureBox2"
         PictureBox2.Size = New Size(229, 114)
@@ -244,7 +265,7 @@ Partial Class MainForm
         ' 
         ' lblTitle
         ' 
-        lblTitle.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         lblTitle.ForeColor = SystemColors.Control
         lblTitle.Location = New Point(3, 120)
         lblTitle.Name = "lblTitle"
@@ -255,32 +276,12 @@ Partial Class MainForm
         ' 
         ' pnlMain
         ' 
+        pnlMain.BackColor = Color.DarkGreen
         pnlMain.Dock = DockStyle.Fill
         pnlMain.Location = New Point(238, 0)
         pnlMain.Name = "pnlMain"
         pnlMain.Size = New Size(1045, 769)
         pnlMain.TabIndex = 2
-        ' 
-        ' btnInventory
-        ' 
-        btnInventory.BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        btnInventory.Dock = DockStyle.Top
-        btnInventory.FlatAppearance.BorderSize = 0
-        btnInventory.FlatStyle = FlatStyle.Flat
-        btnInventory.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        btnInventory.ForeColor = SystemColors.Control
-        btnInventory.ImageAlign = ContentAlignment.MiddleLeft
-        btnInventory.ImageKey = "engine.png"
-        btnInventory.ImageList = ImageList1
-        btnInventory.Location = New Point(0, 419)
-        btnInventory.Name = "btnInventory"
-        btnInventory.Padding = New Padding(30, 0, 0, 0)
-        btnInventory.Size = New Size(238, 32)
-        btnInventory.TabIndex = 5
-        btnInventory.Text = "     Inventories"
-        btnInventory.TextAlign = ContentAlignment.MiddleLeft
-        btnInventory.TextImageRelation = TextImageRelation.ImageBeforeText
-        btnInventory.UseVisualStyleBackColor = False
         ' 
         ' MainForm
         ' 

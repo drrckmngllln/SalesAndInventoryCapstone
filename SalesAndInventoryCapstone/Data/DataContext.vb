@@ -33,7 +33,7 @@ Public Class DataContext
         MyBase.OnModelCreating(builder)
         ' Configure entity properties and relationships here if needed
 
-
+        builder.Entity(Of User)().HasQueryFilter(Function(u) u.IsEnabled)
 
     End Sub
 End Class

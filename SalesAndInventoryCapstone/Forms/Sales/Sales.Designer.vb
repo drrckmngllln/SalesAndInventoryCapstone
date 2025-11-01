@@ -39,13 +39,16 @@ Partial Class Sales
         GroupBox1 = New GroupBox()
         ltotal = New Label()
         Panel2 = New Panel()
+        Label2 = New Label()
+        GroupBox2 = New GroupBox()
+        Label3 = New Label()
+        Label1 = New Label()
         btnManualAdd = New Button()
         tSearch = New TextBox()
         dgv = New DataGridView()
-        GroupBox2 = New GroupBox()
-        Label1 = New Label()
-        Label2 = New Label()
-        Label3 = New Label()
+        MenuStrip1 = New MenuStrip()
+        MenuToolStripMenuItem = New ToolStripMenuItem()
+        LogoutToolStripMenuItem = New ToolStripMenuItem()
         Panel1.SuspendLayout()
         pnlCheckout.SuspendLayout()
         GroupBox3.SuspendLayout()
@@ -55,8 +58,9 @@ Partial Class Sales
         GroupBox6.SuspendLayout()
         GroupBox1.SuspendLayout()
         Panel2.SuspendLayout()
-        CType(dgv, ComponentModel.ISupportInitialize).BeginInit()
         GroupBox2.SuspendLayout()
+        CType(dgv, ComponentModel.ISupportInitialize).BeginInit()
+        MenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' Panel1
@@ -239,14 +243,56 @@ Partial Class Sales
         Panel2.Controls.Add(btnManualAdd)
         Panel2.Controls.Add(tSearch)
         Panel2.Controls.Add(dgv)
+        Panel2.Controls.Add(MenuStrip1)
         Panel2.Dock = DockStyle.Fill
         Panel2.Location = New Point(0, 0)
         Panel2.Name = "Panel2"
         Panel2.Size = New Size(928, 671)
         Panel2.TabIndex = 2
         ' 
+        ' Label2
+        ' 
+        Label2.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
+        Label2.AutoSize = True
+        Label2.Location = New Point(18, 477)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(68, 15)
+        Label2.TabIndex = 4
+        Label2.Text = "Enter Code:"
+        ' 
+        ' GroupBox2
+        ' 
+        GroupBox2.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
+        GroupBox2.Controls.Add(Label3)
+        GroupBox2.Controls.Add(Label1)
+        GroupBox2.Location = New Point(12, 587)
+        GroupBox2.Name = "GroupBox2"
+        GroupBox2.Size = New Size(776, 74)
+        GroupBox2.TabIndex = 3
+        GroupBox2.TabStop = False
+        GroupBox2.Text = "Hints"
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Location = New Point(6, 34)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(260, 15)
+        Label3.TabIndex = 1
+        Label3.Text = "- Double Click the Data Grid To Update Quantity"
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Location = New Point(6, 19)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(182, 15)
+        Label1.TabIndex = 0
+        Label1.Text = "- Press Enter when Entering Code"
+        ' 
         ' btnManualAdd
         ' 
+        btnManualAdd.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         btnManualAdd.Location = New Point(794, 472)
         btnManualAdd.Name = "btnManualAdd"
         btnManualAdd.Size = New Size(117, 25)
@@ -256,6 +302,7 @@ Partial Class Sales
         ' 
         ' tSearch
         ' 
+        tSearch.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         tSearch.Font = New Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         tSearch.Location = New Point(92, 472)
         tSearch.Name = "tSearch"
@@ -269,62 +316,51 @@ Partial Class Sales
         dgv.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgv.Location = New Point(12, 12)
+        dgv.Location = New Point(12, 31)
         dgv.Name = "dgv"
         dgv.ReadOnly = True
-        dgv.Size = New Size(899, 454)
+        dgv.Size = New Size(899, 435)
         dgv.TabIndex = 0
         ' 
-        ' GroupBox2
+        ' MenuStrip1
         ' 
-        GroupBox2.Controls.Add(Label3)
-        GroupBox2.Controls.Add(Label1)
-        GroupBox2.Location = New Point(12, 587)
-        GroupBox2.Name = "GroupBox2"
-        GroupBox2.Size = New Size(776, 74)
-        GroupBox2.TabIndex = 3
-        GroupBox2.TabStop = False
-        GroupBox2.Text = "Hints"
+        MenuStrip1.Font = New Font("Segoe UI", 9F)
+        MenuStrip1.Items.AddRange(New ToolStripItem() {MenuToolStripMenuItem})
+        MenuStrip1.Location = New Point(0, 0)
+        MenuStrip1.Name = "MenuStrip1"
+        MenuStrip1.Size = New Size(928, 24)
+        MenuStrip1.TabIndex = 5
+        MenuStrip1.Text = "MenuStrip1"
         ' 
-        ' Label1
+        ' MenuToolStripMenuItem
         ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(6, 19)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(182, 15)
-        Label1.TabIndex = 0
-        Label1.Text = "- Press Enter when Entering Code"
+        MenuToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {LogoutToolStripMenuItem})
+        MenuToolStripMenuItem.Name = "MenuToolStripMenuItem"
+        MenuToolStripMenuItem.Size = New Size(50, 20)
+        MenuToolStripMenuItem.Text = "Menu"
         ' 
-        ' Label2
+        ' LogoutToolStripMenuItem
         ' 
-        Label2.AutoSize = True
-        Label2.Location = New Point(18, 477)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(68, 15)
-        Label2.TabIndex = 4
-        Label2.Text = "Enter Code:"
-        ' 
-        ' Label3
-        ' 
-        Label3.AutoSize = True
-        Label3.Location = New Point(6, 34)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(260, 15)
-        Label3.TabIndex = 1
-        Label3.Text = "- Double Click the Data Grid To Update Quantity"
+        LogoutToolStripMenuItem.Name = "LogoutToolStripMenuItem"
+        LogoutToolStripMenuItem.Size = New Size(180, 22)
+        LogoutToolStripMenuItem.Text = "Logout"
         ' 
         ' Sales
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1344, 671)
+        ControlBox = False
         Controls.Add(Panel2)
         Controls.Add(Panel1)
+        FormBorderStyle = FormBorderStyle.None
+        MainMenuStrip = MenuStrip1
         MaximizeBox = False
         MinimizeBox = False
         Name = "Sales"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Sales"
+        WindowState = FormWindowState.Maximized
         Panel1.ResumeLayout(False)
         pnlCheckout.ResumeLayout(False)
         GroupBox3.ResumeLayout(False)
@@ -339,9 +375,11 @@ Partial Class Sales
         GroupBox1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         Panel2.PerformLayout()
-        CType(dgv, ComponentModel.ISupportInitialize).EndInit()
         GroupBox2.ResumeLayout(False)
         GroupBox2.PerformLayout()
+        CType(dgv, ComponentModel.ISupportInitialize).EndInit()
+        MenuStrip1.ResumeLayout(False)
+        MenuStrip1.PerformLayout()
         ResumeLayout(False)
     End Sub
 
@@ -369,4 +407,7 @@ Partial Class Sales
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label1 As Label
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents MenuToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LogoutToolStripMenuItem As ToolStripMenuItem
 End Class

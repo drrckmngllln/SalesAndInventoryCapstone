@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class LoginForm
-    Inherits Krypton.Toolkit.KryptonForm
+    Inherits Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -38,6 +38,7 @@ Partial Class LoginForm
         chkShowPassword = New CheckBox()
         lblLockoutTimer = New Label()
         lockoutTimer = New Timer(components)
+        btnForgotPassword = New Button()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -46,8 +47,8 @@ Partial Class LoginForm
         tUsername.CueHint.CueHintText = "Username"
         tUsername.Location = New Point(11, 308)
         tUsername.Name = "tUsername"
-        tUsername.Size = New Size(374, 31)
-        tUsername.StateActive.Border.Rounding = 10F
+        tUsername.Size = New Size(400, 31)
+        tUsername.StateActive.Border.Rounding = 10.0F
         tUsername.StateActive.Border.Width = 2
         tUsername.TabIndex = 0
         ' 
@@ -57,20 +58,20 @@ Partial Class LoginForm
         tPassword.Location = New Point(11, 345)
         tPassword.Name = "tPassword"
         tPassword.PasswordChar = "●"c
-        tPassword.Size = New Size(374, 31)
-        tPassword.StateActive.Border.Rounding = 10F
+        tPassword.Size = New Size(400, 31)
+        tPassword.StateActive.Border.Rounding = 10.0F
         tPassword.StateActive.Border.Width = 2
         tPassword.TabIndex = 1
         tPassword.UseSystemPasswordChar = True
         ' 
         ' btnLogin
         ' 
-        btnLogin.Location = New Point(69, 437)
+        btnLogin.Location = New Point(81, 437)
         btnLogin.Name = "btnLogin"
         btnLogin.Size = New Size(126, 33)
         btnLogin.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnLogin.StateCommon.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnLogin.StateCommon.Border.Rounding = 10F
+        btnLogin.StateCommon.Border.Rounding = 10.0F
         btnLogin.StateCommon.Border.Width = 2
         btnLogin.StateCommon.Content.ShortText.Color1 = SystemColors.Control
         btnLogin.StateCommon.Content.ShortText.Color2 = SystemColors.Control
@@ -81,12 +82,12 @@ Partial Class LoginForm
         ' 
         ' btnExit
         ' 
-        btnExit.Location = New Point(201, 437)
+        btnExit.Location = New Point(213, 437)
         btnExit.Name = "btnExit"
         btnExit.Size = New Size(126, 33)
         btnExit.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnExit.StateCommon.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
-        btnExit.StateCommon.Border.Rounding = 10F
+        btnExit.StateCommon.Border.Rounding = 10.0F
         btnExit.StateCommon.Border.Width = 2
         btnExit.StateCommon.Content.ShortText.Color1 = SystemColors.Control
         btnExit.StateCommon.Content.ShortText.Color2 = SystemColors.Control
@@ -108,9 +109,9 @@ Partial Class LoginForm
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI Semibold", 20F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label1.Font = New Font("Segoe UI Semibold", 20.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.ForeColor = SystemColors.Control
-        Label1.Location = New Point(146, 261)
+        Label1.Location = New Point(157, 253)
         Label1.Name = "Label1"
         Label1.Size = New Size(85, 37)
         Label1.TabIndex = 5
@@ -119,7 +120,7 @@ Partial Class LoginForm
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label2.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label2.ForeColor = SystemColors.Control
         Label2.Location = New Point(92, 120)
         Label2.Name = "Label2"
@@ -130,7 +131,7 @@ Partial Class LoginForm
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label3.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label3.ForeColor = SystemColors.Control
         Label3.Location = New Point(180, 141)
         Label3.Name = "Label3"
@@ -141,7 +142,7 @@ Partial Class LoginForm
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label4.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label4.ForeColor = SystemColors.Control
         Label4.Location = New Point(68, 162)
         Label4.Name = "Label4"
@@ -152,7 +153,7 @@ Partial Class LoginForm
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label5.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label5.ForeColor = SystemColors.Control
         Label5.Location = New Point(180, 183)
         Label5.Name = "Label5"
@@ -163,7 +164,7 @@ Partial Class LoginForm
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI Semibold", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label6.Font = New Font("Segoe UI Semibold", 15.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label6.ForeColor = SystemColors.Control
         Label6.Location = New Point(81, 204)
         Label6.Name = "Label6"
@@ -175,7 +176,7 @@ Partial Class LoginForm
         ' 
         chkShowPassword.AutoSize = True
         chkShowPassword.ForeColor = SystemColors.Control
-        chkShowPassword.Location = New Point(146, 382)
+        chkShowPassword.Location = New Point(12, 382)
         chkShowPassword.Name = "chkShowPassword"
         chkShowPassword.Size = New Size(108, 19)
         chkShowPassword.TabIndex = 11
@@ -187,7 +188,7 @@ Partial Class LoginForm
         lblLockoutTimer.ForeColor = SystemColors.Control
         lblLockoutTimer.Location = New Point(11, 404)
         lblLockoutTimer.Name = "lblLockoutTimer"
-        lblLockoutTimer.Size = New Size(374, 30)
+        lblLockoutTimer.Size = New Size(400, 30)
         lblLockoutTimer.TabIndex = 13
         lblLockoutTimer.Text = "30"
         lblLockoutTimer.TextAlign = ContentAlignment.MiddleCenter
@@ -197,13 +198,26 @@ Partial Class LoginForm
         ' 
         lockoutTimer.Interval = 1000
         ' 
+        ' btnForgotPassword
+        ' 
+        btnForgotPassword.FlatAppearance.BorderSize = 0
+        btnForgotPassword.FlatStyle = FlatStyle.Flat
+        btnForgotPassword.ForeColor = SystemColors.Control
+        btnForgotPassword.Location = New Point(283, 378)
+        btnForgotPassword.Name = "btnForgotPassword"
+        btnForgotPassword.Size = New Size(128, 23)
+        btnForgotPassword.TabIndex = 14
+        btnForgotPassword.Text = "Forgot Password"
+        btnForgotPassword.UseVisualStyleBackColor = True
+        ' 
         ' LoginForm
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        ClientSize = New Size(407, 492)
+        BackColor = Color.DarkGreen
+        ClientSize = New Size(423, 485)
         ControlBox = False
+        Controls.Add(btnForgotPassword)
         Controls.Add(lblLockoutTimer)
         Controls.Add(chkShowPassword)
         Controls.Add(Label6)
@@ -220,17 +234,6 @@ Partial Class LoginForm
         KeyPreview = True
         Name = "LoginForm"
         StartPosition = FormStartPosition.CenterScreen
-        StateActive.Back.Color1 = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        StateActive.Back.Color2 = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        StateActive.Border.Color1 = SystemColors.Control
-        StateActive.Border.Color2 = SystemColors.Control
-        StateActive.Border.Rounding = 10F
-        StateActive.Header.Back.Color1 = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        StateActive.Header.Back.Color2 = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        StateActive.Header.Border.Color1 = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        StateActive.Header.Border.Color2 = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        StateActive.Header.Content.ShortText.Color1 = Color.White
-        StateActive.Header.Content.ShortText.Color2 = Color.White
         Text = "LoginForm"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
@@ -251,4 +254,5 @@ Partial Class LoginForm
     Friend WithEvents chkShowPassword As CheckBox
     Friend WithEvents lblLockoutTimer As Label
     Friend WithEvents lockoutTimer As Timer
+    Friend WithEvents btnForgotPassword As Button
 End Class

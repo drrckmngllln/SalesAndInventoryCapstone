@@ -9,8 +9,8 @@
 
     'This function modifies the color of the sidebar menu when selected
     Sub ButtonSelector(Optional selectedButton As String = "dashboard")
-        Dim defaultColor As Color = Color.FromArgb(30, 30, 30)
-        Dim selectedColor As Color = Color.FromArgb(80, 80, 80)
+        Dim defaultColor As Color = Color.FromArgb(0, 100, 0)
+        Dim selectedColor As Color = Color.FromArgb(0, 80, 0)
 
         btnDashboard.BackColor = defaultColor
         btnCategories.BackColor = defaultColor

@@ -74,6 +74,11 @@ Public Class Sales
             Return
         End If
 
+        If inventory.CurrentStock <= 0 Then
+            MessageBox.Show("Item is out of stock!")
+            Return
+        End If
+
         Dim existingItem = inventoryItems.FirstOrDefault(Function(i) i.Code = code.ToUpper())
         If existingItem IsNot Nothing Then
             ' Update existing item
@@ -306,8 +311,9 @@ Public Class Sales
         btnConfirmCheckout.Visible = False
     End Sub
 
-
-
+    Private Sub LogoutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogoutToolStripMenuItem.Click
+        Logout()
+    End Sub
 End Class
 
 Public Class SaleItemGrid
