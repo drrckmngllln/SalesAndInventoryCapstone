@@ -72,12 +72,13 @@ Partial Class ManualSalesAdd
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(812, 493)
-        ControlBox = False
         Controls.Add(Label2)
         Controls.Add(Label1)
         Controls.Add(tSearch)
         Controls.Add(dgv)
         KeyPreview = True
+        MaximizeBox = False
+        MinimizeBox = False
         Name = "ManualSalesAdd"
         StartPosition = FormStartPosition.CenterScreen
         Text = "ManualSalesAdd"

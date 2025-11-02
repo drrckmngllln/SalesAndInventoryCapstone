@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel.DataAnnotations.Schema
 
-<Table("SaleItemView")>
+<Table("saleitemview")>
 Public Class SaleItemView
     Public Property Id As Integer
     Public Property SaleId As Integer

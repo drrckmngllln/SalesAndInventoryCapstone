@@ -64,8 +64,11 @@ Public Class ReportForm
 
     Async Function LoadSaleItemsAsync(fromDate As DateTime, toDate As DateTime, category As String) As Task
         Using ctx As New DataContext()
+
             Dim saleItemsInRange = Await ctx.SaleItemViews _
-                .Where(Function(si) si.CreatedAt >= fromDate AndAlso si.CreatedAt <= toDate AndAlso category = si.Category) _
+                .Where(Function(si) si.CreatedAt >= fromDate AndAlso
+                                    si.CreatedAt <= toDate AndAlso
+                                    si.Category = category) _
                 .Select(Function(si) New With {
                     .Id = si.Id,
                     .CreatedAt = si.CreatedAt,
@@ -80,6 +83,7 @@ Public Class ReportForm
                 }) _
                 .OrderBy(Function(si) si.ReferenceNo) _
                 .ToListAsync()
+
             Dim rds As New ReportDataSource(DataSetName, saleItemsInRange)
             ReportViewer1.LocalReport.DataSources.Clear()
             ReportViewer1.LocalReport.DataSources.Add(rds)

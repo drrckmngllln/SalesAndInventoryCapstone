@@ -28,7 +28,7 @@ Public Class InventoryAddEditForm
     Async Function GetInventory() As Task
         Using db As New DataContext()
             Dim product = Await db.Inventories.FirstOrDefaultAsync(Function(i) i.Id = inventoryId)
-            If Not inventory Is Nothing Then
+            If product Is Nothing Then
                 MsgBox("Inventory found.")
                 tCode.Clear()
                 tCurrentStock.Clear()
@@ -36,18 +36,17 @@ Public Class InventoryAddEditForm
                 tSellingPrice.Clear()
                 tRemarks.Clear()
                 Return
+            Else
+                lProductName.Text = product.ProductName
+                lProductDescription.Text = product.ProductDescription
+                lProductCategory.Text = product.CategoryName
+                tCode.Text = product.Code
+                tCurrentStock.Text = product.CurrentStock.ToString()
+                tOriginalPrice.Text = product.OriginalPrice.ToString("F2")
+                tSellingPrice.Text = product.SellingPrice.ToString("F2")
+                tRemarks.Text = product.Remarks
+                ToggleControls(True)
             End If
-
-            lProductName.Text = product.ProductName
-            lProductDescription.Text = product.ProductDescription
-            lProductCategory.Text = product.CategoryName
-            tCode.Text = product.Code
-            tCurrentStock.Text = product.CurrentStock.ToString()
-            tOriginalPrice.Text = product.OriginalPrice.ToString("F2")
-            tSellingPrice.Text = product.SellingPrice.ToString("F2")
-            tRemarks.Text = product.Remarks
-            ToggleControls(True)
-
         End Using
     End Function
 
