@@ -67,6 +67,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Forms\Reports\InventoryReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Forms\Reports\ReportDs.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ReportDs.Designer.vb</LastGenOutput>

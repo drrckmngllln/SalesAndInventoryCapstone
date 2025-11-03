@@ -40,9 +40,12 @@ Partial Class ReportForm
         dateSIEnd = New DateTimePicker()
         Label6 = New Label()
         pnlSIReport = New Panel()
+        Inventories = New TabPage()
+        pnlInventory = New Panel()
         pnlSaleIemReport.SuspendLayout()
         TabPage1.SuspendLayout()
         TabPage2.SuspendLayout()
+        Inventories.SuspendLayout()
         SuspendLayout()
         ' 
         ' dateFrom
@@ -107,6 +110,7 @@ Partial Class ReportForm
         ' 
         pnlSaleIemReport.Controls.Add(TabPage1)
         pnlSaleIemReport.Controls.Add(TabPage2)
+        pnlSaleIemReport.Controls.Add(Inventories)
         pnlSaleIemReport.Dock = DockStyle.Fill
         pnlSaleIemReport.Location = New Point(0, 0)
         pnlSaleIemReport.Name = "pnlSaleIemReport"
@@ -215,6 +219,25 @@ Partial Class ReportForm
         pnlSIReport.Size = New Size(1425, 551)
         pnlSIReport.TabIndex = 13
         ' 
+        ' Inventories
+        ' 
+        Inventories.Controls.Add(pnlInventory)
+        Inventories.Location = New Point(4, 24)
+        Inventories.Name = "Inventories"
+        Inventories.Padding = New Padding(3)
+        Inventories.Size = New Size(1439, 592)
+        Inventories.TabIndex = 2
+        Inventories.Text = "Inventories"
+        Inventories.UseVisualStyleBackColor = True
+        ' 
+        ' pnlInventory
+        ' 
+        pnlInventory.Dock = DockStyle.Fill
+        pnlInventory.Location = New Point(3, 3)
+        pnlInventory.Name = "pnlInventory"
+        pnlInventory.Size = New Size(1433, 586)
+        pnlInventory.TabIndex = 0
+        ' 
         ' ReportForm
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -228,6 +251,7 @@ Partial Class ReportForm
         TabPage1.PerformLayout()
         TabPage2.ResumeLayout(False)
         TabPage2.PerformLayout()
+        Inventories.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
@@ -249,4 +273,6 @@ Partial Class ReportForm
     Friend WithEvents dateSIEnd As DateTimePicker
     Friend WithEvents Label6 As Label
     Friend WithEvents pnlSIReport As Panel
+    Friend WithEvents Inventories As TabPage
+    Friend WithEvents pnlInventory As Panel
 End Class

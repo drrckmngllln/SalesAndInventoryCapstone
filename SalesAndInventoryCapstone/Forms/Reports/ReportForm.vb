@@ -10,8 +10,12 @@ Public Class ReportForm
     Private ReadOnly SaleItemReportPath As String =
         IO.Path.Combine(Application.StartupPath, "Forms/Reports", "SaleItemReport.rdlc")
 
+    Private ReadOnly InventoryReportPath As String =
+        IO.Path.Combine(Application.StartupPath, "Forms/Reports", "InventoryReport.rdlc")
+
     ' Keep only this - don’t create another ReportForm inside itself
     Private Property ReportViewer1 As ReportViewer
+    Private Property rpt2 As ReportViewer
 
     ' Initialize and embed ReportViewer inside a Panel
     Public Sub InitializeReport(hostPanel As Panel)
@@ -31,6 +35,9 @@ Public Class ReportForm
 
     Private Async Sub ReportForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         Await GetCategoriesAsync()
+
+        InitializeReport(pnlInventory)
+        Await LoadInventoriesAsync()
     End Sub
 
     ' Async loader for sales data
@@ -65,10 +72,11 @@ Public Class ReportForm
     Async Function LoadSaleItemsAsync(fromDate As DateTime, toDate As DateTime, category As String) As Task
         Using ctx As New DataContext()
 
+            Dim sample = Await ctx.SaleItemViews.ToListAsync()
+
             Dim saleItemsInRange = Await ctx.SaleItemViews _
-                .Where(Function(si) si.CreatedAt >= fromDate AndAlso
-                                    si.CreatedAt <= toDate AndAlso
-                                    si.Category = category) _
+                .Where(Function(si) si.CreatedAt.Date <= fromDate.Date And
+                                    si.CreatedAt.Date <= toDate.Date And si.Category = category) _
                 .Select(Function(si) New With {
                     .Id = si.Id,
                     .CreatedAt = si.CreatedAt,
@@ -92,6 +100,17 @@ Public Class ReportForm
         End Using
     End Function
 
+    Async Function LoadInventoriesAsync() As Task
+        Using ctx As New DataContext()
+            Dim inventories = Await ctx.Inventories.ToListAsync()
+            Dim rds As New ReportDataSource(DataSetName, inventories)
+            ReportViewer1.LocalReport.DataSources.Clear()
+            ReportViewer1.LocalReport.DataSources.Add(rds)
+            ReportViewer1.LocalReport.ReportPath = InventoryReportPath
+            ReportViewer1.RefreshReport()
+        End Using
+    End Function
+
     Async Function GetCategoriesAsync() As Task
         Using ctx As New DataContext()
             Dim categories = Await ctx.Categories.ToListAsync()
@@ -106,6 +125,7 @@ Public Class ReportForm
         InitializeReport(pnlSaleReport)
 
         Await LoadSalesDataAsync(dateFrom.Value.Date, dateTo.Value.Date)
+
     End Sub
 
     Private Async Sub btnSIFilter_Click(sender As Object, e As EventArgs) Handles btnSIFilter.Click
