@@ -314,6 +314,25 @@ Public Class Sales
     Private Sub LogoutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogoutToolStripMenuItem.Click
         Logout()
     End Sub
+
+    Private Sub tCash_KeyPress(sender As Object, e As KeyPressEventArgs) Handles tCash.KeyPress
+        Dim textBox = DirectCast(sender, TextBox)
+
+        If Char.IsControl(e.KeyChar) Then
+            Return
+        ElseIf Char.IsDigit(e.KeyChar) Then
+            Return
+        ElseIf e.KeyChar = "."c Then
+            If textBox.Text.Contains(".") Then
+                e.Handled = True
+            End If
+            Return
+        Else
+            ' Block everything else
+            e.Handled = True
+        End If
+    End Sub
+
 End Class
 
 Public Class SaleItemGrid

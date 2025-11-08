@@ -20,38 +20,95 @@ Public Class Products
     Async Function LoadData(Optional search As String = "") As Task
         dgv.Rows.Clear()
         dgv.Columns.Clear()
-        dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+        dgv.RowTemplate.Height = 30
 
         dgv.Columns.Add("Id", "Id")
-        dgv.Columns.Add("ProductName", "Product Name")
-        dgv.Columns.Add("ProductDescription", "Description")
-        dgv.Columns.Add("Category", "Category")
-
         dgv.Columns("Id").Visible = False
-        dgv.Columns("ProductName").Width = 200
-        dgv.Columns("ProductDescription").Width = 500
-        dgv.Columns("Category").Width = 200
 
+        dgv.Columns.Add("ProductName", "Product Name")
+        dgv.Columns("ProductName").Width = 200
+
+        dgv.Columns.Add("ProductDescription", "Description")
+        dgv.Columns("ProductDescription").Width = 300
+
+        dgv.Columns.Add("Category", "Category")
+        dgv.Columns("Category").Width = 150
+
+        dgv.Columns.Add("OriginalPrice", "Original Price")
+        dgv.Columns("OriginalPrice").Width = 120
+
+        dgv.Columns.Add("SellingPrice", "Selling Price")
+        dgv.Columns("SellingPrice").Width = 120
+
+        ' Add Edit button column
         Dim editButton As New DataGridViewButtonColumn()
         editButton.Name = "btnEdit"
         editButton.HeaderText = ""
         editButton.Text = "Edit"
         editButton.UseColumnTextForButtonValue = True
-        editButton.Width = 100
+        editButton.Width = 80
         dgv.Columns.Add(editButton)
 
+        ' Add Delete button column
         Dim deleteButton As New DataGridViewButtonColumn()
         deleteButton.Name = "btnDelete"
         deleteButton.HeaderText = ""
         deleteButton.Text = "Delete"
-        deleteButton.Width = 100
         deleteButton.UseColumnTextForButtonValue = True
+        deleteButton.Width = 80
         dgv.Columns.Add(deleteButton)
+
+        ' Make columns not resizable by user (optional)
+        For Each col As DataGridViewColumn In dgv.Columns
+            col.Resizable = DataGridViewTriState.False
+        Next
+
+
 
         Dim products = Await GetProducts(search)
         For Each product In products
-            Dim rowIndex = dgv.Rows.Add(product.Id, product.ProductName, product.ProductDescription, product.Category)
+            Dim originalPriceText As String
+            If product.OriginalPrice Is Nothing OrElse
+               String.IsNullOrEmpty(product.OriginalPrice.ToString()) OrElse
+               Val(product.OriginalPrice) = 0 Then
+
+                originalPriceText = "Price Not Set"
+            Else
+                Dim priceValue As Decimal
+                If Decimal.TryParse(product.OriginalPrice.ToString(), priceValue) Then
+                    originalPriceText = priceValue.ToString("C2")
+                Else
+                    originalPriceText = product.OriginalPrice.ToString()
+                End If
+            End If
+
+            Dim sellingPriceText As String
+            If product.SellingPrice Is Nothing OrElse
+               String.IsNullOrEmpty(product.SellingPrice.ToString()) OrElse
+               Val(product.SellingPrice) = 0 Then
+
+                sellingPriceText = "Price Not Set"
+            Else
+                Dim sellValue As Decimal
+                If Decimal.TryParse(product.SellingPrice.ToString(), sellValue) Then
+                    sellingPriceText = sellValue.ToString("C2")
+                Else
+                    sellingPriceText = product.SellingPrice.ToString()
+                End If
+            End If
+
+            ' --- Add row ---
+            dgv.Rows.Add(
+                product.Id,
+                product.ProductName,
+                product.ProductDescription,
+                product.Category,
+                originalPriceText,
+                sellingPriceText
+            )
         Next
+
     End Function
 
     Async Function GetProducts(Optional search As String = "") As Task(Of List(Of Product))

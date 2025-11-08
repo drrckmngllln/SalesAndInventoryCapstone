@@ -12,6 +12,10 @@ Public Class Product
     Public Property CategoryId As Integer?
     <Column("Category")>
     Public Property Category As String
+    <Column("OriginalPrice")>
+    Public Property OriginalPrice As Decimal?
+    <Column("SellingPrice")>
+    Public Property SellingPrice As Decimal?
 End Class
 
 <Table("products")>
