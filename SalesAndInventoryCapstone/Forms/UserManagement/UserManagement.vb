@@ -38,12 +38,12 @@ Public Class UserManagement
         editButton.UseColumnTextForButtonValue = True
         dgv.Columns.Add(editButton)
 
-        Dim deleteButton As New DataGridViewButtonColumn()
-        deleteButton.Name = "btnDelete"
-        deleteButton.HeaderText = ""
-        deleteButton.Text = "Delete"
-        deleteButton.UseColumnTextForButtonValue = True
-        dgv.Columns.Add(deleteButton)
+        'Dim deleteButton As New DataGridViewButtonColumn()
+        'deleteButton.Name = "btnDelete"
+        'deleteButton.HeaderText = ""
+        'deleteButton.Text = "Delete"
+        'deleteButton.UseColumnTextForButtonValue = True
+        'dgv.Columns.Add(deleteButton)
 
         Dim toggleButton As New DataGridViewButtonColumn()
         toggleButton.Name = "btnToggle"
@@ -65,7 +65,7 @@ Public Class UserManagement
 
         ' === OPTIONAL STYLING ===
         dgv.Columns("btnEdit").Width = 60
-        dgv.Columns("btnDelete").Width = 70
+        'dgv.Columns("btnDelete").Width = 70
         dgv.Columns("btnToggle").Width = 80
     End Function
 
