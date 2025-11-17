@@ -34,7 +34,6 @@ Partial Class CategoryAEForm
         ' 
         ' tName
         ' 
-        tName.CueHint.CueHintText = "Username"
         tName.CueHint.Hint = PaletteTextHint.ClearTypeGridFit
         tName.Location = New Point(12, 27)
         tName.Name = "tName"
@@ -124,7 +123,7 @@ Partial Class CategoryAEForm
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(446, 99)
+        ClientSize = New Size(448, 93)
         ControlBox = False
         Controls.Add(btnCancel)
         Controls.Add(Label1)

@@ -182,12 +182,21 @@ Public Class Sales
     End Sub
 
     Private Async Sub btnConfirmCheckout_Click(sender As Object, e As EventArgs) Handles btnConfirmCheckout.Click
-        ' Validate inputs
         If String.IsNullOrWhiteSpace(tFirstName.Text) OrElse String.IsNullOrWhiteSpace(tLastName.Text) Then
             MessageBox.Show("Please enter customer name.", "Missing Info", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
+        If inventoryItems.Count = 0 Then
+            MessageBox.Show("Cart is empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        If Not Await ValidateStockBeforeCheckout(inventoryItems.ToList()) Then
+            Return  ' Cancels checkout
+        End If
+
+        ' Calculate total + payment validation
         Dim totalAmount As Decimal = CalculateTotal()
         Dim cashGiven As Decimal
 
@@ -201,25 +210,12 @@ Public Class Sales
             Return
         End If
 
-        ' Save sale to database
-        Await SaveSaleAsync(lReferenceNo.Text,
-                        totalAmount,
-                        cashGiven,
-                        tLastName.Text.Trim(),
-                        tFirstName.Text.Trim(),
-                        tMiddleName.Text.Trim(),
-                        inventoryItems.ToList())
-
-        MessageBox.Show("Sale completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        ' Open change form
-        Dim changeForm As New FormChange(totalAmount, cashGiven, lReferenceNo.Text)
-        If changeForm.ShowDialog() = DialogResult.OK Then
-            MessageBox.Show("Change given: " & (cashGiven - totalAmount).ToString("C2"), "Change", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-            ' Reset form only after confirming change given
-            ResetSaleForm()
-        End If
+        ' Continue your original checkout save logic
+        Await SaveSaleAsync(lReferenceNo.Text, totalAmount, cashGiven,
+                            tLastName.Text.Trim(),
+                            tFirstName.Text.Trim(),
+                            tMiddleName.Text.Trim(),
+                            inventoryItems.ToList())
     End Sub
 
 
@@ -332,6 +328,31 @@ Public Class Sales
             e.Handled = True
         End If
     End Sub
+
+    Private Async Function ValidateStockBeforeCheckout(items As List(Of SaleItemGrid)) As Task(Of Boolean)
+        Using ctx As New DataContext()
+            For Each item In items
+                Dim inv = Await ctx.Inventories.FirstOrDefaultAsync(Function(x) x.Code = item.Code)
+
+                If inv Is Nothing Then
+                    MessageBox.Show($"Item '{item.Code}' no longer exists in inventory!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return False
+                End If
+
+                If inv.CurrentStock <= 0 Then
+                    MessageBox.Show($"Item '{inv.ProductName}' is OUT OF STOCK!", "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Return False
+                End If
+
+                If item.Quantity > inv.CurrentStock Then
+                    MessageBox.Show($"Not enough stock for '{inv.ProductName}'. Available: {inv.CurrentStock}, Requested: {item.Quantity}", "Insufficient Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Return False
+                End If
+            Next
+        End Using
+
+        Return True
+    End Function
 
 End Class
 

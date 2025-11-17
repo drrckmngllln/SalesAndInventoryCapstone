@@ -44,19 +44,19 @@
 
     'This function loads the dashboard form
     Private Sub btnDashboard_Click(sender As Object, e As EventArgs) Handles btnDashboard.Click
-        LoadUI(pnlMain, New Dashboard)
+        LoadUI(pnlMain, New UserManagement)
         ButtonSelector("dashboard")
     End Sub
 
     'this function loads the categories form
     Private Sub btnCategories_Click(sender As Object, e As EventArgs) Handles btnCategories.Click
-        LoadUI(pnlMain, New Categories)
+        LoadUI(pnlMain, New Dashboard)
         ButtonSelector("categories")
     End Sub
 
     'this function loads the user management form
     Private Sub btnUserManagement_Click(sender As Object, e As EventArgs) Handles btnUserManagement.Click
-        LoadUI(pnlMain, New UserManagement)
+        LoadUI(pnlMain, New Categories)
         ButtonSelector("usermanagement")
     End Sub
 
@@ -77,7 +77,7 @@
 
     'this function loads the report form
     Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
-        LoadUI(pnlMain, New ReportForm)
+        LoadUI(pnlMain, New Inventories)
         ButtonSelector("report")
     End Sub
 
@@ -87,7 +87,7 @@
     End Sub
 
     Private Sub btnInventory_Click(sender As Object, e As EventArgs) Handles btnInventory.Click
-        LoadUI(pnlMain, New Inventories)
+        LoadUI(pnlMain, New ReportForm)
         ButtonSelector("inventory")
     End Sub
 End Class
