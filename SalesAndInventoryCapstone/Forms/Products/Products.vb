@@ -10,7 +10,7 @@ Public Class Products
 
     'this function is called when the user clicks on the search button
     Private Async Sub tSearch_TextChanged(sender As Object, e As EventArgs) Handles tSearch.TextChanged
-        If tSearch.Text.Length > 2 Then
+        If tSearch.Text.Length > 0 Then
             Await LoadData(tSearch.Text.Trim())
         Else
             Await LoadData()

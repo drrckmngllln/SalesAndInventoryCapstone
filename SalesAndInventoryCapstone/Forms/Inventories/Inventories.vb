@@ -78,7 +78,7 @@ Public Class Inventories
     End Sub
 
     Private Async Sub tSearch_TextChanged(sender As Object, e As EventArgs) Handles tSearch.TextChanged
-        If tSearch.TextLength > 2 Then
+        If tSearch.TextLength > 0 Then
             Await LoadAsync(tSearch.Text)
         Else
             Await LoadAsync()
