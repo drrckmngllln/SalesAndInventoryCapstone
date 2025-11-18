@@ -36,6 +36,14 @@ Public Class Inventories
 
             dgv.Columns("Id").Visible = False
 
+            Dim addStockButton As New DataGridViewButtonColumn()
+            addStockButton.Name = "btnAddStock"
+            addStockButton.HeaderText = ""
+            addStockButton.Text = "Add Stock"
+            addStockButton.UseColumnTextForButtonValue = True
+            addStockButton.Width = 100
+            dgv.Columns.Add(addStockButton)
+
             Dim editButton As New DataGridViewButtonColumn()
             editButton.Name = "btnEdit"
             editButton.HeaderText = ""
@@ -90,6 +98,14 @@ Public Class Inventories
 
         Dim id As String = dgv.Rows(e.RowIndex).Cells("Id").Value.ToString()
         Dim product As String = dgv.Rows(e.RowIndex).Cells("ProductName").Value.ToString()
+
+        If dgv.Columns(e.ColumnIndex).Name = "btnAddStock" Then
+            ' === Handle Add Stock ===
+            Dim frm As New AddStockForm()
+            frm.productId = id
+            frm.ShowDialog(Me)
+            Await LoadAsync()
+        End If
 
         If dgv.Columns(e.ColumnIndex).Name = "btnEdit" Then
             ' === Handle Edit ===

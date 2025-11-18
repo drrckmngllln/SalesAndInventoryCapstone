@@ -3,24 +3,13 @@ Public Class AddStockForm
     Public productId As String
 
     Async Function GetStock() As Task(Of Inventory)
-        Dim sql As String = $"SELECT * FROM inventoriesview WHERE Id={productId}"
-        Dim result = Await DBHelper.Fetch(sql)
-        If result.Tables.Count > 0 AndAlso result.Tables(0).Rows.Count > 0 Then
-            Dim row = result.Tables(0).Rows(0)
-            Return New Inventory With {
-                .Id = productId,
-                .Code = row("Code").ToString(),
-                .ProductName = row("ProductName").ToString(),
-                .ProductDescription = row("ProductDescription").ToString(),
-                .CurrentStock = Convert.ToInt32(row("CurrentStock")),
-                .CategoryName = row("CategoryName").ToString(),
-                .OriginalPrice = Convert.ToDecimal(row("OriginalPrice")),
-                .SellingPrice = Convert.ToDecimal(row("SellingPrice")),
-                .Remarks = row("Remarks").ToString()
-            }
-        End If
-
-        Return Nothing
+        Using ctx As New DataContext()
+            Dim inventory = Await ctx.Inventories.FirstOrDefaultAsync(Function(i) i.Id.ToString() = productId)
+            If inventory IsNot Nothing Then
+                Return inventory
+            End If
+            Return inventory
+        End Using
     End Function
 
     Async Function HandleAddStock() As Task
@@ -31,9 +20,9 @@ Public Class AddStockForm
 
         'Dim stock = Await GetStock()
         Using context As New DataContext()
-            Dim stock = Await context.Inventories.FirstOrDefaultAsync(Function(i) i.Id.ToString() = productId)
+            Dim stock = Await context.Inventories.FirstOrDefaultAsync(Function(i) i.Id = productId)
 
-            If String.IsNullOrEmpty(productId) OrElse stock.CurrentStock <= 0 Then
+            If stock Is Nothing Then
                 MessageBox.Show("Please enter a valid product ID and quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
             End If
