@@ -25,3 +25,4 @@ Public Class Sale
     <Column("Profit")>
     Public Property Profit As Decimal
 End Class
+

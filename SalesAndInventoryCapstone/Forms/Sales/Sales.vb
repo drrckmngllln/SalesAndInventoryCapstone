@@ -15,12 +15,6 @@ Public Class Sales
         dgv.Columns.Clear()
         dgv.AutoGenerateColumns = False
 
-        Dim colId As New DataGridViewTextBoxColumn()
-        colId.Name = "Id"
-        colId.HeaderText = "ID"
-        colId.DataPropertyName = "Id"
-        colId.Visible = False ' Hide ID column
-
         Dim colCode As New DataGridViewTextBoxColumn()
         colCode.Name = "Code"
         colCode.HeaderText = "Code"
@@ -59,16 +53,24 @@ Public Class Sales
     End Sub
 
 
+
     Private Function CalculateTotal() As Decimal
-        Dim total As Decimal = 0
-        For Each row As DataGridViewRow In dgv.Rows
-            total += Convert.ToDecimal(row.Cells("Price").Value)
-        Next
-        Return total
+        Return inventoryItems.Sum(Function(i) i.Price)
     End Function
 
-    Async Sub HandleAddInventory(code As String)
-        Dim inventory = Await _context.Inventories.FirstOrDefaultAsync(Function(x) x.Code = code.ToUpper())
+    Private Sub UpdateTotalLabel()
+        ltotal.Text = "Total: " & CalculateTotal().ToString("C2")
+    End Sub
+
+
+    Private Async Function HandleAddInventory(code As String) As Task
+        Dim normalizedCode = code?.Trim().ToUpper()
+        If String.IsNullOrWhiteSpace(normalizedCode) Then Return
+
+        Dim inventory = Await _context.Inventories _
+        .AsNoTracking() _
+        .FirstOrDefaultAsync(Function(x) x.Code = normalizedCode)
+
         If inventory Is Nothing Then
             MessageBox.Show("Item not found!")
             Return
@@ -79,12 +81,12 @@ Public Class Sales
             Return
         End If
 
-        Dim existingItem = inventoryItems.FirstOrDefault(Function(i) i.Code = code.ToUpper())
+        Dim existingItem = inventoryItems.FirstOrDefault(Function(i) i.Code = normalizedCode)
         If existingItem IsNot Nothing Then
             ' Update existing item
             existingItem.Quantity += 1
             existingItem.Price = existingItem.SellingPrice * existingItem.Quantity
-            dgv.Refresh() ' Refresh grid
+            dgv.Refresh()
         Else
             ' Add new row with OriginalPrice + SellingPrice
             inventoryItems.Add(New SaleItemGrid With {
@@ -101,7 +103,7 @@ Public Class Sales
         tSearch.Clear()
 
         ' Update total
-        ltotal.Text = inventoryItems.Sum(Function(i) i.Price).ToString("C2")
+        UpdateTotalLabel()
 
         ' Select latest row
         Dim lastRowIndex As Integer = dgv.Rows.Count - 1
@@ -110,16 +112,15 @@ Public Class Sales
             dgv.Rows(lastRowIndex).Selected = True
             dgv.FirstDisplayedScrollingRowIndex = lastRowIndex
         End If
-    End Sub
+    End Function
 
-
-
-    Private Sub tSearch_KeyDown(sender As Object, e As KeyEventArgs) Handles tSearch.KeyDown
+    Private Async Sub tSearch_KeyDown(sender As Object, e As KeyEventArgs) Handles tSearch.KeyDown
         If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
             Try
-                HandleAddInventory(tSearch.Text)
+                Await HandleAddInventory(tSearch.Text)
             Catch ex As Exception
-                MsgBox("Inventory not found.", MsgBoxStyle.Critical, "Error")
+                MessageBox.Show("Inventory not found or error encountered.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End If
     End Sub
@@ -130,26 +131,24 @@ Public Class Sales
             Dim code = selectedRow.Cells("Code").Value.ToString()
             Dim qty = CInt(selectedRow.Cells("Quantity").Value)
 
-            ' Open edit form
             Dim editForm As New EditQuantity(code, qty)
             If editForm.ShowDialog() = DialogResult.OK Then
-                ' Update quantity in BindingList
                 Dim item = inventoryItems.FirstOrDefault(Function(i) i.Code = code)
                 If item IsNot Nothing Then
                     item.Quantity = editForm.NewQuantity
 
-                    ' Get price from DB again (optional)
                     Dim price = _context.Inventories.FirstOrDefault(Function(x) x.Code = code)?.SellingPrice
                     If price.HasValue Then
                         item.Price = price.Value * item.Quantity
                     End If
 
                     dgv.Refresh()
-                    ltotal.Text = "Total: " & inventoryItems.Sum(Function(i) i.Price).ToString("C2")
+                    UpdateTotalLabel()
                 End If
             End If
         End If
     End Sub
+
 
     Private Sub btnManualAdd_Click(sender As Object, e As EventArgs) Handles btnManualAdd.Click
         Dim picker As New ManualSalesAdd
@@ -162,19 +161,20 @@ Public Class Sales
                 existingItem.Price = inv.SellingPrice * existingItem.Quantity
             Else
                 inventoryItems.Add(New SaleItemGrid With {
-                    .Code = inv.Code,
-                    .Description = inv.ProductName,
-                    .Quantity = 1,
-                    .Price = inv.SellingPrice,
-                    .OriginalPrice = inv.OriginalPrice,
-                    .SellingPrice = inv.SellingPrice
-                })
+                .Code = inv.Code,
+                .Description = inv.ProductName,
+                .Quantity = 1,
+                .Price = inv.SellingPrice,
+                .OriginalPrice = inv.OriginalPrice,
+                .SellingPrice = inv.SellingPrice
+            })
             End If
 
             dgv.Refresh()
-            ltotal.Text = "Total: " & inventoryItems.Sum(Function(i) i.Price).ToString("C2")
+            UpdateTotalLabel()
         End If
     End Sub
+
 
     Private Sub btnCheckout_Click(sender As Object, e As EventArgs) Handles btnCheckout.Click
         pnlCheckout.Visible = Not pnlCheckout.Visible
@@ -193,29 +193,32 @@ Public Class Sales
         End If
 
         If Not Await ValidateStockBeforeCheckout(inventoryItems.ToList()) Then
-            Return  ' Cancels checkout
-        End If
-
-        ' Calculate total + payment validation
-        Dim totalAmount As Decimal = CalculateTotal()
-        Dim cashGiven As Decimal
-
-        If Not Decimal.TryParse(tCash.Text, cashGiven) Then
-            MessageBox.Show("Invalid cash amount.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End If
 
-        If cashGiven < totalAmount Then
-            MessageBox.Show("Cash given is less than total amount.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
+        If MsgBox("Confirm Proceed checkout?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            ' Calculate total + payment validation
+            Dim totalAmount As Decimal = CalculateTotal()
+            Dim cashGiven As Decimal
+
+            If Not Decimal.TryParse(tCash.Text, cashGiven) Then
+                MessageBox.Show("Invalid cash amount.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+
+            If cashGiven < totalAmount Then
+                MessageBox.Show("Cash given is less than total amount.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+
+            Await SaveSaleAsync(lReferenceNo.Text, totalAmount, cashGiven,
+                                tLastName.Text.Trim(),
+                                tFirstName.Text.Trim(),
+                                tMiddleName.Text.Trim(),
+                                inventoryItems.ToList())
+
         End If
 
-        ' Continue your original checkout save logic
-        Await SaveSaleAsync(lReferenceNo.Text, totalAmount, cashGiven,
-                            tLastName.Text.Trim(),
-                            tFirstName.Text.Trim(),
-                            tMiddleName.Text.Trim(),
-                            inventoryItems.ToList())
     End Sub
 
 
@@ -223,89 +226,64 @@ Public Class Sales
                                      lastName As String, firstName As String, middleName As String,
                                      items As List(Of SaleItemGrid)) As Task
         Using ctx As New DataContext()
-            ' Create sale record (initialize totals to 0)
             Dim sale As New Sale() With {
-                .CreatedAt = DateTime.UtcNow,
-                .ReferenceNumber = referenceNo,
-                .TotalSales = totalSales,
-                .CashGiven = cashGiven,
-                .LastName = lastName,
-                .FirstName = firstName,
-                .MiddleName = middleName,
-                .OriginalPrice = 0D,
-                .SellingPrice = 0D,
-                .Profit = 0D
+            .CreatedAt = DateTime.UtcNow,
+            .ReferenceNumber = referenceNo,
+            .TotalSales = totalSales,
+            .CashGiven = cashGiven,
+            .LastName = lastName,
+            .FirstName = firstName,
+            .MiddleName = middleName,
+            .OriginalPrice = 0D,
+            .SellingPrice = 0D,
+            .Profit = 0D
         }
 
             ctx.Sales.Add(sale)
             Await ctx.SaveChangesAsync()
 
-            ' Track totals
             Dim totalOriginal As Decimal = 0D
             Dim totalSelling As Decimal = 0D
             Dim totalProfit As Decimal = 0D
 
-            ' Add sale items and update inventory stock
             For Each item In items
-                ' Get inventory entity
                 Dim invEntity = Await ctx.InventoryInputs.FirstOrDefaultAsync(Function(x) x.Code = item.Code)
                 If invEntity Is Nothing Then Continue For
 
-                ' Compute per-line values
                 Dim lineOriginal As Decimal = item.OriginalPrice * item.Quantity
                 Dim lineSelling As Decimal = item.SellingPrice * item.Quantity
                 Dim lineProfit As Decimal = lineSelling - lineOriginal
 
-                ' Add sale item record
                 ctx.SaleItems.Add(New SaleItem() With {
                 .SaleId = sale.Id,
                 .InventoryId = invEntity.Id,
                 .Quantity = item.Quantity,
-                .Price = item.Price, ' total for this line (usually SellingPrice × Qty)
+                .Price = item.Price,
                 .OriginalPrice = lineOriginal,
                 .SellingPrice = lineSelling,
                 .Profit = lineProfit
             })
 
-                ' Deduct stock
                 invEntity.CurrentStock -= item.Quantity
 
-                ' Accumulate totals
                 totalOriginal += lineOriginal
                 totalSelling += lineSelling
                 totalProfit += lineProfit
             Next
 
-            ' Update sale totals
             sale.OriginalPrice = totalOriginal
             sale.SellingPrice = totalSelling
             sale.Profit = totalProfit
 
-            Await ctx.SaveChangesAsync()
+            Dim result = Await ctx.SaveChangesAsync() > 0
+
+            If result Then
+                Dim frm As New FormChange(totalSales, cashGiven, referenceNo)
+                frm.ShowDialog()
+            End If
+
         End Using
     End Function
-
-
-
-    Private Sub ResetSaleForm()
-        ' Clear DataGridView
-        dgv.DataSource = Nothing
-        dgv.Rows.Clear()
-
-        ' Reset textboxes
-        tLastName.Clear()
-        tFirstName.Clear()
-        tMiddleName.Clear()
-        tCash.Clear()
-
-        ' Reset totals
-        ltotal.Text = "0.00"
-        lReferenceNo.Text = Guid.NewGuid().ToString() ' or your 5-digit code generator
-
-        ' Hide checkout group if visible
-        pnlCheckout.Visible = False
-        btnConfirmCheckout.Visible = False
-    End Sub
 
     Private Sub LogoutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogoutToolStripMenuItem.Click
         Logout()
@@ -324,7 +302,6 @@ Public Class Sales
             End If
             Return
         Else
-            ' Block everything else
             e.Handled = True
         End If
     End Sub
@@ -353,6 +330,23 @@ Public Class Sales
 
         Return True
     End Function
+
+    Private Sub ResetSaleForm()
+        inventoryItems.Clear()
+        dgv.Refresh()
+
+        tLastName.Clear()
+        tFirstName.Clear()
+        tMiddleName.Clear()
+        tCash.Clear()
+
+        UpdateTotalLabel()
+        lReferenceNo.Text = Guid.NewGuid().ToString().ToUpper()
+
+        pnlCheckout.Visible = False
+        btnConfirmCheckout.Visible = False
+    End Sub
+
 
 End Class
 

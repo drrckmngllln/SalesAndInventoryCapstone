@@ -1,4 +1,6 @@
-﻿Public Class Dashboard
+﻿Imports Microsoft.EntityFrameworkCore
+
+Public Class Dashboard
     Dim db As New DBHelper()
 
     Private Async Sub Dashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -66,70 +68,91 @@
 
     '' 🔔 Get Notifications
     Async Function GetNotifications() As Task(Of List(Of Notifcations))
-        Dim notifications = Await DBHelper.Fetch("
-            SELECT 
-	            a.Id AS Id,
-                b.Id AS InventoryId,
-	            b.`Code` AS InventoryCode,
-	            b.CurrentStock AS CurrentStock,
-	            a.Message AS Message,
-	            a.IsRead AS IsRead,
-	            a.CreatedAt AS `CreatedAt` 
-            FROM notifications AS a
-            INNER JOIN inventories AS b ON a.InventoryId = b.Id
-            WHERE	a.IsRead = 0
-        ")
-        Dim notificationList As New List(Of Notifcations)()
-        For Each row As DataRow In notifications.Tables(0).Rows
-            Dim notif As New Notifcations With {
-                .Id = Convert.ToInt32(row("Id")),
-                .InventoryId = Convert.ToInt32(row("InventoryId")),
-                .InventoryCode = Convert.ToString(row("InventoryCode")),
-                .CurrentStock = Convert.ToInt32(row("CurrentStock")),
-                .Message = Convert.ToString(row("Message")),
-                .CreatedAt = Convert.ToDateTime(row("CreatedAt"))
-            }
-            notificationList.Add(notif)
-        Next
-        Return notificationList
+        Using ctx As New DataContext()
+            Dim notifications = Await (
+                From n In ctx.Notifications
+                Join i In ctx.Inventories On n.InventoryId Equals i.Id
+                Where n.IsRead = False
+                Select New Notifcations With {
+                    .Id = n.Id,
+                    .InventoryId = i.Id,
+                    .InventoryCode = i.Code,
+                    .CurrentStock = i.CurrentStock,
+                    .Message = n.Message,
+                    .CreatedAt = n.CreatedAt
+                }
+            ).ToListAsync()
+
+            Return notifications
+        End Using
+
     End Function
 
     '' 📬 Mark Notification as Read
     Async Function MarkNotificationAsRead(id As Integer) As Task
-        Await DBHelper.UpdateAsync("notifications", New Dictionary(Of String, Object) From {
-            {"IsRead", True}
-        }, $"Id = {id}")
-
+        Using ctx As New DataContext()
+            Dim notification = Await ctx.Notifications.FindAsync(id)
+            If notification IsNot Nothing Then
+                notification.IsRead = True
+                Await ctx.SaveChangesAsync()
+            End If
+        End Using
     End Function
 
     '' 📦 Check for Low Stock
     Async Function CheckForLowStock() As Task
-        Dim lowStockThreshold As Integer = 10
-        Dim inventories = Await DBHelper.Fetch("SELECT * FROM inventories WHERE CurrentStock <= '" & lowStockThreshold & "'")
+        Const lowStockThreshold As Integer = 10
 
-        Dim dbNotifications = Await GetNotifications()
-        Dim existingCodes = dbNotifications.Select(Function(n) n.InventoryId).ToHashSet()
+        Using ctx As New DataContext()
+            Dim lowStockInventories = Await ctx.Inventories _
+            .Where(Function(i) i.CurrentStock <= lowStockThreshold) _
+            .ToListAsync()
 
-        For Each row As DataRow In inventories.Tables(0).Rows
-            Dim currentStock = Convert.ToInt32(row("CurrentStock"))
-            Dim inventoryCode = Convert.ToString(row("Code"))
-            Dim inventoryId = Convert.ToInt32(row("Id"))
+            Dim unreadNotifications = Await ctx.Notifications _
+            .Where(Function(n) Not n.IsRead) _
+            .ToListAsync()
 
-            If existingCodes.Contains(inventoryId) Then Continue For
+            Dim lowStockIds = lowStockInventories _
+            .Select(Function(i) i.Id) _
+            .ToHashSet()
 
-            Dim message = $"Low stock alert for {inventoryCode}. Current stock is {currentStock}."
+            Dim notificationsToRemove = unreadNotifications _
+            .Where(Function(n) Not lowStockIds.Contains(n.InventoryId)) _
+            .ToList()
 
-            ' Insert new notification
-            Await DBHelper.CreateAsync("notifications", New Dictionary(Of String, Object) From {
-                {"InventoryId", inventoryId},
-                {"Message", message},
-                {"IsRead", False},
-                {"CreatedAt", DateTime.Now}
-            })
-        Next
+            If notificationsToRemove.Any() Then
+                ctx.Notifications.RemoveRange(notificationsToRemove)
+            End If
+
+            Dim existingNotifInventoryIds = unreadNotifications _
+            .Where(Function(n) lowStockIds.Contains(n.InventoryId)) _
+            .Select(Function(n) n.InventoryId) _
+            .ToHashSet()
+
+            For Each inv In lowStockInventories
+                If Not existingNotifInventoryIds.Contains(inv.Id) Then
+                    Dim message As String
+
+                    If inv.CurrentStock <= 0 Then
+                        message = $"Out of stock: {inv.Code}. Current stock is {inv.CurrentStock}."
+                    Else
+                        message = $"Low stock alert for {inv.Code}. Current stock is {inv.CurrentStock} (threshold: {lowStockThreshold})."
+                    End If
+
+                    Dim notif As New Notification With {
+                    .InventoryId = inv.Id,
+                    .Message = message,
+                    .IsRead = False,
+                    .CreatedAt = DateTime.Now
+                }
+
+                    Await ctx.Notifications.AddAsync(notif)
+                End If
+            Next
+
+            Await ctx.SaveChangesAsync()
+        End Using
     End Function
-
-
 
 End Class
 

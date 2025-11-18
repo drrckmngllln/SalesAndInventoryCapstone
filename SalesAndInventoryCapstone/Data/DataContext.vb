@@ -21,6 +21,7 @@ Public Class DataContext
     Public Property ProductInputs As DbSet(Of ProductInput)
     Public Property SaleItemViews As DbSet(Of SaleItemView)
     Public Property Users As DbSet(Of User)
+    Public Property Notifications As DbSet(Of Notification)
 
 
     Protected Overrides Sub OnConfiguring(optionsBuilder As DbContextOptionsBuilder)
