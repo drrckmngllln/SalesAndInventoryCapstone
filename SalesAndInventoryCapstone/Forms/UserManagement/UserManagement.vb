@@ -28,7 +28,7 @@ Public Class UserManagement
         dgv.Columns.Add("name", "Name")
         dgv.Columns.Add("username", "Username")
         dgv.Columns.Add("role", "Role")
-        dgv.Columns.Add("isEnabled", "Is Enabled")
+        dgv.Columns.Add("activated", "Activated")
 
         ' === ADD BUTTON COLUMNS ===
         Dim editButton As New DataGridViewButtonColumn()
@@ -56,7 +56,7 @@ Public Class UserManagement
         Dim users = Await GetUsers()
         For Each user In users
             Dim isEnabledText As String = If(user.IsEnabled, "Yes", "No")
-            Dim toggleText As String = If(user.IsEnabled, "Disable", "Enable")
+            Dim toggleText As String = If(user.IsEnabled, "Deactivate", "Activated")
             Dim rowIndex = dgv.Rows.Add(user.Id, $"{user.LastName}, {user.FirstName}", user.Username, user.Role, isEnabledText)
 
             ' ✅ Assign toggle button text per row

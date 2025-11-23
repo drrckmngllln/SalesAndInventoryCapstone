@@ -36,8 +36,9 @@ Partial Class AddEditForm
         btnCancel = New Krypton.Toolkit.KryptonButton()
         Label4 = New Label()
         Label5 = New Label()
-        tSecurityQuestion = New Krypton.Toolkit.KryptonRichTextBox()
         tSecurityAnswer = New Krypton.Toolkit.KryptonRichTextBox()
+        cmbSecurityQuestion = New Krypton.Toolkit.KryptonComboBox()
+        CType(cmbSecurityQuestion, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Label1
@@ -213,29 +214,30 @@ Partial Class AddEditForm
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Location = New Point(466, 113)
+        Label5.Location = New Point(466, 61)
         Label5.Name = "Label5"
         Label5.Size = New Size(91, 15)
         Label5.TabIndex = 19
         Label5.Text = "Security Answer"
         ' 
-        ' tSecurityQuestion
-        ' 
-        tSecurityQuestion.Location = New Point(466, 27)
-        tSecurityQuestion.Name = "tSecurityQuestion"
-        tSecurityQuestion.Size = New Size(418, 83)
-        tSecurityQuestion.StateActive.Border.Rounding = 10F
-        tSecurityQuestion.TabIndex = 23
-        tSecurityQuestion.Text = ""
-        ' 
         ' tSecurityAnswer
         ' 
-        tSecurityAnswer.Location = New Point(466, 131)
+        tSecurityAnswer.Location = New Point(466, 79)
         tSecurityAnswer.Name = "tSecurityAnswer"
         tSecurityAnswer.Size = New Size(418, 83)
         tSecurityAnswer.StateActive.Border.Rounding = 10F
         tSecurityAnswer.TabIndex = 24
         tSecurityAnswer.Text = ""
+        ' 
+        ' cmbSecurityQuestion
+        ' 
+        cmbSecurityQuestion.DropDownWidth = 552
+        cmbSecurityQuestion.Location = New Point(466, 30)
+        cmbSecurityQuestion.Name = "cmbSecurityQuestion"
+        cmbSecurityQuestion.Size = New Size(418, 28)
+        cmbSecurityQuestion.StateActive.ComboBox.Border.Rounding = 10F
+        cmbSecurityQuestion.StateCommon.ComboBox.Content.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        cmbSecurityQuestion.TabIndex = 25
         ' 
         ' AddEditForm
         ' 
@@ -243,8 +245,8 @@ Partial Class AddEditForm
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(898, 270)
         ControlBox = False
+        Controls.Add(cmbSecurityQuestion)
         Controls.Add(tSecurityAnswer)
-        Controls.Add(tSecurityQuestion)
         Controls.Add(Label5)
         Controls.Add(Label4)
         Controls.Add(btnCancel)
@@ -263,6 +265,7 @@ Partial Class AddEditForm
         Name = "AddEditForm"
         StartPosition = FormStartPosition.CenterScreen
         Text = "AddEditForm"
+        CType(cmbSecurityQuestion, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -280,6 +283,6 @@ Partial Class AddEditForm
     Friend WithEvents btnCancel As Krypton.Toolkit.KryptonButton
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents tSecurityQuestion As Krypton.Toolkit.KryptonRichTextBox
     Friend WithEvents tSecurityAnswer As Krypton.Toolkit.KryptonRichTextBox
+    Friend WithEvents cmbSecurityQuestion As Krypton.Toolkit.KryptonComboBox
 End Class

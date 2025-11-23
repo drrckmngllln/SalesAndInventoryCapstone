@@ -26,14 +26,15 @@ Partial Class frmSecurityQuestion
         Label1 = New Label()
         btnSearch = New Button()
         GroupBox1 = New GroupBox()
-        tSecurityQuestion = New Label()
+        cmbSecurityQuestion = New Krypton.Toolkit.KryptonComboBox()
         pnlMain = New Panel()
         GroupBox2 = New GroupBox()
-        tAnswer = New TextBox()
+        tAnswer = New Krypton.Toolkit.KryptonTextBox()
         GroupBox3 = New GroupBox()
-        tNewPassword = New TextBox()
+        tNewPassword = New Krypton.Toolkit.KryptonTextBox()
         btnSubmit = New Button()
         GroupBox1.SuspendLayout()
+        CType(cmbSecurityQuestion, ComponentModel.ISupportInitialize).BeginInit()
         pnlMain.SuspendLayout()
         GroupBox2.SuspendLayout()
         GroupBox3.SuspendLayout()
@@ -66,23 +67,24 @@ Partial Class frmSecurityQuestion
         ' 
         ' GroupBox1
         ' 
-        GroupBox1.Controls.Add(tSecurityQuestion)
+        GroupBox1.Controls.Add(cmbSecurityQuestion)
         GroupBox1.Dock = DockStyle.Top
         GroupBox1.Location = New Point(0, 0)
         GroupBox1.Name = "GroupBox1"
-        GroupBox1.Size = New Size(570, 182)
+        GroupBox1.Size = New Size(570, 55)
         GroupBox1.TabIndex = 3
         GroupBox1.TabStop = False
         GroupBox1.Text = "Security Question"
         ' 
-        ' tSecurityQuestion
+        ' cmbSecurityQuestion
         ' 
-        tSecurityQuestion.Dock = DockStyle.Fill
-        tSecurityQuestion.Location = New Point(3, 19)
-        tSecurityQuestion.Name = "tSecurityQuestion"
-        tSecurityQuestion.Size = New Size(564, 160)
-        tSecurityQuestion.TabIndex = 0
-        tSecurityQuestion.Text = "..."
+        cmbSecurityQuestion.DropDownWidth = 552
+        cmbSecurityQuestion.Location = New Point(6, 22)
+        cmbSecurityQuestion.Name = "cmbSecurityQuestion"
+        cmbSecurityQuestion.Size = New Size(558, 28)
+        cmbSecurityQuestion.StateActive.ComboBox.Border.Rounding = 10F
+        cmbSecurityQuestion.StateCommon.ComboBox.Content.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        cmbSecurityQuestion.TabIndex = 0
         ' 
         ' pnlMain
         ' 
@@ -92,7 +94,7 @@ Partial Class frmSecurityQuestion
         pnlMain.Controls.Add(GroupBox1)
         pnlMain.Location = New Point(12, 38)
         pnlMain.Name = "pnlMain"
-        pnlMain.Size = New Size(570, 422)
+        pnlMain.Size = New Size(570, 265)
         pnlMain.TabIndex = 4
         pnlMain.Visible = False
         ' 
@@ -100,7 +102,7 @@ Partial Class frmSecurityQuestion
         ' 
         GroupBox2.Controls.Add(tAnswer)
         GroupBox2.Dock = DockStyle.Top
-        GroupBox2.Location = New Point(0, 182)
+        GroupBox2.Location = New Point(0, 55)
         GroupBox2.Name = "GroupBox2"
         GroupBox2.Size = New Size(570, 95)
         GroupBox2.TabIndex = 4
@@ -114,31 +116,34 @@ Partial Class frmSecurityQuestion
         tAnswer.Multiline = True
         tAnswer.Name = "tAnswer"
         tAnswer.Size = New Size(564, 73)
+        tAnswer.StateActive.Border.Rounding = 10F
         tAnswer.TabIndex = 0
         ' 
         ' GroupBox3
         ' 
         GroupBox3.Controls.Add(tNewPassword)
-        GroupBox3.Location = New Point(0, 283)
+        GroupBox3.Location = New Point(0, 156)
         GroupBox3.Name = "GroupBox3"
-        GroupBox3.Size = New Size(570, 47)
+        GroupBox3.Size = New Size(570, 59)
         GroupBox3.TabIndex = 5
         GroupBox3.TabStop = False
         GroupBox3.Text = "New Password"
         ' 
         ' tNewPassword
         ' 
-        tNewPassword.Dock = DockStyle.Fill
+        tNewPassword.Dock = DockStyle.Top
         tNewPassword.Location = New Point(3, 19)
         tNewPassword.Name = "tNewPassword"
-        tNewPassword.Size = New Size(564, 23)
+        tNewPassword.PasswordChar = "●"c
+        tNewPassword.Size = New Size(564, 29)
+        tNewPassword.StateActive.Border.Rounding = 10F
         tNewPassword.TabIndex = 0
         tNewPassword.UseSystemPasswordChar = True
         ' 
         ' btnSubmit
         ' 
         btnSubmit.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        btnSubmit.Location = New Point(340, 379)
+        btnSubmit.Location = New Point(343, 221)
         btnSubmit.Name = "btnSubmit"
         btnSubmit.Size = New Size(224, 40)
         btnSubmit.TabIndex = 4
@@ -149,15 +154,19 @@ Partial Class frmSecurityQuestion
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(594, 472)
+        ClientSize = New Size(594, 315)
         Controls.Add(pnlMain)
         Controls.Add(btnSearch)
         Controls.Add(Label1)
         Controls.Add(tUsername)
+        FormBorderStyle = FormBorderStyle.FixedSingle
+        MaximizeBox = False
+        MinimizeBox = False
         Name = "frmSecurityQuestion"
         StartPosition = FormStartPosition.CenterScreen
         Text = "frmSecurityQuestion"
         GroupBox1.ResumeLayout(False)
+        CType(cmbSecurityQuestion, ComponentModel.ISupportInitialize).EndInit()
         pnlMain.ResumeLayout(False)
         GroupBox2.ResumeLayout(False)
         GroupBox2.PerformLayout()
@@ -172,10 +181,10 @@ Partial Class frmSecurityQuestion
     Friend WithEvents btnSearch As Button
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents pnlMain As Panel
-    Friend WithEvents tSecurityQuestion As Label
     Friend WithEvents btnSubmit As Button
     Friend WithEvents GroupBox2 As GroupBox
-    Friend WithEvents tAnswer As TextBox
     Friend WithEvents GroupBox3 As GroupBox
-    Friend WithEvents tNewPassword As TextBox
+    Friend WithEvents cmbSecurityQuestion As Krypton.Toolkit.KryptonComboBox
+    Friend WithEvents tAnswer As Krypton.Toolkit.KryptonTextBox
+    Friend WithEvents tNewPassword As Krypton.Toolkit.KryptonTextBox
 End Class

@@ -15,7 +15,7 @@ Public Class Categories
                 .AsQueryable()
 
             If Not String.IsNullOrWhiteSpace(search) Then
-                query = query.Where(Function(c) c.Name.Contains(search))
+                query = query.Where(Function(c) c.Name.StartsWith(search))
             End If
 
             Dim categories = Await query.ToListAsync()
@@ -33,7 +33,7 @@ Public Class Categories
     End Function
 
     Private Async Sub tSearch_TextChanged(sender As Object, e As EventArgs) Handles tSearch.TextChanged
-        If (tSearch.Text.Length > 2) Then
+        If (tSearch.Text.Length > 0) Then
             pnlData.Controls.Clear()
             Await GetCategories(tSearch.Text)
         Else

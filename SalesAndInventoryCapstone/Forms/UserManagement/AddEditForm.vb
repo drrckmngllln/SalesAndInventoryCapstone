@@ -35,7 +35,7 @@ Public Class AddEditForm
                     .FirstName = tFirstName.Text.Trim(),
                     .Username = tUsername.Text.Trim(),
                     .Password = HashPassword(tPassword.Text.Trim()),
-                    .SecurityQuestion = tSecurityQuestion.Text.Trim(),
+                    .SecurityQuestion = cmbSecurityQuestion.Text.Trim(),
                     .SecurityAnswer = tSecurityAnswer.Text.Trim()
                 })
 
@@ -73,7 +73,7 @@ Public Class AddEditForm
                 user.LastName = tLastName.Text.Trim()
                 user.FirstName = tFirstName.Text.Trim()
                 user.Username = tUsername.Text.Trim()
-                user.SecurityQuestion = tSecurityQuestion.Text.Trim()
+                user.SecurityQuestion = cmbSecurityQuestion.Text.Trim()
                 user.SecurityAnswer = tSecurityAnswer.Text.Trim()
                 If Not String.IsNullOrEmpty(tPassword.Text.Trim()) Then
                     user.Password = HashPassword(tPassword.Text.Trim())
@@ -110,6 +110,10 @@ Public Class AddEditForm
                 lblPassword.Visible = False
                 chkShowPassword.Visible = False
                 tPassword.Visible = False
+
+                cmbSecurityQuestion.DataSource = New BindingSource(securityQuestions, Nothing)
+                cmbSecurityQuestion.DisplayMember = "Key"
+                cmbSecurityQuestion.ValueMember = "Value"
             End Using
         End If
     End Sub

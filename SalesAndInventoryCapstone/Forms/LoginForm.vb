@@ -1,10 +1,8 @@
-﻿Imports Krypton.Toolkit
-Imports Microsoft.EntityFrameworkCore
-Imports MySql.Data.MySqlClient
+﻿Imports Microsoft.EntityFrameworkCore
 
 Public Class LoginForm
     Dim lockoutSeconds As Integer = 30
-    Dim remainingLockout As Integer = 0
+    Dim remainingLockout As Integer = 5
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         Me.Close()
@@ -31,7 +29,7 @@ Public Class LoginForm
                 Dim lockoutEnd = user.LastLockedOut.Value.AddSeconds(lockoutSeconds)
                 If DateTime.Now >= lockoutEnd Then
                     user.IsLockedOut = False
-                    user.FailedAttempt = 0
+                    user.FailedAttempt = 5
                     user.LastLockedOut = Nothing
                     Await context.SaveChangesAsync()
                 End If
@@ -46,8 +44,10 @@ Public Class LoginForm
 
             Dim result As Boolean = BCrypt.Net.BCrypt.Verify(password, user.Password)
             If Not result Then
-                user.AddFailedAttempt()
-                If user.FailedAttempt >= 5 Then
+
+                user.FailedAttempt -= 1
+
+                If user.FailedAttempt <= 0 Then
                     user.LockOut()
                     Await context.SaveChangesAsync()
                     MsgBox("Your account has been locked due to multiple failed login attempts.")
@@ -56,7 +56,8 @@ Public Class LoginForm
                 End If
 
                 Await context.SaveChangesAsync()
-                MsgBox($"Invalid Password. Invalid Attempts: {user.FailedAttempt}")
+
+                MsgBox($"Invalid password. Remaining attempts: {user.FailedAttempt}")
                 Return
             End If
 

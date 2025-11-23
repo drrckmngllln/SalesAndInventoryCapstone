@@ -1,6 +1,8 @@
 ﻿Imports Microsoft.EntityFrameworkCore
 
 Public Class frmSecurityQuestion
+
+
     Async Function GetUser(username As String) As Task(Of User)
         Using context As New DataContext()
             Dim user = Await context.Users.FirstOrDefaultAsync(Function(u) u.Username = username)
@@ -21,7 +23,10 @@ Public Class frmSecurityQuestion
         End If
 
         pnlMain.Visible = True
-        tSecurityQuestion.Text = user.SecurityQuestion
+
+        cmbSecurityQuestion.DataSource = New BindingSource(securityQuestions, Nothing)
+        cmbSecurityQuestion.DisplayMember = "Key"
+        cmbSecurityQuestion.ValueMember = "Value"
     End Sub
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click

@@ -115,7 +115,7 @@ Public Class Products
         Using db As New DataContext()
             Dim query = db.Products.AsNoTracking.AsQueryable()
             If Not String.IsNullOrWhiteSpace(search) Then
-                query = query.Where(Function(p) p.ProductName.Contains(search) Or p.ProductDescription.Contains(search))
+                query = query.Where(Function(p) p.ProductName.StartsWith(search) Or p.ProductDescription.StartsWith(search))
             End If
             Return Await query.ToListAsync()
         End Using
