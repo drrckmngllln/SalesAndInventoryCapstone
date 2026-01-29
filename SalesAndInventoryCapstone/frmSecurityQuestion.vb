@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.EntityFrameworkCore
 
 Public Class frmSecurityQuestion
-
+    Dim securityQuestions
 
     Async Function GetUser(username As String) As Task(Of User)
         Using context As New DataContext()

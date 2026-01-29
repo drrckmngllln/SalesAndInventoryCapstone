@@ -1,9 +1,10 @@
 ﻿Imports Microsoft.EntityFrameworkCore
 
 Public Class AddEditForm
-    'Public data As DataRow
     Public id As Integer?
     Dim db As New DBHelper()
+
+    Dim securityQuestions
 
     Async Sub OnSubmit(isCreate As Boolean)
         If isCreate Then
