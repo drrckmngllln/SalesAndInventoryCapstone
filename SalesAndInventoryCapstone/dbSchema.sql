@@ -44,21 +44,7 @@ CREATE TABLE IF NOT EXISTS `inventories` (
 -- Data exporting was unselected.
 
 -- Dumping structure for view salesinventory.inventoriesview
--- Creating temporary table to overcome VIEW dependency errors
-CREATE TABLE `inventoriesview` (
-	`Id` INT NOT NULL,
-	`Code` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`ProductId` INT NULL,
-	`ProductName` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`ProductDescription` LONGTEXT NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`CategoryName` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`CurrentStock` INT NOT NULL,
-	`StockIn` INT NOT NULL,
-	`StockOut` INT NOT NULL,
-	`OriginalPrice` DECIMAL(18,2) NULL,
-	`SellingPrice` DECIMAL(18,2) NULL,
-	`Remarks` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci'
-) ENGINE=MyISAM;
+-- Idempotent view definition
 
 -- Dumping structure for table salesinventory.notifications
 CREATE TABLE IF NOT EXISTS `notifications` (
@@ -90,17 +76,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 -- Data exporting was unselected.
 
 -- Dumping structure for view salesinventory.productsview
--- Creating temporary table to overcome VIEW dependency errors
-CREATE TABLE `productsview` (
-	`Id` INT NOT NULL,
-	`CreatedAt` TIMESTAMP NOT NULL,
-	`ProductName` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`ProductDescription` LONGTEXT NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`CategoryId` INT NULL,
-	`Category` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`OriginalPrice` DECIMAL(18,2) NULL,
-	`SellingPrice` DECIMAL(18,2) NULL
-) ENGINE=MyISAM;
+-- Idempotent view definition
 
 -- Dumping structure for table salesinventory.roles
 CREATE TABLE IF NOT EXISTS `roles` (
@@ -131,20 +107,7 @@ CREATE TABLE IF NOT EXISTS `saleitem` (
 -- Data exporting was unselected.
 
 -- Dumping structure for view salesinventory.saleitemview
--- Creating temporary table to overcome VIEW dependency errors
-CREATE TABLE `saleitemview` (
-	`Id` INT NOT NULL,
-	`SaleId` INT NOT NULL,
-	`CreatedAt` TIMESTAMP NULL,
-	`ReferenceNo` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`ProductName` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`Category` VARCHAR(1) NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`Quantity` INT NULL,
-	`Price` DECIMAL(18,2) NOT NULL,
-	`OriginalPrice` DECIMAL(18,2) NULL,
-	`SellingPrice` DECIMAL(18,2) NULL,
-	`Profit` DECIMAL(18,2) NULL
-) ENGINE=MyISAM;
+-- Idempotent view definition
 
 -- Dumping structure for table salesinventory.sales
 CREATE TABLE IF NOT EXISTS `sales` (
@@ -196,19 +159,13 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 -- Data exporting was unselected.
 
--- Removing temporary table and create final VIEW structure
-DROP TABLE IF EXISTS `inventoriesview`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `inventoriesview` AS select `i`.`Id` AS `Id`,`i`.`Code` AS `Code`,`p`.`Id` AS `ProductId`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Name` AS `CategoryName`,`i`.`CurrentStock` AS `CurrentStock`,`i`.`StockIn` AS `StockIn`,`i`.`StockOut` AS `StockOut`,`i`.`OriginalPrice` AS `OriginalPrice`,`i`.`SellingPrice` AS `SellingPrice`,`i`.`Remarks` AS `Remarks` from ((`inventories` `i` left join `products` `p` on((`i`.`ProductId` = `p`.`Id`))) left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)))
+CREATE OR REPLACE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `inventoriesview` AS select `i`.`Id` AS `Id`,`i`.`Code` AS `Code`,`p`.`Id` AS `ProductId`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Name` AS `CategoryName`,`i`.`CurrentStock` AS `CurrentStock`,`i`.`StockIn` AS `StockIn`,`i`.`StockOut` AS `StockOut`,`i`.`OriginalPrice` AS `OriginalPrice`,`i`.`SellingPrice` AS `SellingPrice`,`i`.`Remarks` AS `Remarks` from ((`inventories` `i` left join `products` `p` on((`i`.`ProductId` = `p`.`Id`))) left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)))
 ;
 
--- Removing temporary table and create final VIEW structure
-DROP TABLE IF EXISTS `productsview`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `productsview` AS select `p`.`Id` AS `Id`,`p`.`CreatedAt` AS `CreatedAt`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Id` AS `CategoryId`,`c`.`Name` AS `Category`,`i`.`OriginalPrice` AS `OriginalPrice`,`i`.`SellingPrice` AS `SellingPrice` from ((`products` `p` left join `inventories` `i` on((`p`.`Id` = `i`.`ProductId`))) left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)))
+CREATE OR REPLACE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `productsview` AS select `p`.`Id` AS `Id`,`p`.`CreatedAt` AS `CreatedAt`,`i`.`Code` AS `Code`,`p`.`ProductName` AS `ProductName`,`p`.`ProductDescription` AS `ProductDescription`,`c`.`Id` AS `CategoryId`,`c`.`Name` AS `Category`,`i`.`OriginalPrice` AS `OriginalPrice`,`i`.`SellingPrice` AS `SellingPrice` from ((`products` `p` left join `inventories` `i` on((`p`.`Id` = `i`.`ProductId`))) left join `categories` `c` on((`p`.`CategoryId` = `c`.`Id`)))
 ;
 
--- Removing temporary table and create final VIEW structure
-DROP TABLE IF EXISTS `saleitemview`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `saleitemview` AS select `si`.`Id` AS `Id`,`si`.`SalesId` AS `SaleId`,`s`.`CreatedAt` AS `CreatedAt`,`s`.`ReferenceNumber` AS `ReferenceNo`,`p`.`ProductName` AS `ProductName`,`c`.`Name` AS `Category`,`si`.`Quantity` AS `Quantity`,`si`.`Price` AS `Price`,`si`.`OriginalPrice` AS `OriginalPrice`,`si`.`SellingPrice` AS `SellingPrice`,`si`.`Profit` AS `Profit` from ((((`saleitem` `si` left join `sales` `s` on((`s`.`Id` = `si`.`SalesId`))) left join `inventories` `i` on((`i`.`Id` = `si`.`InventoryId`))) left join `products` `p` on((`p`.`Id` = `i`.`ProductId`))) left join `categories` `c` on((`c`.`Id` = `p`.`CategoryId`)))
+CREATE OR REPLACE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `saleitemview` AS select `si`.`Id` AS `Id`,`si`.`SalesId` AS `SaleId`,`s`.`CreatedAt` AS `CreatedAt`,`s`.`ReferenceNumber` AS `ReferenceNo`,`p`.`ProductName` AS `ProductName`,`c`.`Name` AS `Category`,`si`.`Quantity` AS `Quantity`,`si`.`Price` AS `Price`,`si`.`OriginalPrice` AS `OriginalPrice`,`si`.`SellingPrice` AS `SellingPrice`,`si`.`Profit` AS `Profit` from ((((`saleitem` `si` left join `sales` `s` on((`s`.`Id` = `si`.`SalesId`))) left join `inventories` `i` on((`i`.`Id` = `si`.`InventoryId`))) left join `products` `p` on((`p`.`Id` = `i`.`ProductId`))) left join `categories` `c` on((`c`.`Id` = `p`.`CategoryId`)))
 ;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;

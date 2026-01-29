@@ -4,6 +4,8 @@
 Public Class Product
     <Column("Id")>
     Public Property Id As Integer
+    <Column("Code")>
+    Public Property Code As String
     <Column("ProductName")>
     Public Property ProductName As String
     <Column("ProductDescription")>

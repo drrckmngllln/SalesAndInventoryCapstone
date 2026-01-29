@@ -3,6 +3,7 @@
 Public Class LoginForm
     Dim lockoutSeconds As Integer = 30
     Dim remainingLockout As Integer = 5
+    Private Const MaxFailedAttempts As Integer = 3
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         Me.Close()
@@ -29,7 +30,7 @@ Public Class LoginForm
                 Dim lockoutEnd = user.LastLockedOut.Value.AddSeconds(lockoutSeconds)
                 If DateTime.Now >= lockoutEnd Then
                     user.IsLockedOut = False
-                    user.FailedAttempt = 5
+                    user.FailedAttempt = MaxFailedAttempts
                     user.LastLockedOut = Nothing
                     Await context.SaveChangesAsync()
                 End If
@@ -40,6 +41,10 @@ Public Class LoginForm
                 Dim secondsLeft = CInt(Math.Max(remaining.TotalSeconds, 0))
                 MsgBox($"Your account is locked for {secondsLeft} more seconds.")
                 Return
+            End If
+
+            If user.FailedAttempt <= 0 Then
+                user.FailedAttempt = MaxFailedAttempts
             End If
 
             Dim result As Boolean = BCrypt.Net.BCrypt.Verify(password, user.Password)
@@ -61,7 +66,7 @@ Public Class LoginForm
                 Return
             End If
 
-            user.ResetFailedAttempts()
+            user.FailedAttempt = MaxFailedAttempts
             Await context.SaveChangesAsync()
             MsgBox("Access Granted")
 
@@ -105,7 +110,7 @@ Public Class LoginForm
                     Dim user = Await context.Users.FirstOrDefaultAsync(Function(u) u.Username = username)
                     If user IsNot Nothing Then
                         user.IsLockedOut = False
-                        user.FailedAttempt = 0
+                        user.FailedAttempt = MaxFailedAttempts
                         user.LastLockedOut = Nothing
                         Await context.SaveChangesAsync()
                     End If

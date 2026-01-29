@@ -78,6 +78,7 @@ Partial Class frmSecurityQuestion
         ' 
         ' cmbSecurityQuestion
         ' 
+        cmbSecurityQuestion.DropDownStyle = ComboBoxStyle.DropDownList
         cmbSecurityQuestion.DropDownWidth = 552
         cmbSecurityQuestion.Location = New Point(6, 22)
         cmbSecurityQuestion.Name = "cmbSecurityQuestion"
@@ -164,7 +165,7 @@ Partial Class frmSecurityQuestion
         MinimizeBox = False
         Name = "frmSecurityQuestion"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "frmSecurityQuestion"
+        Text = "Forgot Password"
         GroupBox1.ResumeLayout(False)
         CType(cmbSecurityQuestion, ComponentModel.ISupportInitialize).EndInit()
         pnlMain.ResumeLayout(False)

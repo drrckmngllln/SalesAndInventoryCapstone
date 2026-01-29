@@ -26,6 +26,9 @@ Public Class Products
         dgv.Columns.Add("Id", "Id")
         dgv.Columns("Id").Visible = False
 
+        dgv.Columns.Add("Code", "Product Code")
+        dgv.Columns("Code").Width = 120
+
         dgv.Columns.Add("ProductName", "Product Name")
         dgv.Columns("ProductName").Width = 200
 
@@ -101,6 +104,7 @@ Public Class Products
             ' --- Add row ---
             dgv.Rows.Add(
                 product.Id,
+                product.Code,
                 product.ProductName,
                 product.ProductDescription,
                 product.Category,
@@ -115,7 +119,7 @@ Public Class Products
         Using db As New DataContext()
             Dim query = db.Products.AsNoTracking.AsQueryable()
             If Not String.IsNullOrWhiteSpace(search) Then
-                query = query.Where(Function(p) p.ProductName.StartsWith(search) Or p.ProductDescription.StartsWith(search))
+                query = query.Where(Function(p) p.ProductName.Contains(search) Or p.ProductDescription.Contains(search))
             End If
             Return Await query.ToListAsync()
         End Using

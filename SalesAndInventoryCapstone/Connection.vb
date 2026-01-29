@@ -1,4 +1,5 @@
-﻿Imports System.IO
+Imports System.IO
+Imports System.Linq
 Imports MySql.Data.MySqlClient
 
 Module Connection
@@ -26,16 +27,23 @@ Module Connection
     End Sub
 
     Public Sub MigrateDatabase()
-        Dim path As String = "/dbSchema.sql"
-        If Not File.Exists(path) Then
+        Dim schemaPath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dbSchema.sql")
+        If Not File.Exists(schemaPath) Then
             MsgBox("Database schema file not found.", MsgBoxStyle.Critical, "Error")
             Application.Exit()
         End If
 
-        Dim sqlScript As String = File.ReadAllText(path)
+        Dim sqlScript As String = File.ReadAllText(schemaPath)
 
         Using connection As New MySqlConnection(Connstring)
             Try
+                EnsureDatabaseExists()
+
+                If DatabaseHasRequiredTables() Then
+                    ' Schema already present; do not overwrite or alter existing data.
+                    Exit Sub
+                End If
+
                 connection.Open()
                 Dim command As New MySqlCommand(sqlScript, connection)
                 command.ExecuteNonQuery()
@@ -47,4 +55,46 @@ Module Connection
             End Try
         End Using
     End Sub
+
+    Private Sub EnsureDatabaseExists()
+        Dim builder As New MySqlConnectionStringBuilder(Connstring)
+        Dim databaseName As String = builder.Database
+        builder.Database = ""
+
+        Using serverConnection As New MySqlConnection(builder.ConnectionString)
+            serverConnection.Open()
+
+            Using cmd As New MySqlCommand("SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = @db", serverConnection)
+                cmd.Parameters.AddWithValue("@db", databaseName)
+                Dim exists = cmd.ExecuteScalar()
+
+                If exists Is Nothing Then
+                    Using createCmd As New MySqlCommand($"CREATE DATABASE `{databaseName}`", serverConnection)
+                        createCmd.ExecuteNonQuery()
+                    End Using
+                End If
+            End Using
+        End Using
+    End Sub
+
+    Private Function DatabaseHasRequiredTables() As Boolean
+        Dim builder As New MySqlConnectionStringBuilder(Connstring)
+        Dim databaseName As String = builder.Database
+        builder.Database = ""
+
+        Using serverConnection As New MySqlConnection(builder.ConnectionString)
+            serverConnection.Open()
+
+            Dim requiredTables As String() = {"categories", "products", "inventories", "sales", "saleitem", "users", "roles", "user_role", "notifications"}
+
+            Using cmd As New MySqlCommand("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = @db AND table_name IN (" &
+                                         String.Join(", ", requiredTables.Select(Function(t) $"'{t}'")) & ")", serverConnection)
+                cmd.Parameters.AddWithValue("@db", databaseName)
+                Dim countObj = cmd.ExecuteScalar()
+                Dim count As Integer = If(countObj IsNot Nothing, Convert.ToInt32(countObj), 0)
+                Return count = requiredTables.Length
+            End Using
+        End Using
+    End Function
 End Module
+

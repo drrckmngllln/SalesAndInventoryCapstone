@@ -87,7 +87,8 @@ Public Class ReportForm
                     .Price = si.Price,
                     .OriginalPrice = si.OriginalPrice,
                     .SellingPrice = si.SellingPrice,
-                    .Profit = si.Profit
+                    .Profit = si.Profit,
+                    .Total = (si.Price * si.Quantity).ToString("F2")
                 }) _
                 .OrderBy(Function(si) si.ReferenceNo) _
                 .ToListAsync()

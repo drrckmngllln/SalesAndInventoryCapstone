@@ -14,6 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="dbSchema.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Forms\Reports\MonthlyReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

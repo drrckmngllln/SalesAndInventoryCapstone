@@ -9,7 +9,7 @@ Public Class UserManagement
         Using context As New DataContext()
             Dim users = context.Users.AsNoTracking().IgnoreQueryFilters().AsQueryable()
 
-            If String.IsNullOrEmpty(search) Then
+            If Not String.IsNullOrEmpty(search) Then
                 users = users.Where(Function(u) u.LastName.Contains(search) OrElse u.FirstName.Contains(search) OrElse u.Username.Contains(search))
             End If
 
@@ -56,7 +56,7 @@ Public Class UserManagement
         Dim users = Await GetUsers()
         For Each user In users
             Dim isEnabledText As String = If(user.IsEnabled, "Yes", "No")
-            Dim toggleText As String = If(user.IsEnabled, "Deactivate", "Activated")
+            Dim toggleText As String = If(user.IsEnabled, "Deactivate", "Activate")
             Dim rowIndex = dgv.Rows.Add(user.Id, $"{user.LastName}, {user.FirstName}", user.Username, user.Role, isEnabledText)
 
             ' ✅ Assign toggle button text per row
@@ -138,7 +138,7 @@ Public Class UserManagement
                 user.IsEnabled = Not user.IsEnabled
                 Await context.SaveChangesAsync()
 
-                Dim actionText As String = If(user.IsEnabled, "enabled", "disabled")
+                Dim actionText As String = If(user.IsEnabled, "activated", "deactivated")
                 MsgBox($"User '{user.Username}' has been {actionText}.")
 
                 Await InitializeUsers()

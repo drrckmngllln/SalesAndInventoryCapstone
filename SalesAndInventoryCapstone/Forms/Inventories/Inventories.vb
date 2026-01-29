@@ -11,10 +11,10 @@ Public Class Inventories
 
             If (Not String.IsNullOrEmpty(search)) Then
                 inventories = inventories.Where(
-                    Function(i) i.ProductName.StartsWith(search) OrElse
-                                i.Code.StartsWith(search) OrElse
-                                i.ProductDescription.StartsWith(search) OrElse
-                                i.CategoryName.StartsWith(search)
+                    Function(i) i.ProductName.Contains(search) OrElse
+                                i.Code.Contains(search) OrElse
+                                i.ProductDescription.Contains(search) OrElse
+                                i.CategoryName.Contains(search)
                 )
             End If
             Dim inventoriesList = Await inventories.ToListAsync()
