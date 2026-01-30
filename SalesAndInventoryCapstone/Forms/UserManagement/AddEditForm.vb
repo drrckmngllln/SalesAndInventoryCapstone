@@ -4,7 +4,7 @@ Public Class AddEditForm
     Public id As Integer?
     Dim db As New DBHelper()
 
-    Dim securityQuestions
+    Private ReadOnly securityQuestions As Dictionary(Of String, String) = Items
 
     Async Sub OnSubmit(isCreate As Boolean)
         If isCreate Then
@@ -96,6 +96,10 @@ Public Class AddEditForm
     End Sub
 
     Private Async Sub AddEditForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        cmbSecurityQuestion.DataSource = New BindingSource(securityQuestions, Nothing)
+        cmbSecurityQuestion.DisplayMember = "Key"
+        cmbSecurityQuestion.ValueMember = "Value"
+
         If id IsNot Nothing Then
             Using context As New DataContext()
                 Dim user = Await context.Users.IgnoreQueryFilters().FirstOrDefaultAsync(Function(u) u.Id = id)
@@ -112,9 +116,7 @@ Public Class AddEditForm
                 chkShowPassword.Visible = False
                 tPassword.Visible = False
 
-                cmbSecurityQuestion.DataSource = New BindingSource(securityQuestions, Nothing)
-                cmbSecurityQuestion.DisplayMember = "Key"
-                cmbSecurityQuestion.ValueMember = "Value"
+                cmbSecurityQuestion.Text = user.SecurityQuestion
             End Using
         End If
     End Sub

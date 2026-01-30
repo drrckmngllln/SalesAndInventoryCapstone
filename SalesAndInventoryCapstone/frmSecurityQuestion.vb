@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.EntityFrameworkCore
 
 Public Class frmSecurityQuestion
-    Dim securityQuestions
+    Private ReadOnly securityQuestions As Dictionary(Of String, String) = Items
 
     Async Function GetUser(username As String) As Task(Of User)
         Using context As New DataContext()
@@ -27,6 +27,8 @@ Public Class frmSecurityQuestion
         cmbSecurityQuestion.DataSource = New BindingSource(securityQuestions, Nothing)
         cmbSecurityQuestion.DisplayMember = "Key"
         cmbSecurityQuestion.ValueMember = "Value"
+        cmbSecurityQuestion.Text = user.SecurityQuestion
+        cmbSecurityQuestion.Enabled = False
     End Sub
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
@@ -43,6 +45,11 @@ Public Class frmSecurityQuestion
 
         If tNewPassword.Text = String.Empty Then
             MsgBox("Please provide a new password.")
+            Return
+        End If
+
+        If user.SecurityQuestion <> cmbSecurityQuestion.Text Then
+            MsgBox("Security question does not match.")
             Return
         End If
 
