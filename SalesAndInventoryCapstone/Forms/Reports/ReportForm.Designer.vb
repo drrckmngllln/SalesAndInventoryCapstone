@@ -34,9 +34,7 @@ Partial Class ReportForm
         TabPage2 = New TabPage()
         btnSIFilter = New Button()
         Label4 = New Label()
-        Label5 = New Label()
         dateSIStart = New DateTimePicker()
-        cmbCategory = New ComboBox()
         dateSIEnd = New DateTimePicker()
         Label6 = New Label()
         pnlSIReport = New Panel()
@@ -139,9 +137,7 @@ Partial Class ReportForm
         ' 
         TabPage2.Controls.Add(btnSIFilter)
         TabPage2.Controls.Add(Label4)
-        TabPage2.Controls.Add(Label5)
         TabPage2.Controls.Add(dateSIStart)
-        TabPage2.Controls.Add(cmbCategory)
         TabPage2.Controls.Add(dateSIEnd)
         TabPage2.Controls.Add(Label6)
         TabPage2.Controls.Add(pnlSIReport)
@@ -155,7 +151,7 @@ Partial Class ReportForm
         ' 
         ' btnSIFilter
         ' 
-        btnSIFilter.Location = New Point(852, 6)
+        btnSIFilter.Location = New Point(555, 5)
         btnSIFilter.Name = "btnSIFilter"
         btnSIFilter.Size = New Size(79, 23)
         btnSIFilter.TabIndex = 14
@@ -171,29 +167,12 @@ Partial Class ReportForm
         Label4.TabIndex = 10
         Label4.Text = "From:"
         ' 
-        ' Label5
-        ' 
-        Label5.AutoSize = True
-        Label5.Location = New Point(555, 9)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(58, 15)
-        Label5.TabIndex = 16
-        Label5.Text = "Category:"
-        ' 
         ' dateSIStart
         ' 
         dateSIStart.Location = New Point(51, 6)
         dateSIStart.Name = "dateSIStart"
         dateSIStart.Size = New Size(212, 23)
         dateSIStart.TabIndex = 9
-        ' 
-        ' cmbCategory
-        ' 
-        cmbCategory.FormattingEnabled = True
-        cmbCategory.Location = New Point(619, 6)
-        cmbCategory.Name = "cmbCategory"
-        cmbCategory.Size = New Size(227, 23)
-        cmbCategory.TabIndex = 15
         ' 
         ' dateSIEnd
         ' 
@@ -267,9 +246,7 @@ Partial Class ReportForm
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents btnSIFilter As Button
     Friend WithEvents Label4 As Label
-    Friend WithEvents Label5 As Label
     Friend WithEvents dateSIStart As DateTimePicker
-    Friend WithEvents cmbCategory As ComboBox
     Friend WithEvents dateSIEnd As DateTimePicker
     Friend WithEvents Label6 As Label
     Friend WithEvents pnlSIReport As Panel

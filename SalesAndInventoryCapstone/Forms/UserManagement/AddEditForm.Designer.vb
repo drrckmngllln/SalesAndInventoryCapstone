@@ -34,11 +34,9 @@ Partial Class AddEditForm
         tPassword = New Krypton.Toolkit.KryptonTextBox()
         chkShowPassword = New CheckBox()
         btnCancel = New Krypton.Toolkit.KryptonButton()
-        Label4 = New Label()
-        Label5 = New Label()
-        tSecurityAnswer = New Krypton.Toolkit.KryptonRichTextBox()
-        cmbSecurityQuestion = New Krypton.Toolkit.KryptonComboBox()
-        CType(cmbSecurityQuestion, ComponentModel.ISupportInitialize).BeginInit()
+        btnAddSecurityQuestion = New Krypton.Toolkit.KryptonButton()
+        dgv = New DataGridView()
+        CType(dgv, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Label1
@@ -52,7 +50,7 @@ Partial Class AddEditForm
         ' 
         ' btnSave
         ' 
-        btnSave.Location = New Point(626, 220)
+        btnSave.Location = New Point(460, 245)
         btnSave.Name = "btnSave"
         btnSave.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnSave.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -170,7 +168,7 @@ Partial Class AddEditForm
         ' 
         ' btnCancel
         ' 
-        btnCancel.Location = New Point(758, 220)
+        btnCancel.Location = New Point(592, 245)
         btnCancel.Name = "btnCancel"
         btnCancel.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
         btnCancel.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
@@ -202,53 +200,60 @@ Partial Class AddEditForm
         btnCancel.Values.DropDownArrowColor = Color.Empty
         btnCancel.Values.Text = "Cancel"
         ' 
-        ' Label4
+        ' btnAddSecurityQuestion
         ' 
-        Label4.AutoSize = True
-        Label4.Location = New Point(466, 9)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(100, 15)
-        Label4.TabIndex = 17
-        Label4.Text = "Security Question"
+        btnAddSecurityQuestion.Location = New Point(724, 245)
+        btnAddSecurityQuestion.Name = "btnAddSecurityQuestion"
+        btnAddSecurityQuestion.OverrideDefault.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.OverrideDefault.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.OverrideDefault.Border.Color1 = SystemColors.Control
+        btnAddSecurityQuestion.OverrideDefault.Border.Color2 = SystemColors.Control
+        btnAddSecurityQuestion.Size = New Size(162, 33)
+        btnAddSecurityQuestion.StateCommon.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.StateCommon.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.StateCommon.Border.Rounding = 10F
+        btnAddSecurityQuestion.StateCommon.Border.Width = 2
+        btnAddSecurityQuestion.StateCommon.Content.ShortText.Color1 = SystemColors.Control
+        btnAddSecurityQuestion.StateCommon.Content.ShortText.Color2 = SystemColors.Control
+        btnAddSecurityQuestion.StateCommon.Content.ShortText.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        btnAddSecurityQuestion.StateDisabled.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.StateDisabled.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.StateDisabled.Border.Color1 = SystemColors.Control
+        btnAddSecurityQuestion.StateDisabled.Border.Color2 = SystemColors.Control
+        btnAddSecurityQuestion.StateNormal.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.StateNormal.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.StateNormal.Border.Color1 = SystemColors.Control
+        btnAddSecurityQuestion.StateNormal.Border.Color2 = SystemColors.Control
+        btnAddSecurityQuestion.StatePressed.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.StatePressed.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.StatePressed.Border.Color1 = SystemColors.Control
+        btnAddSecurityQuestion.StatePressed.Border.Color2 = SystemColors.Control
+        btnAddSecurityQuestion.StateTracking.Back.Color1 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.StateTracking.Back.Color2 = Color.FromArgb(CByte(0), CByte(0), CByte(50))
+        btnAddSecurityQuestion.TabIndex = 26
+        btnAddSecurityQuestion.Values.DropDownArrowColor = Color.Empty
+        btnAddSecurityQuestion.Values.Text = "Add Security Question"
         ' 
-        ' Label5
+        ' dgv
         ' 
-        Label5.AutoSize = True
-        Label5.Location = New Point(466, 61)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(91, 15)
-        Label5.TabIndex = 19
-        Label5.Text = "Security Answer"
-        ' 
-        ' tSecurityAnswer
-        ' 
-        tSecurityAnswer.Location = New Point(466, 79)
-        tSecurityAnswer.Name = "tSecurityAnswer"
-        tSecurityAnswer.Size = New Size(418, 83)
-        tSecurityAnswer.StateActive.Border.Rounding = 10F
-        tSecurityAnswer.TabIndex = 24
-        tSecurityAnswer.Text = ""
-        ' 
-        ' cmbSecurityQuestion
-        ' 
-        cmbSecurityQuestion.DropDownWidth = 552
-        cmbSecurityQuestion.Location = New Point(466, 30)
-        cmbSecurityQuestion.Name = "cmbSecurityQuestion"
-        cmbSecurityQuestion.Size = New Size(418, 28)
-        cmbSecurityQuestion.StateActive.ComboBox.Border.Rounding = 10F
-        cmbSecurityQuestion.StateCommon.ComboBox.Content.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
-        cmbSecurityQuestion.TabIndex = 25
+        dgv.AllowUserToAddRows = False
+        dgv.AllowUserToDeleteRows = False
+        dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgv.Location = New Point(445, 9)
+        dgv.Name = "dgv"
+        dgv.ReadOnly = True
+        dgv.Size = New Size(441, 230)
+        dgv.TabIndex = 27
         ' 
         ' AddEditForm
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(898, 270)
+        ClientSize = New Size(898, 298)
         ControlBox = False
-        Controls.Add(cmbSecurityQuestion)
-        Controls.Add(tSecurityAnswer)
-        Controls.Add(Label5)
-        Controls.Add(Label4)
+        Controls.Add(dgv)
+        Controls.Add(btnAddSecurityQuestion)
         Controls.Add(btnCancel)
         Controls.Add(chkShowPassword)
         Controls.Add(lblPassword)
@@ -265,7 +270,7 @@ Partial Class AddEditForm
         Name = "AddEditForm"
         StartPosition = FormStartPosition.CenterScreen
         Text = "AddEditForm"
-        CType(cmbSecurityQuestion, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgv, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -281,8 +286,6 @@ Partial Class AddEditForm
     Friend WithEvents tPassword As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents chkShowPassword As CheckBox
     Friend WithEvents btnCancel As Krypton.Toolkit.KryptonButton
-    Friend WithEvents Label4 As Label
-    Friend WithEvents Label5 As Label
-    Friend WithEvents tSecurityAnswer As Krypton.Toolkit.KryptonRichTextBox
-    Friend WithEvents cmbSecurityQuestion As Krypton.Toolkit.KryptonComboBox
+    Friend WithEvents btnAddSecurityQuestion As Krypton.Toolkit.KryptonButton
+    Friend WithEvents dgv As DataGridView
 End Class

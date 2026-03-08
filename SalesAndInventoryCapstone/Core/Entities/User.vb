@@ -14,6 +14,20 @@ Public Class User
     Public Property LastLockedOut As DateTime?
     Public Property SecurityQuestion As String
     Public Property SecurityAnswer As String
+    Public Property SecurityQuestions As ICollection(Of SecurityQuestion)
+
+    Public Sub AddSecurityQuestion(question As String, answer As String)
+        If Me.SecurityQuestions Is Nothing Then
+            Me.SecurityQuestions = New List(Of SecurityQuestion)
+        End If
+
+        Me.SecurityQuestions.Add(
+            New SecurityQuestion With {
+            .UserId = Id,
+            .SecurityQuestion = question,
+            .SecurityAnswer = answer
+            })
+    End Sub
 
     Public Sub AddFailedAttempt()
         Me.FailedAttempt += 1

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.EntityFrameworkCore
+﻿Imports System.ComponentModel
+Imports Microsoft.EntityFrameworkCore
 
 Public Class AddEditForm
     Public id As Integer?
@@ -31,14 +32,28 @@ Public Class AddEditForm
                     Return
                 End If
 
-                context.Users.Add(New User With {
+                Dim newUser As New User With {
                     .LastName = tLastName.Text.Trim(),
                     .FirstName = tFirstName.Text.Trim(),
                     .Username = tUsername.Text.Trim(),
-                    .Password = HashPassword(tPassword.Text.Trim()),
-                    .SecurityQuestion = cmbSecurityQuestion.Text.Trim(),
-                    .SecurityAnswer = tSecurityAnswer.Text.Trim()
-                })
+                    .Password = tPassword.Text.Trim(),
+                    .Role = "User",
+                    .IsEnabled = True,
+                    .IsLockedOut = False,
+                    .FailedAttempt = 0
+                }
+
+                For Each row As DataGridViewRow In dgv.Rows
+                    If row.IsNewRow Then Continue For
+
+                    Dim question As String = row.Cells("sq").Value?.ToString()
+                    Dim answer As String = row.Cells("sa").Value?.ToString()
+
+                    newUser.AddSecurityQuestion(question, answer)
+
+                Next
+
+                context.Users.Add(newUser)
 
                 Dim result = Await context.SaveChangesAsync() > 0
 
@@ -74,8 +89,6 @@ Public Class AddEditForm
                 user.LastName = tLastName.Text.Trim()
                 user.FirstName = tFirstName.Text.Trim()
                 user.Username = tUsername.Text.Trim()
-                user.SecurityQuestion = cmbSecurityQuestion.Text.Trim()
-                user.SecurityAnswer = tSecurityAnswer.Text.Trim()
                 If Not String.IsNullOrEmpty(tPassword.Text.Trim()) Then
                     user.Password = HashPassword(tPassword.Text.Trim())
                 End If
@@ -96,9 +109,6 @@ Public Class AddEditForm
     End Sub
 
     Private Async Sub AddEditForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        cmbSecurityQuestion.DataSource = New BindingSource(securityQuestions, Nothing)
-        cmbSecurityQuestion.DisplayMember = "Key"
-        cmbSecurityQuestion.ValueMember = "Value"
 
         If id IsNot Nothing Then
             Using context As New DataContext()
@@ -115,10 +125,11 @@ Public Class AddEditForm
                 lblPassword.Visible = False
                 chkShowPassword.Visible = False
                 tPassword.Visible = False
-
-                cmbSecurityQuestion.Text = user.SecurityQuestion
             End Using
         End If
+
+        dgv.Columns.Add("sq", "Security Question")
+        dgv.Columns.Add("sa", "Security Answer")
     End Sub
 
     Private Sub AddEditForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -148,5 +159,12 @@ Public Class AddEditForm
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         Me.Close()
+    End Sub
+
+    Private Sub btnAddSecurityQuestion_Click(sender As Object, e As EventArgs) Handles btnAddSecurityQuestion.Click
+        Dim frm As New frmAddSecurityQuestion
+        If frm.ShowDialog() = DialogResult.OK Then
+            dgv.Rows.Add(frm.SelectedSecurityQuestion, frm.SecurityAnswer)
+        End If
     End Sub
 End Class

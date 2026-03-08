@@ -626,7 +626,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Sum(Fields!TotalSales.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>

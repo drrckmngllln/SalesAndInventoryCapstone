@@ -22,10 +22,14 @@ Partial Class Products
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Products))
         Label1 = New Label()
         tSearch = New Krypton.Toolkit.KryptonTextBox()
         btnNew = New Krypton.Toolkit.KryptonButton()
         dgv = New DataGridView()
+        ImageList1 = New ImageList(components)
+        Button1 = New Button()
         CType(dgv, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -96,11 +100,31 @@ Partial Class Products
         dgv.Size = New Size(973, 506)
         dgv.TabIndex = 9
         ' 
+        ' ImageList1
+        ' 
+        ImageList1.ColorDepth = ColorDepth.Depth32Bit
+        ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
+        ImageList1.TransparentColor = Color.Transparent
+        ImageList1.Images.SetKeyName(0, "search-interface-symbol.png")
+        ' 
+        ' Button1
+        ' 
+        Button1.FlatAppearance.BorderSize = 0
+        Button1.FlatStyle = FlatStyle.Flat
+        Button1.ImageKey = "search-interface-symbol.png"
+        Button1.ImageList = ImageList1
+        Button1.Location = New Point(665, 48)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(36, 31)
+        Button1.TabIndex = 10
+        Button1.UseVisualStyleBackColor = True
+        ' 
         ' Products
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(997, 603)
+        Controls.Add(Button1)
         Controls.Add(dgv)
         Controls.Add(tSearch)
         Controls.Add(btnNew)
@@ -116,4 +140,6 @@ Partial Class Products
     Friend WithEvents tSearch As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents btnNew As Krypton.Toolkit.KryptonButton
     Friend WithEvents dgv As DataGridView
+    Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents Button1 As Button
 End Class

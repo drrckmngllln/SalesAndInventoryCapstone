@@ -34,7 +34,6 @@ Public Class ReportForm
     End Sub
 
     Private Async Sub ReportForm_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Await GetCategoriesAsync()
 
         InitializeReport(pnlInventory)
         Await LoadInventoriesAsync()
@@ -69,14 +68,13 @@ Public Class ReportForm
         End Using
     End Function
 
-    Async Function LoadSaleItemsAsync(fromDate As DateTime, toDate As DateTime, category As String) As Task
+    Async Function LoadSaleItemsAsync(fromDate As DateTime, toDate As DateTime) As Task
         Using ctx As New DataContext()
 
             Dim sample = Await ctx.SaleItemViews.ToListAsync()
 
             Dim saleItemsInRange = Await ctx.SaleItemViews _
-                .Where(Function(si) si.CreatedAt.Date <= fromDate.Date And
-                                    si.CreatedAt.Date <= toDate.Date And si.Category = category) _
+                .Where(Function(si) si.CreatedAt.Date <= fromDate.Date) _
                 .Select(Function(si) New With {
                     .Id = si.Id,
                     .CreatedAt = si.CreatedAt,
@@ -112,15 +110,7 @@ Public Class ReportForm
         End Using
     End Function
 
-    Async Function GetCategoriesAsync() As Task
-        Using ctx As New DataContext()
-            Dim categories = Await ctx.Categories.ToListAsync()
-
-            cmbCategory.DisplayMember = "Name"
-            cmbCategory.ValueMember = "Id"
-            cmbCategory.DataSource = categories
-        End Using
-    End Function
+    'End Function
 
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         InitializeReport(pnlSaleReport)
@@ -132,6 +122,6 @@ Public Class ReportForm
     Private Async Sub btnSIFilter_Click(sender As Object, e As EventArgs) Handles btnSIFilter.Click
         InitializeReport(pnlSIReport)
 
-        Await LoadSaleItemsAsync(dateFrom.Value.Date, dateTo.Value.Date, cmbCategory.Text)
+        Await LoadSaleItemsAsync(dateFrom.Value.Date, dateTo.Value.Date)
     End Sub
 End Class

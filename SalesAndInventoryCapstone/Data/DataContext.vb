@@ -22,7 +22,7 @@ Public Class DataContext
     Public Property SaleItemViews As DbSet(Of SaleItemView)
     Public Property Users As DbSet(Of User)
     Public Property Notifications As DbSet(Of Notification)
-
+    Public Property SecurityQuestions As DbSet(Of SecurityQuestion)
 
     Protected Overrides Sub OnConfiguring(optionsBuilder As DbContextOptionsBuilder)
         If Not optionsBuilder.IsConfigured Then
@@ -36,5 +36,13 @@ Public Class DataContext
 
         builder.Entity(Of User)().HasQueryFilter(Function(u) u.IsEnabled)
 
+        builder.Entity(Of SecurityQuestion)(
+            Sub(b)
+                b.HasKey(Function(key) key.Id)
+                b.Property(Function(p) p.UserId)
+                b.Property(Function(p) p.SecurityQuestion)
+                b.Property(Function(p) p.SecurityAnswer)
+                b.HasOne(Function(x) x.User).WithMany(Function(x) x.SecurityQuestions)
+            End Sub)
     End Sub
 End Class

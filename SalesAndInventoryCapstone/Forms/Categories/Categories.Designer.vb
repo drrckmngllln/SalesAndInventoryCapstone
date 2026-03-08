@@ -22,6 +22,8 @@ Partial Class Categories
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Categories))
         Label1 = New Label()
         pnlGrid = New Panel()
         pnlData = New Panel()
@@ -32,6 +34,8 @@ Partial Class Categories
         Panel2 = New Panel()
         btnNew = New Krypton.Toolkit.KryptonButton()
         tSearch = New Krypton.Toolkit.KryptonTextBox()
+        ImageList1 = New ImageList(components)
+        Button1 = New Button()
         pnlGrid.SuspendLayout()
         Panel1.SuspendLayout()
         Panel3.SuspendLayout()
@@ -166,11 +170,31 @@ Partial Class Categories
         tSearch.StateActive.Border.Width = 2
         tSearch.TabIndex = 4
         ' 
+        ' ImageList1
+        ' 
+        ImageList1.ColorDepth = ColorDepth.Depth32Bit
+        ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
+        ImageList1.TransparentColor = Color.Transparent
+        ImageList1.Images.SetKeyName(0, "search-interface-symbol.png")
+        ' 
+        ' Button1
+        ' 
+        Button1.FlatAppearance.BorderSize = 0
+        Button1.FlatStyle = FlatStyle.Flat
+        Button1.ImageKey = "search-interface-symbol.png"
+        Button1.ImageList = ImageList1
+        Button1.Location = New Point(710, 46)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(36, 31)
+        Button1.TabIndex = 5
+        Button1.UseVisualStyleBackColor = True
+        ' 
         ' Categories
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1042, 639)
+        Controls.Add(Button1)
         Controls.Add(tSearch)
         Controls.Add(btnNew)
         Controls.Add(pnlGrid)
@@ -195,4 +219,6 @@ Partial Class Categories
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents pnlData As Panel
+    Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents Button1 As Button
 End Class

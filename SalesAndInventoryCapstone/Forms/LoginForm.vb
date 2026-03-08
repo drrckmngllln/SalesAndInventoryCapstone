@@ -47,7 +47,9 @@ Public Class LoginForm
                 user.FailedAttempt = MaxFailedAttempts
             End If
 
-            Dim result As Boolean = BCrypt.Net.BCrypt.Verify(password, user.Password)
+            'Dim result As Boolean = BCrypt.Net.BCrypt.Verify(password, user.Password)
+            Dim result As Boolean = user.Password = password
+
             If Not result Then
 
                 user.FailedAttempt -= 1
