@@ -43,15 +43,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="My Project\Application.Designer.vb" />
     <Compile Update="Forms\Reports\ReportDs.Designer.vb">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ReportDs.xsd</DependentUpon>
-    </Compile>
-    <Compile Update="My Project\Application.Designer.vb">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
     <Compile Update="My Project\Resources.Designer.vb">
       <DesignTime>True</DesignTime>

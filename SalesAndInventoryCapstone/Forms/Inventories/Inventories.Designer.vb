@@ -93,7 +93,7 @@ Partial Class Inventories
         dgv.AllowUserToAddRows = False
         dgv.AllowUserToDeleteRows = False
         dgv.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells
+        dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgv.Location = New Point(12, 85)
         dgv.Name = "dgv"
@@ -110,6 +110,7 @@ Partial Class Inventories
         ' 
         ' Button1
         ' 
+        Button1.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         Button1.FlatAppearance.BorderSize = 0
         Button1.FlatStyle = FlatStyle.Flat
         Button1.ImageKey = "search-interface-symbol.png"
