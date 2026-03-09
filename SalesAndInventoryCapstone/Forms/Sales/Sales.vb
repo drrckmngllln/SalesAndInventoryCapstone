@@ -280,6 +280,10 @@ Public Class Sales
             If result Then
                 Dim frm As New FormChange(totalSales, cashGiven, referenceNo)
                 frm.ShowDialog()
+
+                If frm.TransactionCompleted Then
+                    ResetSaleForm()
+                End If
             End If
 
         End Using

@@ -3,8 +3,14 @@ Imports Microsoft.Reporting.WinForms
 
 Public Class FormChange
     Private referenceNo As String
+    Private _transactionCompleted As Boolean
 
     Private Property ReportViewer1 As ReportViewer
+    Public ReadOnly Property TransactionCompleted As Boolean
+        Get
+            Return _transactionCompleted
+        End Get
+    End Property
 
     Private ReadOnly DataSetName As String = "ReportDs"
 
@@ -49,11 +55,12 @@ Public Class FormChange
 
             ReportViewer1.LocalReport.ReportPath = ReceiptRpt
 
+            RemoveHandler ReportViewer1.RenderingComplete, AddressOf ReportViewer1_RenderingComplete
+            AddHandler ReportViewer1.RenderingComplete, AddressOf ReportViewer1_RenderingComplete
+
             ReportViewer1.RefreshReport()
 
-            If (ReportViewer1.IsHandleCreated) Then
-                AddHandler ReportViewer1.RenderingComplete, AddressOf ReportViewer1_RenderingComplete
-            Else
+            If Not ReportViewer1.IsHandleCreated Then
                 ' Handle the case where the handle is not created
                 MessageBox.Show("ReportViewer handle is not created.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
@@ -64,9 +71,27 @@ Public Class FormChange
 
     Private Sub ReportViewer1_RenderingComplete(sender As Object, e As RenderingCompleteEventArgs)
         RemoveHandler ReportViewer1.RenderingComplete, AddressOf ReportViewer1_RenderingComplete
-        ReportViewer1.PrintDialog()
-        ' Or if you want dialog:
-        ' ReportViewer1.PrintDialog()
+        BeginInvoke(New Action(AddressOf ShowPrintDialogAndCompleteTransaction))
+    End Sub
+
+    Private Sub ShowPrintDialogAndCompleteTransaction()
+        If IsDisposed OrElse ReportViewer1 Is Nothing OrElse ReportViewer1.IsDisposed Then Return
+
+        Try
+            ReportViewer1.PrintDialog()
+            CompleteTransaction()
+        Catch ex As InvalidOperationException
+            MessageBox.Show("The receipt is not ready to print yet. Please try again.", "Print Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End Try
+    End Sub
+
+    Private Sub CompleteTransaction()
+        If _transactionCompleted Then Return
+
+        _transactionCompleted = True
+        MessageBox.Show("Transaction complete.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.DialogResult = DialogResult.OK
+        Me.Close()
     End Sub
 
 
